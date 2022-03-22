@@ -6,6 +6,8 @@ ESA Data dictionary
 
 0. Install nodejs, mongodb & golang on your local machine.
 
+   Install mongodb package in node: `npm install mongodb`
+
 1. Preprocess original json data to make sure there are no errors before ingestion.
 
     Step 1: put original json files into `data-dic/data/`.
