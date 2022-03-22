@@ -1,0 +1,133 @@
+h1 {
+    padding-left: 10px;
+}
+
+hr.line1 {
+    height: 3px;
+    background-color: rgb(20, 20, 20);
+    border: none;
+}
+
+hr.line2 {
+    height: 3px;
+    background-color: rgb(80, 80, 80);
+    border: none;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+.block hr.line3 {
+    height: 1px;
+    background-color: rgb(120, 120, 120);
+    border: none;
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-top: 30px;
+}
+
+.block hr.line4 {
+    height: 1px;
+    background-color: rgb(180, 180, 180);
+    border: none;
+    margin-left: 35px;
+    margin-top: 35px;
+    margin-right: 1000px;
+}
+
+div#search {
+    margin-left: 20px;
+}
+
+ul.entitylist {
+    font-size: larger;
+    font-weight: bold;
+    padding-bottom: 5px;
+}
+
+div.block {
+    padding-left: 20px;
+    font-size: x-large;
+    font-weight: bold;
+    margin-top: 40px;
+    margin-bottom: 20px;
+}
+
+.block p.content {
+    padding-left: 20px;
+    margin-bottom: -10px;
+    font-size: 20px;
+    font-weight: normal;
+}
+
+.block p.inner-p1 {
+    padding-left: 20px;
+    margin-bottom: -10px;
+    font-size: 20px;
+    font-weight: normal;
+}
+
+.block p.inner-p2 {
+    padding-left: 60px;
+    margin-bottom: -10px;
+    font-size: 20px;
+    font-weight: normal;
+}
+
+.block ol.inner-ol1 {
+    padding-left: 100px;
+    margin-top: 20px;
+    margin-bottom: -10px;
+    font-size: 20px;
+    font-weight: normal;
+}
+
+.block ol.inner-ola-1 {
+    padding-left: 120px;
+    margin-top: 20px;
+    margin-bottom: -10px;
+    font-size: 20px;
+    font-weight: normal;
+}
+
+.block ol.inner-ola-2 {
+    padding-left: 20px;
+    margin-top: 0px;
+    margin-bottom: 10px;
+    font-size: 20px;
+    font-weight: normal;    
+}
+
+.block p.content span.field {
+    padding-left: 20px;
+    margin-bottom: -10px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.block div p.field {
+    padding-left: 40px;
+    margin-bottom: -10px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.block div p.subitem {
+    padding-left: 60px;
+    margin-top: 10px;
+    margin-bottom: -10px;
+    font-size: 18px;
+    font-weight: normal;
+}
+
+.block span.shortarray {
+    font-size: 19px;
+    font-weight: bold;
+}
+
+/* 
+.block ol.item {
+    padding-left: 45px;
+    margin-bottom: -10px;
+    font-size: large;
+    font-weight: normal;
+} */

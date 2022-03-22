@@ -1,0 +1,324 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Education Data Dictionary</title>
+</head>
+
+<body>
+
+    <h1>
+        <%= title %>
+    </h1>
+
+    <hr class="line1">
+    <br>
+
+    <form action="/search" method="post">
+        <div id="search">
+            <input type="text" name="content">
+            <input type="submit" value="search">
+        </div>
+        <ul class="entitylist">
+            <% for(let i=0; i < entities.length; i++) { %>
+                <li>
+                    <%= entities[i] %>
+                </li>
+                <% } %>
+        </ul>
+    </form>
+
+    <hr class="line2">
+
+    <!-- Entity -->
+    <div class="block">
+        <% if (content !=null) { %>
+            Entity:&nbsp;&nbsp;<%= entity %>
+                <hr class="line3">
+                <% } %>
+    </div>
+
+    <!-- Collections -->
+    <div class="block">
+        <% if (content !=null) { %>
+            Collections:
+            <% for(let i=0; i < collections.length; i++) { %>
+
+                <p class="content"> <span class="field">Name:&nbsp;&nbsp;</span>
+                    <%= collections[i].Name %>
+                </p>
+
+                <p class="content"> <span class="field">Description:&nbsp;&nbsp;</span>
+                    <%= collections[i].Description %>
+                </p>
+
+                <p class="content"> <span class="field">Standard:&nbsp;&nbsp;</span>
+                    <%= collections[i].Standard %>
+                </p>
+
+                <p class="content"> <span class="field">DefinitionModification:&nbsp;&nbsp;</span>
+                    <%= collections[i].DefinitionModification %>
+                </p>
+
+                <div>
+                    <p class="field"> Elements: </p>
+                    <% for(let j=0; j < collections[i].Elements.length; j++) { %>
+                        <p class="subitem">
+                            <%= collections[i].Elements[j] %>
+                                <% } %>
+                        </p>
+                </div>
+
+                <div>
+                    <p class="field"> BusinessRules: </p>
+                    <% for(let j=0; j < collections[i].BusinessRules.length; j++) { %>
+                        <p class="subitem">
+                            <%= collections[i].BusinessRules[j] %>
+                                <% } %>
+                        </p>
+                </div>
+
+                <div>
+                    <% if ( i < collections.length - 1 ) { %>
+                        <hr class="line4">
+                        <% } %>
+                </div>
+
+                <% } %>
+                    <hr class="line3">
+                    <% } %>
+    </div>
+
+    <!-- CrossrefEntities -->
+    <div class="block">
+        <% if (content !=null) { %>
+            CrossrefEntities:&nbsp;&nbsp;
+            <% for(let i=0; i < crossrefEntities.length; i++) { %>
+
+                <span class="shortarray">
+                    <%= crossrefEntities[i] %>
+                </span>
+
+                <% if ( i < crossrefEntities.length - 1) { %> &nbsp;|&nbsp; <% } %>
+                        <% } %>
+                            <hr class="line3">
+                            <% } %>
+    </div>
+
+    <!-- Definition -->
+    <div class="block">
+        <% if (content !=null) { %>
+            Definition:&nbsp;&nbsp;
+            <span class="shortarray">
+                <%- definition %>
+            </span>
+            <hr class="line3">
+            <% } %>
+    </div>
+
+    <!-- ExpectedAttributes -->
+    <div class="block">
+        <% if (content !=null) { %>
+            ExpectedAttributes:&nbsp;&nbsp;
+            <% for(let i=0; i < expectedAttributes.length; i++) { %>
+
+                <span class="shortarray">
+                    <%= expectedAttributes[i] %>
+                </span>
+
+                <% if ( i < expectedAttributes.length - 1) { %> &nbsp;|&nbsp; <% } %>
+                        <% } %>
+                            <hr class="line3">
+                            <% } %>
+    </div>
+
+    <!-- Identifier -->
+    <div class="block">
+        <% if (content !=null) { %>
+            Identifier:&nbsp;&nbsp;
+            <span class="shortarray">
+                <%= identifier %>
+            </span>
+            <hr class="line3">
+            <% } %>
+    </div>
+
+    <!-- LegalDefinitions -->
+    <div class="block">
+        <% if (content !=null) { %>
+            LegalDefinitions:&nbsp;&nbsp;
+            <% for(let i=0; i < legalDefinitions.length; i++) { %>
+
+                <p class="content"> <span class="field">LegislationName:&nbsp;&nbsp;</span>
+                    <%= legalDefinitions[i].LegislationName %>
+                </p>
+
+                <p class="content"> <span class="field">Citation:&nbsp;&nbsp;</span>
+                    <%= legalDefinitions[i].Citation %>
+                </p>
+
+                <p class="content"> <span class="field">Link:&nbsp;&nbsp;</span>
+                    <%- legalDefinitions[i].Link %>
+                </p>
+
+                <p class="content"> <span class="field">Datestamp:&nbsp;&nbsp;</span>
+                    <%= legalDefinitions[i].Datestamp %>
+                </p>
+
+                <p class="content"> <span class="field">Definition:&nbsp;&nbsp;</span>
+                    <%- legalDefinitions[i].Definition %>
+                </p>
+
+                <p class="content"> <span class="field">Commentary:&nbsp;&nbsp;</span>
+                    <%- legalDefinitions[i].Commentary %>
+                </p>
+
+                <div>
+                    <% if ( i < legalDefinitions.length - 1 ) { %>
+                        <hr class="line4">
+                        <% } %>
+                </div>
+                <% } %>
+                    <hr class="line3">
+                    <% } %>
+    </div>
+
+    <!-- OtherNames -->
+    <div class="block">
+        <% if (content !=null) { %>
+            OtherNames:&nbsp;&nbsp;
+            <% for(let i=0; i < otherNames.length; i++) { %>
+
+                <span class="shortarray">
+                    <%= otherNames[i] %>
+                </span>
+
+                <% if ( i < otherNames.length - 1) { %> &nbsp;|&nbsp; <% } %>
+                        <% } %>
+                            <hr class="line3">
+                            <% } %>
+    </div>
+
+    <!-- OtherStandards -->
+    <div class="block">
+        <% if (content !=null) { %>
+            OtherStandards:&nbsp;&nbsp;
+            <% for(let i=0; i < otherStandards.length; i++) { %>
+
+                <p class="content"> <span class="field">Standard:&nbsp;&nbsp;</span>
+                    <%= otherStandards[i].Standard %>
+                </p>
+
+                <div>
+                    <p class="content"> <span class="field">Link:&nbsp;&nbsp;</span>
+                        <% for(let j=0; j < otherStandards[i].Link.length; j++) { %>
+                            <p class="subitem">
+                                <%- otherStandards[i].Link[j] %>
+                            </p>
+                            <% } %>
+                    </p>
+                </div>
+
+                <div>
+                    <p class="content"> <span class="field">Path:&nbsp;&nbsp;</span>
+                        <% for(let j=0; j < otherStandards[i].Path.length; j++) { %>
+                            <p class="subitem">
+                                <%= otherStandards[i].Path[j] %>
+                            </p>
+                            <% } %>
+                    </p>
+                </div>
+
+                <p class="content"> <span class="field">Definition:&nbsp;&nbsp;</span>
+                    <%= otherStandards[i].Definition %>
+                </p>
+
+                <p class="content"> <span class="field">Commentary:&nbsp;&nbsp;</span>
+                    <%- otherStandards[i].Commentary %>
+                </p>
+
+                <div>
+                    <% if ( i < otherStandards.length - 1 ) { %>
+                        <hr class="line4">
+                        <% } %>
+                </div>
+
+                <% } %>
+                    <hr class="line3">
+                    <% } %>
+    </div>
+
+    <!-- /////////////////////////////////// -->
+
+    <!-- SIF -->
+    <div class="block">
+        <% if (content !=null) { %>
+            SIF:&nbsp;&nbsp;
+            <% for(let i=0; i < sif.length; i++) { %>
+
+                <div>
+                    <p class="content"> <span class="field">XPath:&nbsp;&nbsp;</span>
+                        <% for(let j=0; j < sif[i].XPath.length; j++) { %>
+                            <p class="subitem">
+                                <%- sif[i].XPath[j] %>
+                            </p>
+                            <% } %>
+                    </p>
+                </div>
+
+                <p class="content"> <span class="field">Datestamp:&nbsp;&nbsp;</span>
+                    <%= sif[i].Datestamp %>
+                </p>
+
+                <p class="content"> <span class="field">Definition:&nbsp;&nbsp;</span>
+                    <%- sif[i].Definition %>
+                </p>
+
+                <div>
+                    <% if ( i < sif.length - 1 ) { %>
+                        <hr class="line4">
+                        <% } %>
+                </div>
+
+                <% } %>
+                    <hr class="line3">
+                    <% } %>
+    </div>
+
+    <!-- Superclass -->
+    <div class="block">
+        <% if (content !=null) { %>
+            Superclass:&nbsp;&nbsp;
+            <% for(let i=0; i < superclass.length; i++) { %>
+
+                <span class="shortarray">
+                    <%= superclass[i] %>
+                </span>
+
+                <% if ( i < superclass.length - 1) { %> &nbsp;|&nbsp; <% } %>
+                        <% } %>
+                            <hr class="line3">
+                            <% } %>
+    </div>
+
+    <!-- Type -->
+    <div class="block">
+        <% if (content !=null) { %>
+            Type:&nbsp;&nbsp;
+            <span class="shortarray">
+                <%= type %>
+            </span>
+            <% } %>
+    </div>
+
+    <!-- END -->
+
+    <br>
+    <br>
+
+</body>
+
+</html>

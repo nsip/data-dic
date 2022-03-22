@@ -1,0 +1,161 @@
+{
+    "Entity": "School",
+    "Definition": "<p>A school is a place of learning for students, offering education for children from ages 6 through to 18. Schools include primary schools, secondary schools, and special schools. They exclude places offering tertiary education and vocational education exclusively.</p><p>A school may incorporate multiple geographically distinct locations from which education is offered (<A href=\"Campus\">Campus</A>). In some collections, campuses of the same school are treated as distinct schools.</p>",
+    "Identifier": "0001",
+    "SIF": [
+        {
+            "XPath": [
+                "/SchoolInfo"
+            ],
+            "Datestamp": "Latest version: 3.4.9, 2021-11-",
+            "Definition": "This object contains information about the school or campus."
+        }
+    ],
+    "OtherStandards": [
+        {
+            "Standard": "IMS One Roster",
+            "Link": [
+                "https://www.imsglobal.org/sites/default/files/spec/oneroster/v1p2/rostering-informationmodel/OneRosterv1p2RosteringService_InfoModelv1p0.html#Data_Org"
+            ],
+            "Path": [
+                "/School",
+                "/Org"
+            ],
+            "Definition": "ORG is defined here as a structure for holding organizational information. An ORG might be a school, or it might be a local, statewide, or national entity. ORGs will typically have a parent ORG (up to the national level), and children, allowing a hierarchy to be established. School is defined here as the place where the learning happens. Most commonly this is the data that describes a bricks and mortar building, or, in the case of a virtual school, the virtual school organization. For enrollment and result reporting purposes, little information about this organization is required. A common example of a local organization is a school district.",
+            "Commentary": "School is defined as equivalent to Org."
+        },
+        {
+            "Standard": "IMS LTI",
+            "Link": [],
+            "Path": [],
+            "Definition": "",
+            "Commentary": "Not modelled. LTI presupposes deployment within a single education institution, and models classes and courses, but does not model the school of deployment as an object or even an attribute. LTI does inherit data modelling from IMS LIS, where schools are modelled: <A href="https: //www.imsglobal.org/lis/lisv2p0p1/CMSInfoModelv1p0p1.html#toc-167">https://www.imsglobal.org/lis/lisv2p0p1/CMSInfoModelv1p0p1.html#toc-167</A> (\"Information about an organization that has 'ownership' of a Course or some component of a Course\", with name, ID, and type). But that attribute is not passed on to LTI."
+        },
+        {
+            "Standard": "Google Classroom",
+            "Link": [],
+            "Path": [],
+            "Definition": "",
+            "Commentary": "Not modelled: Google Classroom presupposes deployment within a single education institution, and models classes and courses, but does not model the school of deployment as an object or even an attribute.However, organisations and inheritance between them are modelled for permissions around the API: <A href="https: //support.google.com/a/answer/182537">https://support.google.com/a/answer/182537</A> (\"An organizational unit is simply a group that an administrator can create in the Google Admin console to apply settings to a specific set of users.\")"
+        }
+    ],
+    "LegalDefinitions": [
+        {
+            "LegislationName": "Education Act 2013",
+            "Citation": "Glossary, §6",
+            "Link": "http://www.austlii.edu.au/cgi-bin/viewdoc/au/legis/cth/consol_act/aea2013210/s6.html",
+            "Datestamp": "2020-12-01",
+            "Definition": "<p>School means a primary school, a secondary school or a combined school, and, where appropriate, a proposed school.</p> 
+<p>Note 1: Non-government schools that provide education to distance education students only are taken not to be schools (see section 19).</p> 
+<p>Primary school means a school (other than a combined school) that provides primary education.</p> 
+<p>Secondary school means a school (other than a combined school) that provides secondary education.</p> 
+<p>Combined school means a school that provides both primary education and secondary education.</p> 
+<p>Special school means a school that: 
+<ol type="a"><li>is, or is likely to be, recognized by the State or Territory Minister for the school as a special school; and</li> 
+<li>provides education under special programs, or special activities, designed specifically for students with disabilities.</li></ol></p> 
+<p>Primary education: see subsections 15(1) and (3).</p>
+<p>Secondary education: see subsections 15(1) and (3).</p>"
+        },
+        {
+            "LegislationName": "Education Act 2013",
+            "Citation": "§15(1)",
+            "Link": "http://www.austlii.edu.au/cgi-bin/viewdoc/au/legis/cth/consol_act/aea2013210/s15.html",
+            "Datestamp": "2020-12-01",
+            "Definition": "<p>The regulations may prescribe, for a State or Territory, the level of education that constitutes primary education or secondary education for schools located in the State or Territory.</p> 
+<p>Note: A level of education may be prescribed by reference to a particular year in a course of primary education or secondary education (such as year 6), or by reference to a student’s age.</p>",
+    "Commentary": "§15(3) is a per-student determination."
+        },
+        {
+            "LegislationName": "Education Regulations 2013",
+            "Citation": "§7",
+            "Datestamp": "2020-12-01",
+            "Definition": "<p>Levels of education that constitute primary and secondary education for schools other than special schools</p> 
+<ol type="1"><li>For the purposes of section 15 of the Act, the levels of education that constitute primary education for a school, other than a special school, for a calendar year are: 
+<ol type="a"><li>for schools in South Australia other than those specified in the table in clause 1 of Schedule 3 for the calendar year—foundation to year 7; and</li> 
+<li>for all other schools (including those specified in that table)—foundation to year 6.</li></ol></li> 
+<li>For the purposes of section 15 of the Act, the levels of education that constitute secondary education for a school, other than a special school, for a calendar year are: 
+<ol type="a"><li>for schools in South Australia other than those specified in the table in clause 1 of Schedule 3 for the calendar year—years 8 to 12; and</li> 
+<li>for all other schools (including those specified in that table)—years 7 to 12.</li></ol></li></ol></p>"
+        },
+        {
+            "LegislationName": "Education Regulations 2013",
+            "Citation": "§9",
+            "Datestamp": "2020-12-01",
+            "Definition": "<p>Levels of education that constitute primary education and secondary education for special schools 
+<ol type="1"><li>For section 15 of the Act, the level of education that constitutes primary education for a special school is the education provided to students aged 4 to 11 at the school.</li> 
+<li>For section 15 of the Act, the level of education that constitutes secondary education for a special school is the education provided to students aged 12 to 21 at the school.</li></ol></p>"
+        }
+    ],
+    "Collections": [
+        {
+            "Name": "Australian Government Financial Questionnaire Collection",
+            "Description": "Primary subject matter of collection.",
+            "Standard": "SIF-AU",
+            "Elements": [
+                "/FinancialQuestionnaireCollection/FQReportingList/FQReporting/CommonwealthId",
+                "/FinancialQuestionnaireCollection/FQReportingList/FQReporting/EntityName",
+                "/FinancialQuestionnaireCollection/FQReportingList/FQReporting/EntityContact"
+            ],
+            "DefinitionModification": "Per Education Act: Distance-Education–only schools not counted."
+        },
+        {
+            "Name": "Australian Government Address Collection",
+            "Description": "Primary subject matter of collection.",
+            "Standard": "SIF-AU",
+            "Elements": [
+                "/AddressCollection/AddressCollectionReportingList/AddressCollectionReporting/CommonwealthId",
+                "/AddressCollection/AddressCollectionReportingList/AddressCollectionReporting/EntityName",
+                "/AddressCollection/AddressCollectionReportingList/AddressCollectionReporting/EntityContact"
+            ],
+            "DefinitionModification": "Per Education Act: Distance-Education–only schools not counted. Campuses of the same school are treated as distinct schools for the collection (since the purpose of the collection is to determine the socioeconomic status of the school on a geographical basis.)"
+        },
+        {
+            "Name": "Australian Government Census Collection",
+            "Description": "Primary subject matter of collection.",
+            "Standard": "SIF-AU",
+            "Elements": [
+                "/CensusCollection/CensusCollectionReportingList/CensusCollectionReporting/CommonwealthId",
+                "/CensusCollection/CensusCollectionReportingList/CensusCollectionReporting/EntityName",
+                "/CensusCollection/CensusCollectionReportingList/CensusCollectionReporting/EntityContact"
+            ],
+            "DefinitionModification": "Per Education Act: Distance-Education–only schools not counted."
+        },
+        {
+            "Name": "Australian Government Student Attendance Collection",
+            "Description": "Primary subject matter of collection.",
+            "Standard": "SIF-AU",
+            "Elements": [
+                "/StudentAttendanceCollection/StudentAttendanceCollectionReportingList/StudentAttendanceCollectionReporting/CommonwealthId",
+                "/StudentAttendanceCollection/StudentAttendanceCollectionReportingList/StudentAttendanceCollectionReporting/EntityName",
+                "/StudentAttendanceCollection/StudentAttendanceCollectionReportingList/StudentAttendanceCollectionReporting/EntityContact"
+            ],
+            "DefinitionModification": "Per Education Act: Distance-Education–only schools not counted."
+        },
+        {
+            "Name": "Australian Charities and Not-For-Profits Commission Registration",
+            "Description": "Primary subject matter of collection.",
+            "BusinessRules": [
+                "Government schools not counted: https://www.acnc.gov.au/for-charities/start-charity/you-start-charity/charity-subtypes/schools-universities-and-other.",
+                "School should be registered to have an Australian Company Number.",
+                "School must be able to provide Financial information (taken from the Australian Government Financial Questionnaire)."
+            ]
+        }
+    ],
+    "Type": "Object",
+    "ExpectedAttributes": [
+        "School Name",
+        "ACARA ID",
+        "AGE ID (old)",
+        "AGE ID (new)",
+        "School Sector",
+        "Principal",
+        "Contact"
+    ],
+    "Superclass": [
+        "Organisation"
+    ],
+    "CrossrefEntities": [
+        "ApprovedAuthority",
+        "Campus"
+    ]
+}

@@ -1,0 +1,99 @@
+{
+    "Entity": "Person.FamilyName",
+    "Definition": "The family name of an individual, typically inherited from and shared with other family members. Surname in Western naming traditions.",
+    "Identifier": "0002",
+    "SIF": [
+        {
+            "XPath": [
+                "/StudentPersonal/PersonInfo/Name/FamilyName",
+                "/StudentPersonal/PersonInfo/OtherNames/OtherName/FamilyName",
+                "/StaffPersonal/PersonInfo/Name/FamilyName",
+                "/StaffPersonal/PersonInfo/OtherNames/OtherName/FamilyName",
+                "/StudentContactPersonal/PersonInfo/Name/FamilyName",
+                "/StudentContactPersonal/PersonInfo/OtherNames/OtherName/FamilyName",
+                "/FinancialQuestionnaireCollection/FQReportingList/FQReporting/EntityContact/ Name/FamilyName"
+            ],
+            "Datestamp": "Latest version: 3.4.9, 2021-11-",
+            "Definition": "That part of the person's name which is used to describe family, clan, tribal group, or marital association. Note that this element is required when known. However, it may not be possible to know the family name in which case you should add the available information to the FullName element."
+        }
+    ],
+    "OtherStandards": [
+        {
+            "Standard": "IMS One Roster",
+            "Link": [
+                "https://www.imsglobal.org/sites/default/files/spec/oneroster/v1p2/rostering-informationmodel/OneRosterv1p2RosteringService_InfoModelv1p0.html#Data_User"
+            ],
+            "Path": [
+                "/User/familyName",
+                "/Student/familyName",
+                "/Teacher/familyName",
+                "/User/preferredFamilyName",
+                "/Student/preferredFamilyName",
+                "/Teacher/preferredFamilyName"
+            ],
+            "Definition": "The family name. Also, known as the last name.preferredFamilyName: The user's preferred last name.",
+            "Commentary": "IMS One Roster differentiates between legal and preferred family names. In SIF, this is done through OtherNames/OtherName"
+        }
+    ],
+    "LegalDefinitions": [
+        {
+            "LegislationName": "Births Deaths and Marriages Act 1996 VIC",
+            "Citation": "§22",
+            "Link": "http://www8.austlii.edu.au/cgi-bin/viewdoc/au/legis/vic/consol_act/bdamra1996383/s22.html",
+            "Datestamp": "2020-12-01",
+            "Definition": "The birth registration statement must state the name of the child. However, the Registrar may assign a name to the child if the name stated in the birth registration statement is a prohibited name; or the birth registration statement is lodged by both parents of the child and they satisfy the Registrar that they are unable to agree on the child's name.",
+    "Commentary": "Similar definitions in other state Births Deaths and Marriages Acts"
+        }
+    ],
+    "Collections": [
+        {
+            "Name": "Australian Government Financial Questionnaire Collection",
+            "Description": "Contact person for collection.",
+            "Standard": "SIF-AU",
+            "Elements": [
+                "/FinancialQuestionnaireCollection/FQReportingList/FQReporting/EntityContact/Name/FamilyName"
+            ],
+            "DefinitionModification": "Per Education Act: Distance-Education–only schools not counted."
+        },
+        {
+            "Name": "Australian Government Address Collection",
+            "Description": "Contact person for collection.",
+            "Standard": "SIF-AU",
+            "Elements": [
+                "/AddressCollection/ AddressCollectionReportingList/AddressCollectionReporting/EntityContact/Name/FamilyName"
+            ],
+            "DefinitionModification": "Per Education Act: Distance-Education–only schools not counted. Campuses of the same school are treated as distinct schools for the collection (since the purpose of the collection is to determine the socioeconomic status of the school on a geographical basis.)"
+        },
+        {
+            "Name": "Australian Government Census Collection",
+            "Description": "Contact person for collection.",
+            "Standard": "SIF-AU",
+            "Elements": [
+                "/CensusCollection/CensusReportingList/CensusReporting/EntityContact/Name/FamilyName"
+            ],
+            "DefinitionModification": "Per Education Act: Distance-Education–only schools not counted."
+        },
+        {
+            "Name": "Australian Government Student Attendance Collection",
+            "Description": "Contact person for collection.",
+            "Standard": "SIF-AU",
+            "Elements": [
+                "/StudentAttendanceCollection/StudentAttendanceCollectionReportingList/StudentAttendanceCollectionReporting/EntityContact/Name/FamilyName"
+            ]
+        },
+        {
+            "Name": "Australian Charities and Not-For-Profits Commission Registration",
+            "Description": "Contact person for collection."
+        }
+    ],
+    "Type": "Element",
+    "DefaultParent": [
+        "Person"
+    ],
+    "Superclass": [
+        "Name"
+    ],
+    "CrossrefEntities": [
+        "Person.FullName"
+    ]
+}
