@@ -3,7 +3,7 @@
   "OtherNames": [
     "Location"
   ],
-  "Definition": "<p>A geographically distinct locations within a (<A href="School">school</A>) from which education is offered. In some collections, campuses of the same school are treated as distinct schools.</p>",
+  "Definition": "<p>A geographically distinct locations within a <A href="School">school</A> from which education is offered. In some collections, campuses of the same school are treated as distinct schools.</p>",
   "Identifier": "0003",
   "SIF": [
     {

@@ -1,6 +1,6 @@
 {
 "Entity": "AGE ID (old)",
-"Definition": "<p>The unique identifier issued to schools by the Federa Government for the purpose of its data collections. The AGE ID (old) identifies campuses, rather than schools. The AGE Id is available through the <a href="https://asl.acara.edu.au">Australian Schools List</a>, but only in XML and JSON format, not in Excel or Online view.</p>
+"Definition": "<p>The unique identifier issued to schools by the Federal Government for the purpose of its data collections. The AGE ID (old) identifies campuses, rather than schools. The AGE Id is available through the <a href="https://asl.acara.edu.au">Australian Schools List</a>, but only in XML and JSON format, not in Excel or Online view.</p>
 
 <p>The old AGE ID is in the process of being replaced by a new AGE ID as of this writing, which identifies schools.</p>",
 "Identifier": "0009",
@@ -9,7 +9,7 @@
     "XPath": [
       "/SchoolInfo/CommonwealthId"
     ],
-    "Datestamp": "Latest version: 3.4.9, 2021-11-",
+    "Datestamp": "Latest version: 3.4.9, 2021-11-30",
     "Definition": "Commonwealth identifier for this school/campus."
   }
 ],

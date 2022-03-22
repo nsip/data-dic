@@ -10,7 +10,7 @@
       "/SchoolInfo/ACARAId",
       "/StudentPersonal/MostRecent/SchoolACARAId"
     ],
-    "Datestamp": "Latest version: 3.4.9, 2021-11-",
+    "Datestamp": "Latest version: 3.4.9, 2021-11-30",
     "Definition": "ACARA identifier for this school/campus."
   }
 ],
