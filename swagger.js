@@ -1,5 +1,5 @@
 export const swagger_obj = {
-    routePrefix: '/documentation',
+    routePrefix: '/api-docs',
     swagger: {
         info: {
             title: 'Data Dictionary API',
@@ -10,7 +10,7 @@ export const swagger_obj = {
             url: 'https://swagger.io',
             description: 'Find more info here'
         },
-        host: 'localhost',
+        host: '127.0.0.1:3000', // config.host + ":" + config.port,
         schemes: ['http'],
         consumes: ['application/json'],
         produces: ['application/json'],
@@ -40,7 +40,7 @@ export const swagger_obj = {
     },
     uiConfig: {
         docExpansion: 'full',
-        deepLinking: false
+        deepLinking: true
     },
     uiHooks: {
         onRequest: function (request, reply, next) { next() },

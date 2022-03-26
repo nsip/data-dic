@@ -1,31 +1,31 @@
 import * as ejs from 'ejs'
 import * as fs from 'fs'
-import { po, OnFindEntity, OnListEntity } from './db-find.js'
+import { PO, OnFindEntity, OnListEntity } from './db-find.js'
 
 const template = fs.readFileSync('./www/dictionary.ejs', 'utf-8')
 
-const render_ejs = (po, code) => {
+const render_ejs = (PO, code) => {
 
     const data = ejs.render(template, {
-        title: po.title,
-        entities: po.entities,
-        content: po.content,
+        title: PO.title,
+        entities: PO.entities,
+        content: PO.content,
 
-        entity: po.entity,
-        collections: po.collections,
-        crossrefEntities: po.crossrefEntities,
-        definition: po.definition,
-        expectedAttributes: po.expectedAttributes,
-        identifier: po.identifier,
-        legalDefinitions: po.legalDefinitions,
-        otherNames: po.otherNames,
-        otherStandards: po.otherStandards,
-        sif: po.sif,
-        superclass: po.superclass,
-        type: po.type,
+        entity: PO.entity,
+        collections: PO.collections,
+        crossrefEntities: PO.crossrefEntities,
+        definition: PO.definition,
+        expectedAttributes: PO.expectedAttributes,
+        identifier: PO.identifier,
+        legalDefinitions: PO.legalDefinitions,
+        otherNames: PO.otherNames,
+        otherStandards: PO.otherStandards,
+        sif: PO.sif,
+        superclass: PO.superclass,
+        type: PO.type,
     })
 
-    po.res
+    PO.res
         .code(code)
         .header('Content-Type', 'text/html; charset=utf-8')
         .send(data)
@@ -35,7 +35,7 @@ export const esa_dic = async (fastify, options) => {
 
     fastify.get('/', async (req, res) => {
         {
-            po.res = res
+            PO.res = res
         }
         await OnListEntity(
             render_ejs
@@ -46,10 +46,10 @@ export const esa_dic = async (fastify, options) => {
         // console.log(new Date().getTime())
         const entityVal = req.body.content // input(text)-name@'content'
         {
-            po.res = res
+            PO.res = res
         }
         await OnFindEntity(
-            entityVal,
+            entityVal.trim(),
             render_ejs,
         )
     })

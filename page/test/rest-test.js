@@ -1,4 +1,3 @@
-
 import { getFileContent } from '../tool.js'
 import * as ejs from 'ejs'
 import * as fs from 'fs'

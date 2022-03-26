@@ -1,6 +1,7 @@
 export const dic_api = async (fastify, options) => {
 
     //////////////////////////////////////////////////////////////////////////////////////
+    // api example 
 
     fastify.put('/test-path/:id', {
         schema: {
@@ -54,9 +55,8 @@ export const dic_api = async (fastify, options) => {
 
     //////////////////////////////////////////////////////////////////////////////////////
 
-    fastify.get('/hello-dic', {
-
-    }, (req, reply) => { reply.code(200).send("hello dic") })
+    fastify.get('/hello-dic', {}, (req, reply) => { reply.code(200).send("hello dic" + Date.now()) })
 
     //////////////////////////////////////////////////////////////////////////////////////
+
 }
