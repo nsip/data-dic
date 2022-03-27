@@ -17,15 +17,22 @@
     <hr class="line1">
     <br>
 
-    <form action="/search" method="post">
-        <div id="search">
-            <input type="text" name="content">
+    <!---------------------------------------------------------------------->
+
+    <!-- Entity List-->
+    <form id="search-form" action="/search" method="post">
+        <div id="search-div">
+            <input id="search-entity" type="text" name="content">
             <input type="submit" value="search">
         </div>
-        <ul class="entitylist">
+        <ul class="entity-list">
             <% for(let i=0; i < entities.length; i++) { %>
-                <li>
-                    <%= entities[i] %>
+                <li class="link" id="<%= entities[i] %>" onclick="
+                    document.getElementById('search-entity').value=(this.id);
+                    document.getElementById('search-form').submit();">
+                    <span>
+                        <%= entities[i] %>
+                    </span>
                 </li>
                 <% } %>
         </ul>
@@ -33,17 +40,21 @@
 
     <hr class="line2">
 
-    <!-- Entity -->
-    <div class="block">
-        <% if (content !=null) { %>
+    <% if (content !=null) { %>
+
+        <!---------------------------------------------------------------------->
+
+        <!-- Entity -->
+        <div class="block">
             Entity:&nbsp;&nbsp;<%= entity %>
                 <hr class="line3">
-                <% } %>
-    </div>
+        </div>
 
-    <!-- Collections -->
-    <div class="block">
-        <% if (content !=null) { %>
+        <!---------------------------------------------------------------------->
+
+        <!-- Collections -->
+        <div class="block">
+
             Collections:
             <% for(let i=0; i < collections.length; i++) { %>
 
@@ -88,13 +99,14 @@
                 </div>
 
                 <% } %>
-                    <hr class="line3">
-                    <% } %>
-    </div>
 
-    <!-- CrossrefEntities -->
-    <div class="block">
-        <% if (content !=null) { %>
+                    <hr class="line3">
+        </div>
+
+        <!---------------------------------------------------------------------->
+
+        <!-- CrossrefEntities -->
+        <div class="block">
             CrossrefEntities:&nbsp;&nbsp;
             <% for(let i=0; i < crossrefEntities.length; i++) { %>
 
@@ -104,51 +116,50 @@
 
                 <% if ( i < crossrefEntities.length - 1) { %> &nbsp;|&nbsp; <% } %>
                         <% } %>
-                            <hr class="line3">
-                            <% } %>
-    </div>
 
-    <!-- Definition -->
-    <div class="block">
-        <% if (content !=null) { %>
+                            <hr class="line3">
+        </div>
+
+        <!---------------------------------------------------------------------->
+
+        <!-- Definition -->
+        <div class="block">
             Definition:&nbsp;&nbsp;
             <span class="shortarray">
                 <%- definition %>
             </span>
             <hr class="line3">
-            <% } %>
-    </div>
+        </div>
 
-    <!-- ExpectedAttributes -->
-    <div class="block">
-        <% if (content !=null) { %>
+        <!---------------------------------------------------------------------->
+
+        <!-- ExpectedAttributes -->
+        <div class="block">
             ExpectedAttributes:&nbsp;&nbsp;
             <% for(let i=0; i < expectedAttributes.length; i++) { %>
-
                 <span class="shortarray">
                     <%= expectedAttributes[i] %>
                 </span>
-
                 <% if ( i < expectedAttributes.length - 1) { %> &nbsp;|&nbsp; <% } %>
                         <% } %>
                             <hr class="line3">
-                            <% } %>
-    </div>
+        </div>
 
-    <!-- Identifier -->
-    <div class="block">
-        <% if (content !=null) { %>
+        <!---------------------------------------------------------------------->
+
+        <!-- Identifier -->
+        <div class="block">
             Identifier:&nbsp;&nbsp;
             <span class="shortarray">
                 <%= identifier %>
             </span>
             <hr class="line3">
-            <% } %>
-    </div>
+        </div>
 
-    <!-- LegalDefinitions -->
-    <div class="block">
-        <% if (content !=null) { %>
+        <!---------------------------------------------------------------------->
+
+        <!-- LegalDefinitions -->
+        <div class="block">
             LegalDefinitions:&nbsp;&nbsp;
             <% for(let i=0; i < legalDefinitions.length; i++) { %>
 
@@ -183,12 +194,12 @@
                 </div>
                 <% } %>
                     <hr class="line3">
-                    <% } %>
-    </div>
+        </div>
 
-    <!-- OtherNames -->
-    <div class="block">
-        <% if (content !=null) { %>
+        <!---------------------------------------------------------------------->
+
+        <!-- OtherNames -->
+        <div class="block">
             OtherNames:&nbsp;&nbsp;
             <% for(let i=0; i < otherNames.length; i++) { %>
 
@@ -199,12 +210,12 @@
                 <% if ( i < otherNames.length - 1) { %> &nbsp;|&nbsp; <% } %>
                         <% } %>
                             <hr class="line3">
-                            <% } %>
-    </div>
+        </div>
 
-    <!-- OtherStandards -->
-    <div class="block">
-        <% if (content !=null) { %>
+        <!---------------------------------------------------------------------->
+
+        <!-- OtherStandards -->
+        <div class="block">
             OtherStandards:&nbsp;&nbsp;
             <% for(let i=0; i < otherStandards.length; i++) { %>
 
@@ -248,14 +259,12 @@
 
                 <% } %>
                     <hr class="line3">
-                    <% } %>
-    </div>
+        </div>
 
-    <!-- /////////////////////////////////// -->
+        <!---------------------------------------------------------------------->
 
-    <!-- SIF -->
-    <div class="block">
-        <% if (content !=null) { %>
+        <!-- SIF -->
+        <div class="block">
             SIF:&nbsp;&nbsp;
             <% for(let i=0; i < sif.length; i++) { %>
 
@@ -285,12 +294,12 @@
 
                 <% } %>
                     <hr class="line3">
-                    <% } %>
-    </div>
+        </div>
 
-    <!-- Superclass -->
-    <div class="block">
-        <% if (content !=null) { %>
+        <!---------------------------------------------------------------------->
+
+        <!-- Superclass -->
+        <div class="block">
             Superclass:&nbsp;&nbsp;
             <% for(let i=0; i < superclass.length; i++) { %>
 
@@ -301,23 +310,26 @@
                 <% if ( i < superclass.length - 1) { %> &nbsp;|&nbsp; <% } %>
                         <% } %>
                             <hr class="line3">
-                            <% } %>
-    </div>
+        </div>
 
-    <!-- Type -->
-    <div class="block">
-        <% if (content !=null) { %>
+        <!---------------------------------------------------------------------->
+
+        <!-- Type -->
+        <div class="block">
             Type:&nbsp;&nbsp;
             <span class="shortarray">
                 <%= type %>
             </span>
-            <% } %>
-    </div>
+            <hr class="line3">
+        </div>
 
-    <!-- END -->
+        <!---------------------------------------------------------------------->
 
-    <br>
-    <br>
+        <!-- END -->
+
+        <% } %>
+
+            <br>
 
 </body>
 

@@ -96,8 +96,22 @@ const list_entity = async (db, colName) => {
 // })
 
 export let PO = {
+    entities: [],
+    content: null,
+
     title: 'Education Data Dictionary',
+    entity: "",
     collections: [],
+    crossrefEntities: [],
+    definition: "",
+    expectedAttributes: [],
+    identifier: "",
+    legalDefinitions: [],
+    otherNames: [],
+    otherStandards: [],
+    sif: [],
+    superclass: [],
+    type: [],
 }
 
 export const OnListEntity = async (fnReady) => {
@@ -111,19 +125,6 @@ export const OnListEntity = async (fnReady) => {
         {
             PO.entities = await list_entity(db, colName)
             PO.content = null
-
-            PO.entity = ""
-            PO.collections = []
-            PO.crossrefEntities = []
-            PO.definition = ""
-            PO.expectedAttributes = []
-            PO.identifier = ""
-            PO.legalDefinitions = []
-            PO.otherNames = []
-            PO.otherStandards = []
-            PO.sif = []
-            PO.superclass = []
-            PO.type = []
         }
 
         fnReady(PO, 200)
@@ -147,19 +148,6 @@ export const OnFindEntity = async (value, fnReady) => {
 
             {
                 PO.content = null
-
-                PO.entity = "Couldn't find entity: " + value
-                PO.collections = []
-                PO.crossrefEntities = []
-                PO.definition = ""
-                PO.expectedAttributes = []
-                PO.identifier = ""
-                PO.legalDefinitions = []
-                PO.otherNames = []
-                PO.otherStandards = []
-                PO.sif = []
-                PO.superclass = []
-                PO.type = []
             }
 
             fnReady(PO, 404)
@@ -189,16 +177,35 @@ export const OnFindEntity = async (value, fnReady) => {
 
                 assign(PO, 'legalDefinitions', cont.LegalDefinitions, [])
                 for (let i = 0; i < PO.legalDefinitions.length; i++) {
+
                     PO.legalDefinitions[i].Link = linkify(PO.legalDefinitions[i].Link)
 
                     assign(PO.legalDefinitions[i], 'Definition', cont.LegalDefinitions[i].Definition, "", css_p_cls_inject, '\"inner-p2\"')
+
                     assign(PO.legalDefinitions[i], 'Definition', PO.legalDefinitions[i].Definition, "", css_ol_cls_inject, '\"inner-ol1\"')
+
                     assign(PO.legalDefinitions[i], 'Definition', PO.legalDefinitions[i].Definition, "", css_ol1_cls_inject, '\"inner-ol1\"')
 
-                    if (PO.legalDefinitions[i].LegislationName === 'Education Act 2013') {
-                        assign(PO.legalDefinitions[i], 'Definition', PO.legalDefinitions[i].Definition, "", css_ola_cls_inject, '\"inner-ola-1\"')
-                    } else if (PO.legalDefinitions[i].LegislationName === 'Education Regulations 2013') {
-                        assign(PO.legalDefinitions[i], 'Definition', PO.legalDefinitions[i].Definition, "", css_ola_cls_inject, '\"inner-ola-2\"')
+                    switch (PO.legalDefinitions[i].LegislationName) {
+
+                        case 'Commonwealth Education Act 2013':
+                            assign(PO.legalDefinitions[i], 'Definition', PO.legalDefinitions[i].Definition, "", css_ola_cls_inject, '\"inner-ola-1\"')
+                            break;
+
+                        case 'Education Regulations 2013':
+                            assign(PO.legalDefinitions[i], 'Definition', PO.legalDefinitions[i].Definition, "", css_ola_cls_inject, '\"inner-ola-2\"')
+                            break;
+
+                        case 'EDUCATION ACT 2004 (ACT)':
+                            assign(PO.legalDefinitions[i], 'Definition', PO.legalDefinitions[i].Definition, "", css_ola_cls_inject, '\"inner-ola-2\"')
+                            break;
+
+                        case 'EDUCATION AND EARLY CHILDHOOD SERVICES (REGISTRATION AND STANDARDS) ACT 2011 (SA)':
+                            assign(PO.legalDefinitions[i], 'Definition', PO.legalDefinitions[i].Definition, "", css_ola_cls_inject, '\"inner-ola-1\"')
+                            break;
+
+                        case '':
+                            break;
                     }
                 }
 

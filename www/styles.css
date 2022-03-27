@@ -1,5 +1,5 @@
 h1 {
-    padding-left: 10px;
+    text-align: center;
 }
 
 hr.line1 {
@@ -9,67 +9,82 @@ hr.line1 {
 }
 
 hr.line2 {
-    height: 3px;
+    height: 2px;
     background-color: rgb(80, 80, 80);
     border: none;
     margin-left: 20px;
     margin-right: 20px;
+    margin-top: -10px;
+    margin-bottom: 20px;
 }
 
 .block hr.line3 {
     height: 1px;
-    background-color: rgb(120, 120, 120);
+    background-color: rgb(255, 255, 255);
     border: none;
     margin-left: 20px;
     margin-right: 20px;
-    margin-top: 30px;
+    margin-top: 20px;
 }
 
 .block hr.line4 {
     height: 1px;
-    background-color: rgb(180, 180, 180);
+    background-color: rgb(135, 186, 252);
     border: none;
     margin-left: 35px;
-    margin-top: 35px;
-    margin-right: 1000px;
+    margin-top: 25px;
+    margin-right: 35px;
 }
 
-div#search {
+div#search-div {
     margin-left: 20px;
 }
 
-ul.entitylist {
-    font-size: larger;
+ul.entity-list {
+    font-size: 18px;
     font-weight: bold;
     padding-bottom: 5px;
 }
 
+ul.entity-list li.link span {
+    color: blue;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+ul.entity-list li.link span:hover {
+    color: #00f;
+    text-decoration: underline;
+}
+
 div.block {
     padding-left: 20px;
-    font-size: x-large;
+    padding-top: 20px;
+    font-size: 19px;
     font-weight: bold;
-    margin-top: 40px;
+    margin-top: 0px;
     margin-bottom: 20px;
+    background-color: rgb(230, 230, 230);
 }
 
 .block p.content {
     padding-left: 20px;
     margin-bottom: -10px;
-    font-size: 20px;
+    font-size: 18px;
     font-weight: normal;
 }
 
 .block p.inner-p1 {
     padding-left: 20px;
     margin-bottom: -10px;
-    font-size: 20px;
+    font-size: 18px;
     font-weight: normal;
 }
 
 .block p.inner-p2 {
     padding-left: 60px;
     margin-bottom: -10px;
-    font-size: 20px;
+    font-size: 18px;
     font-weight: normal;
 }
 
@@ -77,7 +92,7 @@ div.block {
     padding-left: 100px;
     margin-top: 20px;
     margin-bottom: -10px;
-    font-size: 20px;
+    font-size: 18px;
     font-weight: normal;
 }
 
@@ -85,7 +100,7 @@ div.block {
     padding-left: 120px;
     margin-top: 20px;
     margin-bottom: -10px;
-    font-size: 20px;
+    font-size: 18px;
     font-weight: normal;
 }
 
@@ -93,21 +108,21 @@ div.block {
     padding-left: 20px;
     margin-top: 0px;
     margin-bottom: 10px;
-    font-size: 20px;
-    font-weight: normal;    
+    font-size: 18px;
+    font-weight: normal;
 }
 
 .block p.content span.field {
     padding-left: 20px;
     margin-bottom: -10px;
-    font-size: 20px;
+    font-size: 18px;
     font-weight: bold;
 }
 
 .block div p.field {
     padding-left: 40px;
     margin-bottom: -10px;
-    font-size: 20px;
+    font-size: 18px;
     font-weight: bold;
 }
 
@@ -115,12 +130,12 @@ div.block {
     padding-left: 60px;
     margin-top: 10px;
     margin-bottom: -10px;
-    font-size: 18px;
+    font-size: 16px;
     font-weight: normal;
 }
 
 .block span.shortarray {
-    font-size: 19px;
+    font-size: 17px;
     font-weight: bold;
 }
 
