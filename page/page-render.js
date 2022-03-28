@@ -4,6 +4,8 @@ import { PO, OnFindEntity, OnListEntity } from './db-find.js'
 
 const template = fs.readFileSync('./www/dictionary.ejs', 'utf-8')
 
+let SearchVal = ''
+
 const render_ejs = (PO, code) => {
 
     const data = ejs.render(template, {
@@ -23,6 +25,8 @@ const render_ejs = (PO, code) => {
         sif: PO.sif,
         superclass: PO.superclass,
         type: PO.type,
+
+        search_value: SearchVal,
     })
 
     PO.res
@@ -43,13 +47,17 @@ export const esa_dic = async (fastify, options) => {
     })
 
     fastify.post('/search', async (req, res) => {
+
         // console.log(new Date().getTime())
-        const entityVal = req.body.content // input(text)-name@'content'
+
+        SearchVal = req.body.content // input(text)-name@'content'
+
         {
             PO.res = res
         }
+
         await OnFindEntity(
-            entityVal.trim(),
+            SearchVal.trim(),
             render_ejs,
         )
     })

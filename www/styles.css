@@ -1,3 +1,28 @@
+#container {
+    height: 100%;
+    width: 100%;
+    display: flex;
+}
+
+#leftThing {
+    width: 17%;
+    overflow-y: scroll;
+}
+
+#content {
+    width: 85%;
+    margin-left: -20px;
+    overflow-y: scroll;
+}
+
+#rightThing {
+    width: 0%;
+    overflow-y: scroll;
+    background-color: yellow;
+}
+
+/* ///////////////// */
+
 h1 {
     text-align: center;
 }
@@ -8,17 +33,7 @@ hr.line1 {
     border: none;
 }
 
-hr.line2 {
-    height: 2px;
-    background-color: rgb(80, 80, 80);
-    border: none;
-    margin-left: 20px;
-    margin-right: 20px;
-    margin-top: -10px;
-    margin-bottom: 20px;
-}
-
-.block hr.line3 {
+.block hr.line2 {
     height: 1px;
     background-color: rgb(255, 255, 255);
     border: none;
@@ -27,9 +42,9 @@ hr.line2 {
     margin-top: 20px;
 }
 
-.block hr.line4 {
+.block hr.line3 {
     height: 1px;
-    background-color: rgb(135, 186, 252);
+    background-color: rgb(120, 120, 120);
     border: none;
     margin-left: 35px;
     margin-top: 25px;
@@ -40,9 +55,15 @@ div#search-div {
     margin-left: 20px;
 }
 
+input#search-entity {
+    padding-left: 10px;
+    width: 75%;
+}
+
 ul.entity-list {
-    font-size: 18px;
+    font-size: 16px;
     font-weight: bold;
+    font-family: Arial, Helvetica, sans-serif;
     padding-bottom: 5px;
 }
 
@@ -60,31 +81,32 @@ ul.entity-list li.link span:hover {
 div.block {
     padding-left: 20px;
     padding-top: 20px;
-    font-size: 19px;
+    font-size: 17px;
     font-weight: bold;
+    font-family: Arial, Helvetica, sans-serif;
     margin-top: 0px;
-    margin-bottom: 20px;
-    background-color: rgb(230, 230, 230);
+    margin-bottom: 0px;
+    background-color: rgb(240, 240, 240);
 }
 
 .block p.content {
     padding-left: 20px;
     margin-bottom: -10px;
-    font-size: 18px;
+    font-size: 17px;
     font-weight: normal;
 }
 
 .block p.inner-p1 {
     padding-left: 20px;
     margin-bottom: -10px;
-    font-size: 18px;
+    font-size: 17px;
     font-weight: normal;
 }
 
 .block p.inner-p2 {
     padding-left: 60px;
     margin-bottom: -10px;
-    font-size: 18px;
+    font-size: 17px;
     font-weight: normal;
 }
 
@@ -92,7 +114,7 @@ div.block {
     padding-left: 100px;
     margin-top: 20px;
     margin-bottom: -10px;
-    font-size: 18px;
+    font-size: 16px;
     font-weight: normal;
 }
 
@@ -100,7 +122,7 @@ div.block {
     padding-left: 120px;
     margin-top: 20px;
     margin-bottom: -10px;
-    font-size: 18px;
+    font-size: 16px;
     font-weight: normal;
 }
 
@@ -108,21 +130,21 @@ div.block {
     padding-left: 20px;
     margin-top: 0px;
     margin-bottom: 10px;
-    font-size: 18px;
+    font-size: 16px;
     font-weight: normal;
 }
 
 .block p.content span.field {
     padding-left: 20px;
     margin-bottom: -10px;
-    font-size: 18px;
+    font-size: 16px;
     font-weight: bold;
 }
 
 .block div p.field {
     padding-left: 40px;
     margin-bottom: -10px;
-    font-size: 18px;
+    font-size: 16px;
     font-weight: bold;
 }
 
@@ -135,14 +157,6 @@ div.block {
 }
 
 .block span.shortarray {
-    font-size: 17px;
+    font-size: 16px;
     font-weight: bold;
 }
-
-/* 
-.block ol.item {
-    padding-left: 45px;
-    margin-bottom: -10px;
-    font-size: large;
-    font-weight: normal;
-} */
