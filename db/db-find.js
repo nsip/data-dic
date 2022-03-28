@@ -96,23 +96,25 @@ const list_entity = async (db, colName) => {
 //     client.close()
 // })
 
-export let PO = {
+export const P = {
     entities: [],
     content: null,
 
     title: 'Education Data Dictionary',
-    entity: "",
+    entity: '',
     collections: [],
     crossrefEntities: [],
-    definition: "",
+    definition: '',
     expectedAttributes: [],
-    identifier: "",
+    identifier: '',
     legalDefinitions: [],
     otherNames: [],
     otherStandards: [],
     sif: [],
     superclass: [],
     type: [],
+
+    error: '',
 }
 
 export const OnListEntity = async (fnReady) => {
@@ -125,11 +127,11 @@ export const OnListEntity = async (fnReady) => {
         const colName = 'entity'
 
         {
-            PO.entities = await list_entity(db, colName)
-            PO.content = null
+            P.entities = await list_entity(db, colName)
+            P.content = null
         }
 
-        fnReady(PO, 200)
+        fnReady(P, 200)
 
         client.close()
     })
@@ -162,61 +164,63 @@ export const OnFindEntity = async (value, fnReady) => {
             console.log('--- NULL CONTENT ---')
 
             {
-                PO.content = null
+                P.content = null
+                P.error = `could NOT find ${value} for ${fieldName}`
             }
 
-            fnReady(PO, 404)
+            fnReady(P, 404)
 
         } else {
 
             console.log('--- HAS CONTENT ---')
 
             {
-                PO.content = cont
+                P.content = cont
+                P.error = ''
 
-                assign(PO, 'entity', cont.Entity, "")
+                assign(P, 'entity', cont.Entity, "")
 
-                assign(PO, 'collections', cont.Collections, [])
-                for (let i = 0; i < PO.collections.length; i++) {
-                    assign(PO.collections[i], 'Elements', cont.Collections[i].Elements, [])
-                    assign(PO.collections[i], 'BusinessRules', cont.Collections[i].BusinessRules, [])
+                assign(P, 'collections', cont.Collections, [])
+                for (let i = 0; i < P.collections.length; i++) {
+                    assign(P.collections[i], 'Elements', cont.Collections[i].Elements, [])
+                    assign(P.collections[i], 'BusinessRules', cont.Collections[i].BusinessRules, [])
                 }
 
-                assign(PO, 'crossrefEntities', cont.CrossrefEntities, [])
+                assign(P, 'crossrefEntities', cont.CrossrefEntities, [])
 
-                assign(PO, 'definition', cont.Definition, "", css_p_cls_inject, '\"inner-p1\"')
+                assign(P, 'definition', cont.Definition, "", css_p_cls_inject, '\"inner-p1\"')
 
-                assign(PO, 'expectedAttributes', cont.ExpectedAttributes, [])
+                assign(P, 'expectedAttributes', cont.ExpectedAttributes, [])
 
-                assign(PO, 'identifier', cont.Identifier, "")
+                assign(P, 'identifier', cont.Identifier, "")
 
-                assign(PO, 'legalDefinitions', cont.LegalDefinitions, [])
-                for (let i = 0; i < PO.legalDefinitions.length; i++) {
+                assign(P, 'legalDefinitions', cont.LegalDefinitions, [])
+                for (let i = 0; i < P.legalDefinitions.length; i++) {
 
-                    PO.legalDefinitions[i].Link = linkify(PO.legalDefinitions[i].Link)
+                    P.legalDefinitions[i].Link = linkify(P.legalDefinitions[i].Link)
 
-                    assign(PO.legalDefinitions[i], 'Definition', cont.LegalDefinitions[i].Definition, "", css_p_cls_inject, '\"inner-p2\"')
+                    assign(P.legalDefinitions[i], 'Definition', cont.LegalDefinitions[i].Definition, "", css_p_cls_inject, '\"inner-p2\"')
 
-                    assign(PO.legalDefinitions[i], 'Definition', PO.legalDefinitions[i].Definition, "", css_ol_cls_inject, '\"inner-ol1\"')
+                    assign(P.legalDefinitions[i], 'Definition', P.legalDefinitions[i].Definition, "", css_ol_cls_inject, '\"inner-ol1\"')
 
-                    assign(PO.legalDefinitions[i], 'Definition', PO.legalDefinitions[i].Definition, "", css_ol1_cls_inject, '\"inner-ol1\"')
+                    assign(P.legalDefinitions[i], 'Definition', P.legalDefinitions[i].Definition, "", css_ol1_cls_inject, '\"inner-ol1\"')
 
-                    switch (PO.legalDefinitions[i].LegislationName) {
+                    switch (P.legalDefinitions[i].LegislationName) {
 
                         case 'Commonwealth Education Act 2013':
-                            assign(PO.legalDefinitions[i], 'Definition', PO.legalDefinitions[i].Definition, "", css_ola_cls_inject, '\"inner-ola-1\"')
+                            assign(P.legalDefinitions[i], 'Definition', P.legalDefinitions[i].Definition, "", css_ola_cls_inject, '\"inner-ola-1\"')
                             break;
 
                         case 'Education Regulations 2013':
-                            assign(PO.legalDefinitions[i], 'Definition', PO.legalDefinitions[i].Definition, "", css_ola_cls_inject, '\"inner-ola-2\"')
+                            assign(P.legalDefinitions[i], 'Definition', P.legalDefinitions[i].Definition, "", css_ola_cls_inject, '\"inner-ola-2\"')
                             break;
 
                         case 'EDUCATION ACT 2004 (ACT)':
-                            assign(PO.legalDefinitions[i], 'Definition', PO.legalDefinitions[i].Definition, "", css_ola_cls_inject, '\"inner-ola-2\"')
+                            assign(P.legalDefinitions[i], 'Definition', P.legalDefinitions[i].Definition, "", css_ola_cls_inject, '\"inner-ola-2\"')
                             break;
 
                         case 'EDUCATION AND EARLY CHILDHOOD SERVICES (REGISTRATION AND STANDARDS) ACT 2011 (SA)':
-                            assign(PO.legalDefinitions[i], 'Definition', PO.legalDefinitions[i].Definition, "", css_ola_cls_inject, '\"inner-ola-1\"')
+                            assign(P.legalDefinitions[i], 'Definition', P.legalDefinitions[i].Definition, "", css_ola_cls_inject, '\"inner-ola-1\"')
                             break;
 
                         case '':
@@ -224,20 +228,21 @@ export const OnFindEntity = async (value, fnReady) => {
                     }
                 }
 
-                assign(PO, 'otherNames', cont.OtherNames, [])
+                assign(P, 'otherNames', cont.OtherNames, [])
 
-                assign(PO, 'otherStandards', cont.OtherStandards, [])
-                for (let i = 0; i < PO.otherStandards.length; i++) {
-                    PO.otherStandards[i].Link = linkify(PO.otherStandards[i].Link)
+                assign(P, 'otherStandards', cont.OtherStandards, [])
+                for (let i = 0; i < P.otherStandards.length; i++) {
+                    P.otherStandards[i].Link = linkify(P.otherStandards[i].Link)
                 }
 
-                assign(PO, 'sif', cont.SIF, [])
+                assign(P, 'sif', cont.SIF, [])
 
-                assign(PO, 'superclass', cont.Superclass, [])
+                assign(P, 'superclass', cont.Superclass, [])
 
-                assign(PO, 'type', cont.Type, "")
+                assign(P, 'type', cont.Type, "")
             }
-            fnReady(PO, 200)
+
+            fnReady(P, 200)
 
         }
 

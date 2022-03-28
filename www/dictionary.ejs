@@ -4,8 +4,23 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" href="styles.css">
     <title>Education Data Dictionary</title>
+
+    <script>
+        $(document).ready(() => {
+            // hide and show scrollbars dynamically
+            $("body").css("overflow", "hidden"); // "auto"
+
+            // waiting error messages
+            const err = "<%= error %>"
+            if (err.length > 0) {
+                alert(err)
+            }
+        }); 
+    </script>
+
 </head>
 
 <body>
@@ -25,15 +40,16 @@
             <form id="search-form" action="/search" method="post">
 
                 <div id="search-div">
-                    <input id="search-entity" type="text" name="content" placeholder="entity or identifier" value="<%= search_value %>">
-                    <input type="submit" value="search">
+                    <input id="search-entity" type="text" name="content" placeholder="Entity or Identifier"
+                        value="<%= search_value %>" style="padding: 5px 0px 5px 10px;">
+                    <input type="submit" value="go" style="padding: 5px 10px 5px 10px;">
                 </div>
 
                 <ul class="entity-list">
                     <% for(let i=0; i < entities.length; i++) { %>
-                        <li class="link" id="<%= entities[i] %>" onclick="
-                    document.getElementById('search-entity').value=(this.id);
-                    document.getElementById('search-form').submit();">
+                        <li class="link" onclick="
+                    $('#search-entity').val('<%= entities[i] %>');
+                    $('#search-form').submit();">
                             <span>
                                 <%= entities[i] %>
                             </span>
@@ -310,7 +326,9 @@
                     Superclass:&nbsp;&nbsp;
                     <% for(let i=0; i < superclass.length; i++) { %>
 
-                        <span class="shortarray">
+                        <span class="shortarray-link" onclick="
+                            $('#search-entity').val('<%= superclass[i] %>');
+                            $('#search-form').submit();">
                             <%= superclass[i] %>
                         </span>
 
@@ -336,7 +354,7 @@
 
                 <% } %>
 
-                    <br>
+                    <br> <br> <br>
 
         </div>
 
