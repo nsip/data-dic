@@ -1,10 +1,10 @@
 import * as mongodb from 'mongodb'
 import * as assert from 'assert'
-import { assign, xpath2object, css_p_cls_inject, css_ol_cls_inject, css_ola_cls_inject, css_ol1_cls_inject, linkify } from './tool.js'
+import { assign, isNumeric, xpath2object, css_p_cls_inject, css_ol_cls_inject, css_ola_cls_inject, css_ol1_cls_inject, linkify } from './tool.js'
 
-const MongoClient = mongodb.MongoClient
-const dbName = 'dictionary'
-const url = 'mongodb://127.0.0.1:27017'
+export const MongoClient = mongodb.MongoClient
+export const dbName = 'dictionary'
+export const url = 'mongodb://127.0.0.1:27017'
 // const url = 'mongodb://127.0.0.1:27017' + '/' + dbName
 
 // const find_entity = async (db, colName, entity) => {
@@ -20,7 +20,8 @@ const url = 'mongodb://127.0.0.1:27017'
 //     return col.findOne({ Entity: entity })
 // }
 
-const find_dic = async (db, colName, oneFlag, attr, value, ...out_attrs) => {
+export const find_dic = async (db, colName, oneFlag, attr, value, ...out_attrs) => {
+
     try {
         await db.createCollection(colName)
     } catch (err) {
@@ -76,7 +77,7 @@ const list_entity = async (db, colName) => {
     return entities.sort()
 }
 
-// referred by 'page-render.js'
+// referred by 'render.js'
 // MongoClient.connect(url, async (err, client) => {
 //     assert.equal(null, err)
 //     console.log("Connected successfully to server")
@@ -115,6 +116,7 @@ export let PO = {
 }
 
 export const OnListEntity = async (fnReady) => {
+
     MongoClient.connect(url, async (err, client) => {
         assert.equal(null, err)
         console.log("Connected successfully to server")
@@ -131,9 +133,11 @@ export const OnListEntity = async (fnReady) => {
 
         client.close()
     })
+
 }
 
 export const OnFindEntity = async (value, fnReady) => {
+
     MongoClient.connect(url, async (err, client) => {
         assert.equal(null, err)
         console.log("Connected successfully to server")
@@ -141,7 +145,18 @@ export const OnFindEntity = async (value, fnReady) => {
         const db = client.db(dbName) // create if not existing
         const colName = 'entity'
 
-        const cont = await find_dic(db, colName, true, 'Entity', value)
+        /////////////////////////////////
+
+        let fieldName = 'Entity'
+        // const idNum = value.replaceAll(/^0+|0+$/g, '')
+        if (isNumeric(value)) {
+            fieldName = 'Identifier'
+        }
+        // console.log("-------------", fieldName, ":", value)
+
+        /////////////////////////////////
+
+        const cont = await find_dic(db, colName, true, fieldName, value)
         if (cont == null) {
 
             console.log('--- NULL CONTENT ---')
@@ -228,4 +243,5 @@ export const OnFindEntity = async (value, fnReady) => {
 
         client.close()
     })
+
 }

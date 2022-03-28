@@ -25,6 +25,7 @@
 
 h1 {
     text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 hr.line1 {
@@ -46,7 +47,7 @@ hr.line1 {
     height: 1px;
     background-color: rgb(120, 120, 120);
     border: none;
-    margin-left: 35px;
+    margin-left: 15px;
     margin-top: 25px;
     margin-right: 35px;
 }
@@ -135,23 +136,23 @@ div.block {
 }
 
 .block p.content span.field {
-    padding-left: 20px;
+    padding-left: 0px;
     margin-bottom: -10px;
     font-size: 16px;
     font-weight: bold;
 }
 
 .block div p.field {
-    padding-left: 40px;
+    padding-left: 20px;
     margin-bottom: -10px;
     font-size: 16px;
     font-weight: bold;
 }
 
 .block div p.subitem {
-    padding-left: 60px;
-    margin-top: 10px;
-    margin-bottom: -10px;
+    padding-left: 40px;
+    margin-top: 15px;
+    margin-bottom: -15px;
     font-size: 16px;
     font-weight: normal;
 }

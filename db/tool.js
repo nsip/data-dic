@@ -7,6 +7,10 @@ const provided = (param) => {
     return param !== undefined
 }
 
+export const isNumeric = (num) => {
+    return !isNaN(num)
+}
+
 export const assign = (obj, fld, val, dflt_val, fn_css_class, css_class) => {
     if (provided(val)) {
         if (provided(fn_css_class)) {

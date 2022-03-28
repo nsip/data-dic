@@ -1,10 +1,9 @@
 import * as ejs from 'ejs'
 import * as fs from 'fs'
-import { PO, OnFindEntity, OnListEntity } from './db-find.js'
+import { PO, OnListEntity, OnFindEntity } from '../db/db-find.js'
 
+// running work dir for 'ejs'
 const template = fs.readFileSync('./www/dictionary.ejs', 'utf-8')
-
-let SearchVal = ''
 
 const render_ejs = (PO, code) => {
 
@@ -35,6 +34,8 @@ const render_ejs = (PO, code) => {
         .send(data)
 }
 
+let SearchVal = ''
+
 export const esa_dic = async (fastify, options) => {
 
     fastify.get('/', async (req, res) => {
@@ -47,8 +48,6 @@ export const esa_dic = async (fastify, options) => {
     })
 
     fastify.post('/search', async (req, res) => {
-
-        // console.log(new Date().getTime())
 
         SearchVal = req.body.content // input(text)-name@'content'
 

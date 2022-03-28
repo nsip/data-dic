@@ -4,10 +4,10 @@ import * as fs from 'fs'
 
 export const helloworld = async (fastify, options) => {
 
-    fastify.post('/:id', async (req, res) => {
-        console.log('body    ---', req.body)    // from body
-        console.log('query   ---', req.query)   // from url
-        console.log('params  ---', req.params)  // from /url/:param
+    fastify.post('/path/:id', async (req, res) => {
+        console.log('body    ---', req.body)       // from body
+        console.log('query   ---', req.query)      // from url
+        console.log('params  ---', req.params.id)  // from /path/:id
         console.log('headers ---', req.headers)
         // console.log('raw     ---', req.raw)
         // console.log('---', req.server)
