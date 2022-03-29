@@ -150,9 +150,9 @@ export const OnFindEntity = async (value, fnReady) => {
         /////////////////////////////////
 
         let fieldName = 'Entity'
-        // const idNum = value.replaceAll(/^0+|0+$/g, '')
-        if (isNumeric(value)) {
+        if (isNumeric(value)) { // const idNum = value.replaceAll(/^0+|0+$/g, '')
             fieldName = 'Identifier'
+            value = String(value).padStart(4, '0')
         }
         // console.log("-------------", fieldName, ":", value)
 

@@ -42,7 +42,7 @@
                 <div id="search-div">
                     <input id="search-entity" type="text" name="content" placeholder="Entity or Identifier"
                         value="<%= search_value %>" style="padding: 5px 0px 5px 10px;">
-                    <input type="submit" value="go" style="padding: 5px 10px 5px 10px;">
+                    <input type="submit" value="go" style="padding: 5px 10px 5px 10px; font-size: 14px;">
                 </div>
 
                 <ul class="entity-list">
@@ -65,20 +65,19 @@
 
         <div id="content">
 
-            <% if (content !=null) { %>
+            <!-- Entity -->
+            <div class="block">
+                Entity: <% if (content !=null) { %>
+                    &nbsp;&nbsp;<%=entity%>
+                        <% } %>
+                            <hr class="line2">
+            </div>
 
-                <!-- Entity -->
-                <div class="block">
-                    Entity:&nbsp;&nbsp;<%= entity %>
-                        <hr class="line2">
-                </div>
+            <!---------------------------------------------------------------------->
 
-                <!---------------------------------------------------------------------->
-
-                <!-- Collections -->
-                <div class="block">
-
-                    Collections:
+            <!-- Collections -->
+            <div class="block">
+                Collections: <% if (content !=null) { %>
                     <% for(let i=0; i < collections.length; i++) { %>
 
                         <p class="content"> <span class="field">Name:&nbsp;&nbsp;</span>
@@ -122,68 +121,84 @@
                         </div>
 
                         <% } %>
+                            <% } %>
 
-                            <hr class="line2">
-                </div>
+                                <hr class="line2">
+            </div>
 
-                <!---------------------------------------------------------------------->
+            <!---------------------------------------------------------------------->
 
-                <!-- CrossrefEntities -->
-                <div class="block">
-                    CrossrefEntities:&nbsp;&nbsp;
+            <!-- CrossrefEntities -->
+            <div class="block">
+                CrossrefEntities:<% if (content !=null) { %>
+                    &nbsp;&nbsp;
                     <% for(let i=0; i < crossrefEntities.length; i++) { %>
 
-                        <span class="shortarray">
+                        <span class="shortarray-link" onclick="
+                        $('#search-entity').val('<%= crossrefEntities[i] %>');
+                        $('#search-form').submit();">
                             <%= crossrefEntities[i] %>
                         </span>
 
                         <% if ( i < crossrefEntities.length - 1) { %> &nbsp;|&nbsp; <% } %>
                                 <% } %>
+                                    <% } %>
 
-                                    <hr class="line2">
-                </div>
+                                        <hr class="line2">
+            </div>
 
-                <!---------------------------------------------------------------------->
+            <!---------------------------------------------------------------------->
 
-                <!-- Definition -->
-                <div class="block">
-                    Definition:&nbsp;&nbsp;
+            <!-- Definition -->
+            <div class="block">
+                Definition:<% if (content !=null) { %>
+                    &nbsp;&nbsp;
                     <span class="shortarray">
                         <%- definition %>
                     </span>
-                    <hr class="line2">
-                </div>
+                    <% } %>
+                        <hr class="line2">
+            </div>
 
-                <!---------------------------------------------------------------------->
+            <!---------------------------------------------------------------------->
 
-                <!-- ExpectedAttributes -->
-                <div class="block">
-                    ExpectedAttributes:&nbsp;&nbsp;
+            <!-- ExpectedAttributes -->
+            <div class="block">
+                ExpectedAttributes:<% if (content !=null) { %>
+                    &nbsp;&nbsp;
                     <% for(let i=0; i < expectedAttributes.length; i++) { %>
-                        <span class="shortarray">
+
+                        <span class="shortarray-link" onclick="
+                        $('#search-entity').val('<%= expectedAttributes[i] %>');
+                        $('#search-form').submit();">
                             <%= expectedAttributes[i] %>
                         </span>
+
                         <% if ( i < expectedAttributes.length - 1) { %> &nbsp;|&nbsp; <% } %>
                                 <% } %>
-                                    <hr class="line2">
-                </div>
+                                    <% } %>
+                                        <hr class="line2">
+            </div>
 
-                <!---------------------------------------------------------------------->
+            <!---------------------------------------------------------------------->
 
-                <!-- Identifier -->
-                <div class="block">
-                    Identifier:&nbsp;&nbsp;
+            <!-- Identifier -->
+            <div class="block">
+                Identifier:<% if (content !=null) { %>
+                    &nbsp;&nbsp;
                     <span class="shortarray">
                         <%= identifier %>
                     </span>
-                    <hr class="line2">
-                </div>
+                    <% } %>
+                        <hr class="line2">
+            </div>
 
-                <!---------------------------------------------------------------------->
+            <!---------------------------------------------------------------------->
 
-                <!-- LegalDefinitions -->
-                <div class="block">
-                    LegalDefinitions:&nbsp;&nbsp;
+            <!-- LegalDefinitions -->
+            <div class="block">
+                LegalDefinitions:<% if (content !=null) { %>
+                    &nbsp;&nbsp;
                     <% for(let i=0; i < legalDefinitions.length; i++) { %>
 
                         <p class="content"> <span class="field">LegislationName:&nbsp;&nbsp;</span>
@@ -216,14 +231,16 @@
                                 <% } %>
                         </div>
                         <% } %>
-                            <hr class="line2">
-                </div>
+                            <% } %>
+                                <hr class="line2">
+            </div>
 
-                <!---------------------------------------------------------------------->
+            <!---------------------------------------------------------------------->
 
-                <!-- OtherNames -->
-                <div class="block">
-                    OtherNames:&nbsp;&nbsp;
+            <!-- OtherNames -->
+            <div class="block">
+                OtherNames:<% if (content !=null) { %>
+                    &nbsp;&nbsp;
                     <% for(let i=0; i < otherNames.length; i++) { %>
 
                         <span class="shortarray">
@@ -232,14 +249,16 @@
 
                         <% if ( i < otherNames.length - 1) { %> &nbsp;|&nbsp; <% } %>
                                 <% } %>
-                                    <hr class="line2">
-                </div>
+                                    <% } %>
+                                        <hr class="line2">
+            </div>
 
-                <!---------------------------------------------------------------------->
+            <!---------------------------------------------------------------------->
 
-                <!-- OtherStandards -->
-                <div class="block">
-                    OtherStandards:&nbsp;&nbsp;
+            <!-- OtherStandards -->
+            <div class="block">
+                OtherStandards:<% if (content !=null) { %>
+                    &nbsp;&nbsp;
                     <% for(let i=0; i < otherStandards.length; i++) { %>
 
                         <p class="content"> <span class="field">Standard:&nbsp;&nbsp;</span>
@@ -281,14 +300,16 @@
                         </div>
 
                         <% } %>
-                            <hr class="line2">
-                </div>
+                            <% } %>
+                                <hr class="line2">
+            </div>
 
-                <!---------------------------------------------------------------------->
+            <!---------------------------------------------------------------------->
 
-                <!-- SIF -->
-                <div class="block">
-                    SIF:&nbsp;&nbsp;
+            <!-- SIF -->
+            <div class="block">
+                SIF:<% if (content !=null) { %>
+                    &nbsp;&nbsp;
                     <% for(let i=0; i < sif.length; i++) { %>
 
                         <div>
@@ -316,14 +337,16 @@
                         </div>
 
                         <% } %>
-                            <hr class="line2">
-                </div>
+                            <% } %>
+                                <hr class="line2">
+            </div>
 
-                <!---------------------------------------------------------------------->
+            <!---------------------------------------------------------------------->
 
-                <!-- Superclass -->
-                <div class="block">
-                    Superclass:&nbsp;&nbsp;
+            <!-- Superclass -->
+            <div class="block">
+                Superclass:<% if (content !=null) { %>
+                    &nbsp;&nbsp;
                     <% for(let i=0; i < superclass.length; i++) { %>
 
                         <span class="shortarray-link" onclick="
@@ -334,27 +357,28 @@
 
                         <% if ( i < superclass.length - 1) { %> &nbsp;|&nbsp; <% } %>
                                 <% } %>
-                                    <hr class="line2">
-                </div>
+                                    <% } %>
+                                        <hr class="line2">
+            </div>
 
-                <!---------------------------------------------------------------------->
+            <!---------------------------------------------------------------------->
 
-                <!-- Type -->
-                <div class="block">
-                    Type:&nbsp;&nbsp;
+            <!-- Type -->
+            <div class="block">
+                Type:<% if (content !=null) { %>
+                    &nbsp;&nbsp;
                     <span class="shortarray">
                         <%= type %>
                     </span>
-                    <hr class="line2">
-                </div>
+                    <% } %>
+                        <hr class="line2">
+            </div>
 
-                <!---------------------------------------------------------------------->
+            <!---------------------------------------------------------------------->
 
-                <!-- END -->
+            <!-- END -->
 
-                <% } %>
-
-                    <br> <br> <br>
+            <br> <br> <br>
 
         </div>
 
