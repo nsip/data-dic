@@ -8,6 +8,7 @@ import (
 	. "github.com/digisan/go-generics/v2"
 	lk "github.com/digisan/logkit"
 	"github.com/tidwall/gjson"
+	"github.com/tidwall/sjson"
 )
 
 func SupClsCol(js string) map[string][]string {
@@ -65,9 +66,9 @@ func EntityDesc(fpaths ...string) map[string][]string {
 	}
 
 	/// for testing deeply
-	mEDsKey["Campus"] = []string{"Sydenham Campus", "Hillside Campus", "Taylors Camplus"}
-	mEDsKey["Sydenham Campus"] = []string{"Sydenham-Hillside Campus 1"}
-	mEDsKey["Hillside Campus"] = []string{"Sydenham-Hillside Campus 2"}
+	// mEDsKey["Campus"] = []string{"Sydenham Campus", "Hillside Campus", "Taylors Camplus"}
+	// mEDsKey["Sydenham Campus"] = []string{"Sydenham-Hillside Campus 1"}
+	// mEDsKey["Hillside Campus"] = []string{"Sydenham-Hillside Campus 2"}
 	///
 
 	return mEDsKey
@@ -80,7 +81,7 @@ func (ls List) String() string {
 	for i, ele := range ls {
 		sb.WriteString(ele)
 		if i < len(ls)-1 {
-			sb.WriteString("-->")
+			sb.WriteString("--")
 		}
 	}
 	return sb.String()
@@ -91,8 +92,8 @@ func LinkEntity(mED map[string][]string, keyEntity string, ancestry List, linkCo
 	for entity, descList := range mED {
 		if entity == lookfor {
 			for _, desc := range descList {
-				link := fmt.Sprintf("%s-->%s-->%s", ancestry, entity, desc)
-				link = strings.TrimLeft(link, "-->")
+				link := fmt.Sprintf("%s--%s--%s", ancestry, entity, desc)
+				link = strings.TrimLeft(link, "--")
 				// fmt.Println(link)
 				*linkCol = append(*linkCol, link)
 				lookfor = desc
@@ -112,7 +113,7 @@ AGAIN:
 			if linkCheck != linkCompare {
 				if strings.HasPrefix(linkCompare, linkCheck) ||
 					strings.HasSuffix(linkCompare, linkCheck) ||
-					strings.Contains(linkCompare, "-->"+linkCheck+"-->") {
+					strings.Contains(linkCompare, "--"+linkCheck+"--") {
 					DelOneEle(&linkCol, linkCheck)
 					goto AGAIN
 				}
@@ -130,4 +131,52 @@ func LinkEntities(fpaths ...string) (out []string) {
 		out = append(out, RmPartialLink(*linkCol)...)
 	}
 	return RmPartialLink(out)
+}
+
+func TrimEntityPaths(mEntityPaths map[string][]string) map[string][]string {
+	for k, v := range mEntityPaths {
+		for i := 0; i < len(v); i++ {
+			p := v[i]
+			if strings.HasPrefix(p, k+"--") {
+				v[i] = k
+			}
+			if pos := strings.Index(p, "--"+k+"--"); pos >= 0 {
+				v[i] = p[:pos+len(k)+2]
+			}
+		}
+		mEntityPaths[k] = Settify(v...)
+	}
+	return mEntityPaths
+}
+
+func Link2JSON(linkCol []string, path string) (out string, err error) {
+
+	mEntityPathsCol := []map[string]string{}
+
+	for _, link := range linkCol {
+		for _, entity := range strings.Split(link, "--") {
+			// fmt.Println(entity, ":", link)
+			m := make(map[string]string)
+			m[entity] = link
+			mEntityPathsCol = append(mEntityPathsCol, m)
+		}
+	}
+
+	mEntityPaths := MapMerge(mEntityPathsCol...)
+
+	mEntityPaths = TrimEntityPaths(mEntityPaths)
+
+	for k, v := range mEntityPaths {
+		// fmt.Println(k, v)
+		// fmt.Println()
+
+		if strings.Contains(k, ".") {
+			k = strings.ReplaceAll(k, ".", "^DOT")
+		}
+
+		out, err = sjson.Set(out, k, v)
+		lk.FailOnErr("%v", err)
+	}
+
+	return strings.ReplaceAll(out, "^DOT", "."), nil
 }
