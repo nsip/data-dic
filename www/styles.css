@@ -7,6 +7,8 @@
 #leftThing {
     width: 15%;
     overflow-y: scroll;
+    padding-top: 10px;
+    background-color: rgb(230, 230, 230);
 }
 
 #content {
@@ -29,7 +31,7 @@ h1 {
 }
 
 hr.line1 {
-    height: 3px;
+    height: 1.5px;
     background-color: rgb(20, 20, 20);
     border: none;
     margin: -10px 0px -8px 0px;

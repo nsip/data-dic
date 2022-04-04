@@ -146,52 +146,33 @@ export const OnFindEntity = async (value, fnReady) => {
         assert.equal(null, err)
         console.log("Connected successfully to server")
 
+        let status = 200
+        let searchEntity = ''
+
         const db = client.db(dbName) // create if not existing
 
         ////////////////////////////////////////////////////////////////////////////////////////
-        // Path
-        /////////
-
-        let colName = 'class'
-
-        let fieldName = value
-        fieldName = fieldName.replaceAll(".", "^DOT")
-
-        // TODO: let class-link.json key all UP-CASE
-        let cont = await find_dic(db, colName, true, '', null, fieldName)        
-
-        const pathCol = cont[fieldName]
-        if (Array.isArray(pathCol)) {
-            P.navPathCol = []
-            for (let path of pathCol) {
-                P.navPathCol.push(path.split('--'))
-            }
-        }
-
-        ////////////////////////////////////////////////////////////////////////////////////////
         // Content
-        ////////////
+        ////////////        
 
-        colName = 'entity'
-
-        fieldName = 'Entity'
+        let field = 'Entity'
         if (isNumeric(value)) { // const idNum = value.replaceAll(/^0+|0+$/g, '')
-            fieldName = 'Identifier'
+            field = 'Identifier'
             value = String(value).padStart(4, '0')
         }
-        // console.log("-------------", fieldName, ":", value)
+        // console.log("-------------", field, ":", value)
 
-        cont = await find_dic(db, colName, true, fieldName, value)
+        let cont = await find_dic(db, 'entity', true, field, value)
         if (cont == null) {
 
             console.log('--- NULL CONTENT ---')
 
             {
                 P.content = null
-                P.error = `could NOT find ${value} for ${fieldName}`
+                P.error = `could NOT find ${value} for ${field}`
             }
 
-            fnReady(P, 404)
+            status = 404
 
         } else {
 
@@ -200,6 +181,8 @@ export const OnFindEntity = async (value, fnReady) => {
             {
                 P.content = cont
                 P.error = ''
+
+                searchEntity = cont.Entity
 
                 assign(P, 'entity', cont.Entity, "")
 
@@ -265,9 +248,32 @@ export const OnFindEntity = async (value, fnReady) => {
                 assign(P, 'type', cont.Type, "")
             }
 
-            fnReady(P, 200)
-
+            status = 200
         }
+
+        ////////////////////////////////////////////////////////////////////////////////////////
+        // Path
+        /////////
+
+        if (searchEntity !== '') {
+            
+            field = searchEntity
+            field = field.replaceAll(".", "^DOT")
+
+            cont = await find_dic(db, 'class', true, '', null, field)
+
+            const pathCol = cont[field]
+            if (Array.isArray(pathCol)) {
+                P.navPathCol = []
+                for (let path of pathCol) {
+                    P.navPathCol.push(path.split('--'))
+                }
+            }
+        }
+
+        ////////////////////////////////////////////////////////////////////////////////////////
+
+        fnReady(P, status)
 
         await client.close()
     })
