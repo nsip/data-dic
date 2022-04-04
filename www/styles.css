@@ -32,26 +32,37 @@ hr.line1 {
     height: 3px;
     background-color: rgb(20, 20, 20);
     border: none;
-    margin-top: -10px;
-    margin-bottom: -8px;
+    margin: -10px 0px -8px 0px;
 }
 
 .block hr.line2 {
     height: 1px;
     background-color: rgb(255, 255, 255);
     border: none;
-    margin-left: 20px;
-    margin-right: 20px;
-    margin-top: 20px;
+    margin: 20px 20px 10px 20px;
 }
 
 .block hr.line3 {
     height: 1px;
     background-color: rgb(120, 120, 120);
     border: none;
-    margin-left: 15px;
-    margin-top: 25px;
-    margin-right: 35px;
+    margin: 25px 35px 0px 15px;
+}
+
+div.nav {
+    margin: 0px 0px 10px 20px;    
+    font-weight: bold;
+}
+
+div span.nav {
+    color: blue;
+    text-decoration: none;    
+}
+
+div span.nav:hover {
+    color: #00f;
+    text-decoration: underline;
+    cursor: pointer;
 }
 
 div#search-div {
@@ -72,24 +83,22 @@ ul.entity-list {
 
 ul.entity-list li.link span {
     color: blue;
-    text-decoration: none;
-    cursor: pointer;
+    text-decoration: none;    
 }
 
 ul.entity-list li.link span:hover {
-    color: #00f;
+    color: blue;
     text-decoration: underline;
+    cursor: pointer;
 }
 
 div.block {
-    padding-left: 20px;
-    padding-top: 20px;
+    padding: 20px 0px 0px 20px;
+    margin: 0px, 0px, -5px, 0px;
     font-size: 17px;
     font-weight: bold;
-    font-family: Arial, Helvetica, sans-serif;
-    margin-top: 0px;
-    margin-bottom: -5px;
-    background-color: rgb(240, 240, 240);
+    font-family: Arial, Helvetica, sans-serif;    
+    background-color: rgb(230, 230, 230);
 }
 
 .block p.content {
@@ -167,11 +176,11 @@ div.block {
 .block span.shortarray-link {
     font-size: 16px;
     font-weight: bold;
-    color: #00f;
+    color: blue;
 }
 
 .block span.shortarray-link:hover {
-    color: #00f;
+    color: blue;
     text-decoration: underline;
     cursor: pointer;
 }

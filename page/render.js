@@ -28,6 +28,8 @@ const render_ejs = (P, code) => {
         error: P.error,
 
         search_value: SearchVal,
+
+        navPathCol: P.navPathCol,
     })
 
     P.res
