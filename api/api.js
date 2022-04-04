@@ -36,7 +36,7 @@ export const dic_api = async (fastify, options) => {
                 .header('Content-Type', 'application/json; charset=utf-8')
                 .send(cont)
 
-            client.close()
+            await client.close()
         })
     })
 
@@ -59,7 +59,7 @@ export const dic_api = async (fastify, options) => {
                 .header('Content-Type', 'application/json; charset=utf-8')
                 .send(cont)
 
-            client.close()
+            await client.close()
         })
     })
 

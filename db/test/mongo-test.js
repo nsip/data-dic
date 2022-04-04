@@ -13,7 +13,7 @@ const insert_file = async (db, colName, filepath) => {
         await db.createCollection(colName)
     } catch (err) {
         if (err.codeName != 'NamespaceExists') {
-            client.close()
+            await client.close()
             return
         }
         console.log(`${err.codeName}, use existing collection - ${colName}`)
@@ -39,7 +39,7 @@ MongoClient.connect(url, async (err, client) => {
     //     await db.createCollection(colName)
     // } catch (err) {
     //     if (err.codeName != 'NamespaceExists') {
-    //         client.close()
+    //         await client.close()
     //         return
     //     }
     //     console.log(err.codeName)
@@ -62,5 +62,5 @@ MongoClient.connect(url, async (err, client) => {
 
     //////////////////////////////////////////////////////////
 
-    client.close()
+    await client.close()
 })

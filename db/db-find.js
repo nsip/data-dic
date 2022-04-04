@@ -33,7 +33,8 @@ export const find_dic = async (db, colName, oneFlag, attr, value, ...out_attrs) 
     const col = db.collection(colName)
 
     let query = {}
-    if (attr !== '') {
+    if (attr !== '' && value !== null) {
+
         // escape original regex symbols
         value = value.replaceAll('(', '\\(')
         value = value.replaceAll(')', '\\)')
@@ -49,10 +50,9 @@ export const find_dic = async (db, colName, oneFlag, attr, value, ...out_attrs) 
 
     if (out_attrs.length == 0) {
         if (oneFlag) {
-            return col.findOne(query)
-        } else {
-            return col.find(query).toArray()
+            return await col.findOne(query)
         }
+        return await col.find(query).toArray()
     }
 
     const out = { _id: 0 }
@@ -62,10 +62,9 @@ export const find_dic = async (db, colName, oneFlag, attr, value, ...out_attrs) 
     console.log(out)
 
     if (oneFlag) {
-        return col.findOne(query, { projection: out })
-    } else {
-        return col.find(query, { projection: out }).toArray()
+        return await col.findOne(query, { projection: out })
     }
+    return await col.find(query, { projection: out }).toArray()
 }
 
 const list_entity = async (db, colName) => {
@@ -93,7 +92,7 @@ const list_entity = async (db, colName) => {
 //     const entities = await list_entity(db, colName)
 //     console.log(entities)
 
-//     client.close()
+//     await client.close()
 // })
 
 export const P = {
@@ -133,7 +132,7 @@ export const OnListEntity = async (fnReady) => {
 
         fnReady(P, 200)
 
-        client.close()
+        await client.close()
     })
 
 }
@@ -246,7 +245,7 @@ export const OnFindEntity = async (value, fnReady) => {
 
         }
 
-        client.close()
+        await client.close()
     })
 
 }

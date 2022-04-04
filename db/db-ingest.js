@@ -40,10 +40,29 @@ MongoClient.connect(url, async (err, client) => {
     console.log(names)
 
     for (let filename of names) {
+        if (filename === 'class-link.json') { // this doc will be put into 'class' collection, rather than 'entity'
+            continue
+        }
         const filepath = path.join(data_path, filename)
         console.log("storing: " + filepath)
         await insert_file(db, colName, filepath)
     }
 
-    client.close()
+    await client.close()
+})
+
+MongoClient.connect(url, async (err, client) => {
+    assert.equal(null, err)
+    console.log("Connected successfully to server")
+
+    const db = client.db(dbName) // create if not existing 
+
+    const colName = 'class'
+
+    const data_path = '../data/preproc/out'
+    const filepath = path.join(data_path, 'class-link.json')
+    console.log("storing: " + filepath)
+    await insert_file(db, colName, filepath)
+
+    await client.close()
 })

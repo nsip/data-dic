@@ -178,5 +178,6 @@ func Link2JSON(linkCol []string, path string) (out string, err error) {
 		lk.FailOnErr("%v", err)
 	}
 
-	return strings.ReplaceAll(out, "^DOT", "."), nil
+	return out, nil
+	// return strings.ReplaceAll(out, "^DOT", "."), nil
 }
