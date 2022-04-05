@@ -35,14 +35,12 @@
 
   <!----- Entity Class Path ------------------------------------------------------->
   <div class="nav">
-    <% for (let path of navPathCol) { %>
-    <% for ( let i =0; i < path.length; i++ ) { %>
+    <% for (const path of navPathCol) { %>
+    <% for (const [i, seg] of path.entries()) { %>
     <span class="nav" onclick="
-        $('#search-entity').val('<%= path[i] %>');
-        $('#search-form').submit();"> <%= path[i] %> </span>
-    <% if (i < path.length-1) { %>
-    <span> / </span>
-    <% } %>
+        $('#search-entity').val('<%= seg %>');
+        $('#search-form').submit();"> <%= seg %> </span>
+    <% if (i < path.length-1) { %> <span> / </span> <% } %>
     <% } %>
     <br>
     <% } %>
@@ -62,7 +60,7 @@
         </div>
 
         <ul class="entity-list">
-          <% for(let entity of entities) { %>
+          <% for(const entity of entities) { %>
           <li class="link" onclick="
                     $('#search-entity').val('<%= entity %>');
                     $('#search-form').submit();">
@@ -83,57 +81,36 @@
 
       <!----- Entity ------------------------------------------------------->
       <div class="block">
-        Entity: <% if (content !=null) { %>
-        &nbsp;&nbsp;<%=entity%>
-        <% } %>
+        Entity: <% if (content !=null) { %> &nbsp;&nbsp;<%=entity%> <% } %>
         <hr class="line2">
       </div>
 
-
       <!----- Collections ------------------------------------------------------->
       <div class="block">
-        Collections: <% if (content !=null) { %>
-        <% for(let i=0; i < collections.length; i++) { %>
+        Collections <% if (content !=null) { %>
 
-        <p class="content"> <span class="field">Name:&nbsp;&nbsp;</span>
-          <%= collections[i].Name %>
-        </p>
+        <% for(const [i, col] of collections.entries()) { %>
 
-        <p class="content"> <span class="field">Description:&nbsp;&nbsp;</span>
-          <%= collections[i].Description %>
-        </p>
+        <p class="content"> <span class="field">Name:&nbsp;&nbsp;</span> <%= col.Name %> </p>
 
-        <p class="content"> <span class="field">Standard:&nbsp;&nbsp;</span>
-          <%= collections[i].Standard %>
-        </p>
+        <p class="content"> <span class="field">Description:&nbsp;&nbsp;</span> <%= col.Description %> </p>
 
-        <p class="content"> <span class="field">DefinitionModification:&nbsp;&nbsp;</span>
-          <%= collections[i].DefinitionModification %>
-        </p>
+        <p class="content"> <span class="field">Standard:&nbsp;&nbsp;</span> <%= col.Standard %> </p>
+
+        <p class="content"> <span class="field">DefinitionModification:&nbsp;&nbsp;</span> <%= col.DefinitionModification %> </p>
 
         <div>
           <p class="field"> Elements: </p>
-          <% for(let j=0; j < collections[i].Elements.length; j++) { %>
-          <p class="subitem">
-            <%= collections[i].Elements[j] %>
-            <% } %>
-          </p>
+          <% for (let ele of col.Elements) { %> <p class="subitem"> <%= ele %> </p> <% } %>
         </div>
 
         <div>
           <p class="field"> BusinessRules: </p>
-          <% for(let j=0; j < collections[i].BusinessRules.length; j++) { %>
-          <p class="subitem">
-            <%= collections[i].BusinessRules[j] %>
-            <% } %>
-          </p>
+          <% for( let rule of col.BusinessRules) { %> <p class="subitem"> <%= rule %> </p> <% } %>
         </div>
 
-        <div>
-          <% if ( i < collections.length - 1 ) { %>
-          <hr class="line3">
-          <% } %>
-        </div>
+        <% if ( i < collections.length - 1 ) { %>
+        <hr class="line3"> <% } %>
 
         <% } %>
         <% } %>
@@ -143,17 +120,18 @@
 
       <!----- CrossrefEntities ------------------------------------------------------->
       <div class="block">
-        CrossrefEntities:<% if (content !=null) { %>
-        &nbsp;&nbsp;
-        <% for(let i=0; i < crossrefEntities.length; i++) { %>
+        CrossrefEntities:<% if (content !=null) { %>&nbsp;&nbsp;
+
+        <% for(const [i, crf] of crossrefEntities.entries()) { %>
 
         <span class="shortarray-link" onclick="
-                        $('#search-entity').val('<%= crossrefEntities[i] %>');
+                        $('#search-entity').val('<%= crf %>');
                         $('#search-form').submit();">
-          <%= crossrefEntities[i] %>
+          <%= crf %>
         </span>
 
-        <% if ( i < crossrefEntities.length - 1) { %> &nbsp;|&nbsp; <% } %>
+        <% if (i < crossrefEntities.length - 1) { %> &nbsp;|&nbsp; <% } %>
+
         <% } %>
         <% } %>
 
@@ -162,172 +140,138 @@
 
       <!----- Definition ------------------------------------------------------->
       <div class="block">
-        Definition:<% if (content !=null) { %>
-        &nbsp;&nbsp;
-        <span class="shortarray">
-          <%- definition %>
-        </span>
+        Definition:<% if (content !=null) { %>&nbsp;&nbsp;
+        <span class="shortarray"> <%- definition %> </span>
         <% } %>
         <hr class="line2">
       </div>
 
       <!----- ExpectedAttributes ------------------------------------------------------->
       <div class="block">
-        ExpectedAttributes:<% if (content !=null) { %>
-        &nbsp;&nbsp;
-        <% for(let i=0; i < expectedAttributes.length; i++) { %>
+        ExpectedAttributes:<% if (content !=null) { %>&nbsp;&nbsp;
+
+        <% for(const [i, attr] of expectedAttributes.entries()) { %>
 
         <span class="shortarray-link" onclick="
-                        $('#search-entity').val('<%= expectedAttributes[i] %>');
+                        $('#search-entity').val('<%= attr %>');
                         $('#search-form').submit();">
-          <%= expectedAttributes[i] %>
+          <%= attr %>
         </span>
 
         <% if ( i < expectedAttributes.length - 1) { %> &nbsp;|&nbsp; <% } %>
+
         <% } %>
         <% } %>
+
         <hr class="line2">
       </div>
 
       <!----- Identifier ------------------------------------------------------->
       <div class="block">
-        Identifier:<% if (content !=null) { %>
-        &nbsp;&nbsp;
-        <span class="shortarray">
-          <%= identifier %>
-        </span>
+        Identifier:<% if (content !=null) { %>&nbsp;&nbsp;
+        <span class="shortarray"> <%= identifier %> </span>
         <% } %>
         <hr class="line2">
       </div>
 
       <!----- LegalDefinitions ------------------------------------------------------->
       <div class="block">
-        LegalDefinitions:<% if (content !=null) { %>
-        &nbsp;&nbsp;
-        <% for(let i=0; i < legalDefinitions.length; i++) { %>
+        LegalDefinitions<% if (content !=null) { %>&nbsp;&nbsp;
 
-        <p class="content"> <span class="field">LegislationName:&nbsp;&nbsp;</span>
-          <%= legalDefinitions[i].LegislationName %>
-        </p>
+        <% for(const [i, def] of legalDefinitions.entries()) { %>
 
-        <p class="content"> <span class="field">Citation:&nbsp;&nbsp;</span>
-          <%= legalDefinitions[i].Citation %>
-        </p>
+        <p class="content"> <span class="field">LegislationName:&nbsp;&nbsp;</span> <%= def.LegislationName %> </p>
 
-        <p class="content"> <span class="field">Link:&nbsp;&nbsp;</span>
-          <%- legalDefinitions[i].Link %>
-        </p>
+        <p class="content"> <span class="field">Citation:&nbsp;&nbsp;</span> <%= def.Citation %> </p>
 
-        <p class="content"> <span class="field">Datestamp:&nbsp;&nbsp;</span>
-          <%= legalDefinitions[i].Datestamp %>
-        </p>
+        <p class="content"> <span class="field">Link:&nbsp;&nbsp;</span> <%- def.Link %> </p>
 
-        <p class="content"> <span class="field">Definition:&nbsp;&nbsp;</span>
-          <%- legalDefinitions[i].Definition %>
-        </p>
+        <p class="content"> <span class="field">Datestamp:&nbsp;&nbsp;</span> <%= def.Datestamp %> </p>
 
-        <p class="content"> <span class="field">Commentary:&nbsp;&nbsp;</span>
-          <%- legalDefinitions[i].Commentary %>
-        </p>
+        <p class="content"> <span class="field">Definition:&nbsp;&nbsp;</span> <%- def.Definition %> </p>
 
-        <div>
-          <% if ( i < legalDefinitions.length - 1 ) { %>
-          <hr class="line3">
-          <% } %>
-        </div>
+        <p class="content"> <span class="field">Commentary:&nbsp;&nbsp;</span> <%- def.Commentary %> </p>
+
+        <% if ( i < legalDefinitions.length - 1 ) { %>
+        <hr class="line3"> <% } %>
+
         <% } %>
         <% } %>
+
         <hr class="line2">
       </div>
 
       <!----- OtherNames ------------------------------------------------------->
       <div class="block">
-        OtherNames:<% if (content !=null) { %>
-        &nbsp;&nbsp;
-        <% for(let i=0; i < otherNames.length; i++) { %>
+        OtherNames:<% if (content !=null) { %>&nbsp;&nbsp;
 
-        <span class="shortarray">
-          <%= otherNames[i] %>
-        </span>
+        <% for(const [i, on] of otherNames.entries()) { %>
 
-        <% if ( i < otherNames.length - 1) { %> &nbsp;|&nbsp; <% } %>
+        <span class="shortarray"> <%= on %> </span>
+
+        <% if (i < otherNames.length - 1) { %> &nbsp;|&nbsp; <% } %>
+
         <% } %>
         <% } %>
+
         <hr class="line2">
       </div>
 
       <!----- OtherStandards ------------------------------------------------------->
       <div class="block">
-        OtherStandards:<% if (content !=null) { %>
-        &nbsp;&nbsp;
-        <% for(let i=0; i < otherStandards.length; i++) { %>
+        OtherStandards<% if (content !=null) { %>&nbsp;&nbsp;
 
-        <p class="content"> <span class="field">Standard:&nbsp;&nbsp;</span>
-          <%= otherStandards[i].Standard %>
-        </p>
+        <% for(const [i, os] of otherStandards.entries()) { %>
+
+        <p class="content"> <span class="field">Standard:&nbsp;&nbsp;</span> <%= os.Standard %> </p>
 
         <div>
           <p class="content"> <span class="field">Link:&nbsp;&nbsp;</span>
-            <% for(let j=0; j < otherStandards[i].Link.length; j++) { %>
-          <p class="subitem">
-            <%- otherStandards[i].Link[j] %>
-          </p>
-          <% } %>
+            <% for(const link of os.Link) { %>
+          <p class="subitem"> <%- link %> </p> <% } %>
           </p>
         </div>
 
         <div>
           <p class="content"> <span class="field">Path:&nbsp;&nbsp;</span>
-            <% for(let j=0; j < otherStandards[i].Path.length; j++) { %>
-          <p class="subitem">
-            <%= otherStandards[i].Path[j] %>
+            <% for(const path of os.Path) { %>
+          <p class="subitem"> <%= path %>
           </p>
           <% } %>
           </p>
         </div>
 
-        <p class="content"> <span class="field">Definition:&nbsp;&nbsp;</span>
-          <%= otherStandards[i].Definition %>
-        </p>
+        <p class="content"> <span class="field">Definition:&nbsp;&nbsp;</span> <%= os.Definition %> </p>
 
-        <p class="content"> <span class="field">Commentary:&nbsp;&nbsp;</span>
-          <%- otherStandards[i].Commentary %>
-        </p>
+        <p class="content"> <span class="field">Commentary:&nbsp;&nbsp;</span> <%- os.Commentary %> </p>
 
-        <div>
-          <% if ( i < otherStandards.length - 1 ) { %>
-          <hr class="line3">
-          <% } %>
-        </div>
+        <% if ( i < otherStandards.length - 1 ) { %>
+        <hr class="line3">
+        <% } %>
 
         <% } %>
         <% } %>
+
         <hr class="line2">
       </div>
 
       <!----- SIF ------------------------------------------------------->
       <div class="block">
-        SIF:<% if (content !=null) { %>
-        &nbsp;&nbsp;
-        <% for(let i=0; i < sif.length; i++) { %>
+        SIF<% if (content !=null) { %>&nbsp;&nbsp;
+
+        <% for(const [i, s] of sif.entries()) { %>
 
         <div>
           <p class="content"> <span class="field">XPath:&nbsp;&nbsp;</span>
-            <% for(let j=0; j < sif[i].XPath.length; j++) { %>
-          <p class="subitem">
-            <%- sif[i].XPath[j] %>
-          </p>
+            <% for(let xpath of s.XPath) { %>
+          <p class="subitem"> <%- xpath %> </p>
           <% } %>
           </p>
         </div>
 
-        <p class="content"> <span class="field">Datestamp:&nbsp;&nbsp;</span>
-          <%= sif[i].Datestamp %>
-        </p>
+        <p class="content"> <span class="field">Datestamp:&nbsp;&nbsp;</span> <%= s.Datestamp %> </p>
 
-        <p class="content"> <span class="field">Definition:&nbsp;&nbsp;</span>
-          <%- sif[i].Definition %>
-        </p>
+        <p class="content"> <span class="field">Definition:&nbsp;&nbsp;</span> <%- s.Definition %> </p>
 
         <div>
           <% if ( i < sif.length - 1 ) { %>
@@ -342,30 +286,32 @@
 
       <!----- Superclass ------------------------------------------------------->
       <div class="block">
-        Superclass:<% if (content !=null) { %>
-        &nbsp;&nbsp;
-        <% for(let i=0; i < superclass.length; i++) { %>
+        Superclass:<% if (content !=null) { %>&nbsp;&nbsp;
+
+        <% for(const [i, sc] of superclass.entries()) { %>
 
         <span class="shortarray-link" onclick="
-                            $('#search-entity').val('<%= superclass[i] %>');
+                            $('#search-entity').val('<%= sc %>');
                             $('#search-form').submit();">
-          <%= superclass[i] %>
+          <%= sc %>
         </span>
 
         <% if ( i < superclass.length - 1) { %> &nbsp;|&nbsp; <% } %>
+
         <% } %>
         <% } %>
+
         <hr class="line2">
       </div>
 
       <!----- Type ------------------------------------------------------->
       <div class="block">
-        Type:<% if (content !=null) { %>
-        &nbsp;&nbsp;
-        <span class="shortarray">
-          <%= type %>
-        </span>
+        Type:<% if (content !=null) { %>&nbsp;&nbsp;
+
+        <span class="shortarray"> <%= type %> </span>
+
         <% } %>
+
         <hr class="line2" style="margin-bottom: 40px;">
       </div>
 
