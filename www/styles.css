@@ -51,8 +51,23 @@ hr.line1 {
     margin: 25px 35px 0px 15px;
 }
 
-div.nav {
+#nav-path
+{
+    float: left;
+}
+
+#nav-field
+{
+    float: right;
+}
+
+div.nav-path {
     margin: 0px 0px 10px 20px;    
+    font-weight: bold;
+}
+
+div#nav-field {
+    margin: 0px 10px 10px 0px;
     font-weight: bold;
 }
 

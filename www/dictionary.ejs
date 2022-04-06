@@ -23,7 +23,7 @@
 
 </head>
 
-<body>
+<body id="main">
 
   <!----- Title ------------------------------------------------------->
   <h1>
@@ -34,7 +34,7 @@
   <br>
 
   <!----- Entity Class Path ------------------------------------------------------->
-  <div class="nav">
+  <div id="nav-path" class="nav-path">
     <% for (const path of navPathCol) { %>
     <% for (const [i, seg] of path.entries()) { %>
     <span class="nav" onclick="
@@ -44,6 +44,22 @@
     <% } %>
     <br>
     <% } %>
+  </div>
+
+  <!----- Level 1 Field ------------------------------------------------------->
+  <div id="nav-field">
+    <span class="nav" onclick="scrollToTop('Entity')">Entity</span>&nbsp;&nbsp;
+    <span class="nav" onclick="scrollToTop('Collections')">Collections</span>&nbsp;&nbsp;
+    <span class="nav" onclick="scrollToTop('CrossrefEntities')">CrossrefEntities</span>&nbsp;&nbsp;
+    <span class="nav" onclick="scrollToTop('Definition')">Definition</span>&nbsp;&nbsp;
+    <span class="nav" onclick="scrollToTop('ExpectedAttributes')">ExpectedAttributes</span>&nbsp;&nbsp;
+    <span class="nav" onclick="scrollToTop('Identifier')">Identifier</span>&nbsp;&nbsp;
+    <span class="nav" onclick="scrollToTop('LegalDefinitions')">LegalDefinitions</span>&nbsp;&nbsp;
+    <span class="nav" onclick="scrollToTop('OtherNames')">OtherNames</span>&nbsp;&nbsp;
+    <span class="nav" onclick="scrollToTop('OtherStandards')">OtherStandards</span>&nbsp;&nbsp;
+    <span class="nav" onclick="scrollToTop('SIF')">SIF</span>&nbsp;&nbsp;
+    <span class="nav" onclick="scrollToTop('Superclass')">Superclass</span>&nbsp;&nbsp;
+    <span class="nav" onclick="scrollToTop('Type')">Type</span>
   </div>
 
   <!--------------------------------------------------------------------------->
@@ -80,13 +96,13 @@
     <div id="content">
 
       <!----- Entity ------------------------------------------------------->
-      <div class="block">
+      <div class="block" id="Entity">
         Entity: <% if (content !=null) { %> &nbsp;&nbsp;<%=entity%> <% } %>
         <hr class="line2">
       </div>
 
       <!----- Collections ------------------------------------------------------->
-      <div class="block">
+      <div class="block" id="Collections">
         Collections <% if (content !=null) { %>
 
         <% for(const [i, col] of collections.entries()) { %>
@@ -119,7 +135,7 @@
       </div>
 
       <!----- CrossrefEntities ------------------------------------------------------->
-      <div class="block">
+      <div class="block" id="CrossrefEntities">
         CrossrefEntities:<% if (content !=null) { %>&nbsp;&nbsp;
 
         <% for(const [i, crf] of crossrefEntities.entries()) { %>
@@ -139,7 +155,7 @@
       </div>
 
       <!----- Definition ------------------------------------------------------->
-      <div class="block">
+      <div class="block" id="Definition">
         Definition:<% if (content !=null) { %>&nbsp;&nbsp;
         <span class="shortarray"> <%- definition %> </span>
         <% } %>
@@ -147,7 +163,7 @@
       </div>
 
       <!----- ExpectedAttributes ------------------------------------------------------->
-      <div class="block">
+      <div class="block" id="ExpectedAttributes">
         ExpectedAttributes:<% if (content !=null) { %>&nbsp;&nbsp;
 
         <% for(const [i, attr] of expectedAttributes.entries()) { %>
@@ -167,7 +183,7 @@
       </div>
 
       <!----- Identifier ------------------------------------------------------->
-      <div class="block">
+      <div class="block" id="Identifier">
         Identifier:<% if (content !=null) { %>&nbsp;&nbsp;
         <span class="shortarray"> <%= identifier %> </span>
         <% } %>
@@ -175,7 +191,7 @@
       </div>
 
       <!----- LegalDefinitions ------------------------------------------------------->
-      <div class="block">
+      <div class="block" id="LegalDefinitions">
         LegalDefinitions<% if (content !=null) { %>&nbsp;&nbsp;
 
         <% for(const [i, def] of legalDefinitions.entries()) { %>
@@ -202,7 +218,7 @@
       </div>
 
       <!----- OtherNames ------------------------------------------------------->
-      <div class="block">
+      <div class="block" id="OtherNames">
         OtherNames:<% if (content !=null) { %>&nbsp;&nbsp;
 
         <% for(const [i, on] of otherNames.entries()) { %>
@@ -218,7 +234,7 @@
       </div>
 
       <!----- OtherStandards ------------------------------------------------------->
-      <div class="block">
+      <div class="block" id="OtherStandards">
         OtherStandards<% if (content !=null) { %>&nbsp;&nbsp;
 
         <% for(const [i, os] of otherStandards.entries()) { %>
@@ -256,7 +272,7 @@
       </div>
 
       <!----- SIF ------------------------------------------------------->
-      <div class="block">
+      <div class="block" id="SIF">
         SIF<% if (content !=null) { %>&nbsp;&nbsp;
 
         <% for(const [i, s] of sif.entries()) { %>
@@ -285,7 +301,7 @@
       </div>
 
       <!----- Superclass ------------------------------------------------------->
-      <div class="block">
+      <div class="block" id="Superclass">
         Superclass:<% if (content !=null) { %>&nbsp;&nbsp;
 
         <% for(const [i, sc] of superclass.entries()) { %>
@@ -305,7 +321,7 @@
       </div>
 
       <!----- Type ------------------------------------------------------->
-      <div class="block">
+      <div class="block" id="Type">
         Type:<% if (content !=null) { %>&nbsp;&nbsp;
 
         <span class="shortarray"> <%= type %> </span>
@@ -322,6 +338,24 @@
     </div>
 
   </div>
+
+  <script>
+    
+    function scrollToTop(eleID) {
+      const element = document.getElementById(eleID);
+      element.scrollIntoView(true);
+      const main = document.getElementById('main');
+      main.scrollTop = 0 
+    }
+
+    function scrollToBottom(eleID) {
+      const element = document.getElementById(eleID);
+      element.scrollIntoView(false);
+      const main = document.getElementById('main');
+      main.scrollTop = 0 
+    }
+
+  </script>
 
 </body>
 
