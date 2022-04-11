@@ -3,7 +3,7 @@ import { MongoClient, dbName, url, find_dic } from '../db/db-find.js'
 
 export const dic_api = async (fastify, options) => {
 
-    fastify.get('/hello-world', async (req, res) => {
+    fastify.get('/api/hello-world', async (req, res) => {
         const hw = {
             msg: 'hello world @ ' + new Date().getTime(),
         }

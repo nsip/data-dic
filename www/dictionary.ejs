@@ -65,16 +65,17 @@
   <!--------------------------------------------------------------------------->
   <div id="container">
 
-    <!----- Entity List ------------------------------------------------------->
     <div id="leftThing">
 
-      <form id="search-form" action="/search" method="post">
+      <form id="search-form" action="/search" method="post" onsubmit="check_form(this); return false">
 
+        <!----- Search Input ------------------------------------------------------->
         <div id="search-div">
           <input id="search-entity" type="text" name="content" placeholder="Entity or Identifier" value="<%= search_value %>" style="padding: 5px 0px 5px 10px;">
           <input type="submit" value="go" style="padding: 5px 10px 5px 10px; font-size: 14px;">
         </div>
 
+        <!----- Entity List ------------------------------------------------------->
         <ul class="entity-list">
           <% for(const entity of entities) { %>
           <li class="link" onclick="
@@ -340,21 +341,41 @@
   </div>
 
   <script>
-    
-    function scrollToTop(eleID) {
-      const element = document.getElementById(eleID);
-      element.scrollIntoView(true);
-      const main = document.getElementById('main');
-      main.scrollTop = 0 
+    const scrollToTop = (eleID) => {
+      $('#' + eleID)[0].scrollIntoView(true)
+      $('#main')[0].scrollTop = 0
     }
 
-    function scrollToBottom(eleID) {
-      const element = document.getElementById(eleID);
-      element.scrollIntoView(false);
-      const main = document.getElementById('main');
-      main.scrollTop = 0 
+    const scrollToBottom = (eleID) => {
+      $('#' + eleID)[0].scrollIntoView(false)
+      $('#main')[0].scrollTop = 0
     }
 
+    const check_form = async (form) => {
+
+      let sv = $('#search-entity').val()
+
+      if (!isNaN(sv)) {
+        sv = String(sv).padStart(4, '0')
+      }
+
+      let api_list = [
+        `http://127.0.0.1:3000/api/entity/${sv}`,
+        `http://127.0.0.1:3000/api/identifier/${sv}`
+      ]
+
+      for (let api of api_list) {
+        const resp = await fetch(api)
+        const code = await resp.status
+        if (code == 200) {
+          form.submit()
+          return
+        }
+      }
+
+      alert(`Couldn't find ${sv}`)
+
+    }
   </script>
 
 </body>
