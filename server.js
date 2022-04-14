@@ -4,6 +4,7 @@ import fastifyFac from 'fastify'
 import multipart from 'fastify-multipart'
 import formbody from 'fastify-formbody'
 import stat from 'fastify-static'
+import cors from 'fastify-cors'
 
 import { config } from './config.js'
 import { esa_dic } from './page/render.js'
@@ -18,6 +19,7 @@ const __dirname = path.dirname(__filename);
 const fastify = fastifyFac({ logger: true })
 fastify.register(multipart)
 fastify.register(formbody)
+fastify.register(cors)
 
 // --- register api --- //
 fastify.register(dic_api)
