@@ -6,7 +6,8 @@ import formbody from 'fastify-formbody'
 import stat from 'fastify-static'
 
 import { config } from './config.js'
-import { esa_dic } from './api/page-render.js'
+import { esa_dic } from './page/render.js'
+import { dic_api } from './api/api.js'
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -19,6 +20,9 @@ fastify.register(multipart)
 fastify.register(formbody)
 
 // --- register api --- //
+fastify.register(dic_api)
+
+// --- register page api --- //
 fastify.register(esa_dic)
 fastify.register(stat, {
     root: path.join(__dirname, 'www'),

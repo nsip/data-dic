@@ -1,91 +1,157 @@
+#container {
+    height: 100%;
+    width: 100%;
+    display: flex;
+}
+
+#leftThing {
+    width: 15%;
+    overflow-y: scroll;
+    padding-top: 10px;
+    background-color: rgb(230, 230, 230);
+}
+
+#content {
+    width: 95%;
+    margin-left: 10px;
+    overflow-y: scroll;
+}
+
+#rightThing {
+    width: 0%;
+    overflow-y: scroll;
+    background-color: yellow;
+}
+
+/* ///////////////// */
+
 h1 {
-    padding-left: 10px;
+    text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 hr.line1 {
-    height: 3px;
+    height: 1.5px;
     background-color: rgb(20, 20, 20);
     border: none;
+    margin: -10px 0px -8px 0px;
 }
 
-hr.line2 {
-    height: 3px;
-    background-color: rgb(80, 80, 80);
+.block hr.line2 {
+    height: 1px;
+    background-color: rgb(255, 255, 255);
     border: none;
-    margin-left: 20px;
-    margin-right: 20px;
+    margin: 20px 20px 10px 20px;
 }
 
 .block hr.line3 {
     height: 1px;
     background-color: rgb(120, 120, 120);
     border: none;
-    margin-left: 20px;
-    margin-right: 20px;
-    margin-top: 30px;
+    margin: 25px 35px 0px 15px;
 }
 
-.block hr.line4 {
-    height: 1px;
-    background-color: rgb(180, 180, 180);
-    border: none;
-    margin-left: 35px;
-    margin-top: 35px;
-    margin-right: 1000px;
+#nav-path
+{
+    float: left;
 }
 
-div#search {
-    margin-left: 20px;
+#nav-field
+{
+    float: right;
 }
 
-ul.entitylist {
-    font-size: larger;
+div.nav-path {
+    margin: 0px 0px 10px 20px;    
     font-weight: bold;
+}
+
+div#nav-field {
+    margin: 0px 10px 10px 0px;
+    font-weight: bold;
+}
+
+div span.nav {
+    color: blue;
+    text-decoration: none;    
+}
+
+div span.nav:hover {
+    color: #00f;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+div#search-div {
+    margin-left: 20px;
+}
+
+input#search-entity {
+    padding-left: 10px;
+    width: 75%;
+}
+
+ul.entity-list {
+    font-size: 16px;
+    font-weight: normal;
+    font-family: Arial, Helvetica, sans-serif;
     padding-bottom: 5px;
 }
 
+ul.entity-list li.link span {
+    color: blue;
+    text-decoration: none;    
+}
+
+ul.entity-list li.link span:hover {
+    color: blue;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
 div.block {
-    padding-left: 20px;
-    font-size: x-large;
+    padding: 20px 0px 0px 20px;
+    margin: 0px, 0px, -5px, 0px;
+    font-size: 17px;
     font-weight: bold;
-    margin-top: 40px;
-    margin-bottom: 20px;
+    font-family: Arial, Helvetica, sans-serif;    
+    background-color: rgb(230, 230, 230);
 }
 
 .block p.content {
     padding-left: 20px;
     margin-bottom: -10px;
-    font-size: 20px;
+    font-size: 17px;
     font-weight: normal;
 }
 
 .block p.inner-p1 {
     padding-left: 20px;
     margin-bottom: -10px;
-    font-size: 20px;
+    font-size: 17px;
     font-weight: normal;
 }
 
 .block p.inner-p2 {
-    padding-left: 60px;
+    padding-left: 40px;
     margin-bottom: -10px;
-    font-size: 20px;
+    font-size: 17px;
     font-weight: normal;
 }
 
 .block ol.inner-ol1 {
-    padding-left: 100px;
+    padding-left: 60px;
     margin-top: 20px;
     margin-bottom: -10px;
-    font-size: 20px;
+    font-size: 16px;
     font-weight: normal;
 }
 
 .block ol.inner-ola-1 {
-    padding-left: 120px;
+    padding-left: 80px;
     margin-top: 20px;
     margin-bottom: -10px;
-    font-size: 20px;
+    font-size: 16px;
     font-weight: normal;
 }
 
@@ -93,41 +159,45 @@ div.block {
     padding-left: 20px;
     margin-top: 0px;
     margin-bottom: 10px;
-    font-size: 20px;
-    font-weight: normal;    
+    font-size: 16px;
+    font-weight: normal;
 }
 
 .block p.content span.field {
-    padding-left: 20px;
+    padding-left: 0px;
     margin-bottom: -10px;
-    font-size: 20px;
+    font-size: 16px;
     font-weight: bold;
 }
 
 .block div p.field {
-    padding-left: 40px;
+    padding-left: 20px;
     margin-bottom: -10px;
-    font-size: 20px;
+    font-size: 16px;
     font-weight: bold;
 }
 
 .block div p.subitem {
-    padding-left: 60px;
-    margin-top: 10px;
-    margin-bottom: -10px;
-    font-size: 18px;
+    padding-left: 40px;
+    margin-top: 15px;
+    margin-bottom: -15px;
+    font-size: 16px;
     font-weight: normal;
 }
 
 .block span.shortarray {
-    font-size: 19px;
+    font-size: 16px;
     font-weight: bold;
 }
 
-/* 
-.block ol.item {
-    padding-left: 45px;
-    margin-bottom: -10px;
-    font-size: large;
-    font-weight: normal;
-} */
+.block span.shortarray-link {
+    font-size: 16px;
+    font-weight: bold;
+    color: blue;
+}
+
+.block span.shortarray-link:hover {
+    color: blue;
+    text-decoration: underline;
+    cursor: pointer;
+}

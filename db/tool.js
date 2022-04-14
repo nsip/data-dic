@@ -7,6 +7,10 @@ const provided = (param) => {
     return param !== undefined
 }
 
+export const isNumeric = (num) => {
+    return !isNaN(num)
+}
+
 export const assign = (obj, fld, val, dflt_val, fn_css_class, css_class) => {
     if (provided(val)) {
         if (provided(fn_css_class)) {
@@ -170,11 +174,17 @@ export const css_ol_cls_inject = (p, cls) => {
 }
 
 export const css_ola_cls_inject = (p, cls) => {
-    return p.replaceAll('<ol type="a">', `<ol type="a" class=${cls}>`)
+    if (p.includes("type=\"a\"")) {
+        return p.replaceAll('<ol type="a">', `<ol type="a" class=${cls}>`)
+    }
+    return p.replaceAll("<ol type='a'>", `<ol type="a" class=${cls}>`)
 }
 
 export const css_ol1_cls_inject = (p, cls) => {
-    return p.replaceAll('<ol type="1">', `<ol type="1" class=${cls}>`)
+    if (p.includes("type=\"1\"")) {
+        return p.replaceAll('<ol type="1">', `<ol type="1" class=${cls}>`)
+    }
+    return p.replaceAll("<ol type='1'>", `<ol type="1" class=${cls}>`)
 }
 /////////////////////////////////////////////////////////////
 
