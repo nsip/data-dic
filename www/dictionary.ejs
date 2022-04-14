@@ -360,12 +360,17 @@
       }
 
       let api_list = [
-        `http://127.0.0.1:3000/api/entity/${sv}`,
-        `http://127.0.0.1:3000/api/identifier/${sv}`
+        `http://localhost:3000/api/entity/${sv}`,
+        `http://localhost:3000/api/identifier/${sv}`
       ]
 
       for (let api of api_list) {
-        const resp = await fetch(api)
+        const resp = await fetch(
+          api, {
+            method: 'GET',
+            mode: 'cors',
+          }
+        )
         const code = await resp.status
         if (code == 200) {
           form.submit()

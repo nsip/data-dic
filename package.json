@@ -1,7 +1,7 @@
 {
   "dependencies": {
     "cloudinary": "^1.28.1",
-    "ejs": "^3.1.6",
+    "ejs": "^3.0.2",
     "fastify": "^3.27.1",
     "fastify-cors": "^6.0.3",
     "fastify-file-upload": "^3.0.1",
