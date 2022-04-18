@@ -1,4 +1,5 @@
 {
+  "type": "module",
   "dependencies": {
     "cloudinary": "^1.28.1",
     "ejs": "^3.0.2",
@@ -14,5 +15,25 @@
     "jquery": "^3.6.0",
     "mongodb": "^4.4.0"
   },
-  "type": "module"
+  "scripts": {
+    "build": "pkg . -t node16-linux-x64 -o ../dd -d",
+    "start": "node server.js"
+  },
+  "bin": "./server.js",
+  "name": "data-dic",
+  "description": "ESA Data dictionary",
+  "version": "1.0.0",
+  "main": "config.js",
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nsip/data-dic.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nsip/data-dic/issues"
+  },
+  "homepage": "https://github.com/nsip/data-dic#readme"
 }
