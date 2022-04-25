@@ -64,11 +64,13 @@ hr.line1 {
 div.nav-path {
     margin: 0px 0px 10px 20px;    
     font-weight: bold;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 div#nav-field {
     margin: 0px 10px 10px 0px;
-    font-weight: bold;
+    font-weight: normal;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 div span.nav {
@@ -122,6 +124,19 @@ div.block {
     padding-left: 20px;
     margin-bottom: -10px;
     font-size: 17px;
+    font-weight: normal;
+}
+
+.block p span.meta-item  {
+    padding-left: 20px;    
+    font-size: 16px;
+    font-weight: bold;
+    width: 180px;
+    display: inline-block;
+}
+
+.block p span {    
+    font-size: 16px;
     font-weight: normal;
 }
 

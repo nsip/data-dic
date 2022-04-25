@@ -112,6 +112,7 @@ export const P = {
     sif: [],
     superclass: [],
     type: [],
+    defParent: '',
 
     error: '',
 
@@ -256,7 +257,7 @@ export const OnFindEntity = async (value, fnReady) => {
         /////////
 
         if (searchEntity !== '') {
-            
+
             field = searchEntity
             field = field.replaceAll(".", "^DOT")
 
@@ -268,6 +269,11 @@ export const OnFindEntity = async (value, fnReady) => {
                 for (let path of pathCol) {
                     P.navPathCol.push(path.split('--'))
                 }
+            }
+
+            const firstPathCol = P.navPathCol[0]
+            if (firstPathCol.length > 1) {
+                P.defParent = firstPathCol[firstPathCol.length - 2]
             }
         }
 

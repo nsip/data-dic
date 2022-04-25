@@ -24,6 +24,7 @@ const render_ejs = (P, code) => {
         sif: P.sif,
         superclass: P.superclass,
         type: P.type,
+        defParent: P.defParent,
 
         error: P.error,
 
