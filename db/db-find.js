@@ -1,6 +1,6 @@
 import * as mongodb from 'mongodb'
 import * as assert from 'assert'
-import { assign, isNumeric, xpath2object, css_p_cls_inject, css_ol_cls_inject, css_ola_cls_inject, css_ol1_cls_inject, linkify } from './tool.js'
+import { assign, isNumeric, xpath2object, css_p_cls_inject, css_p_id_inject, css_ol_cls_inject, css_ola_cls_inject, css_ol1_cls_inject, linkify } from './tool.js'
 
 export const MongoClient = mongodb.MongoClient
 export const dbName = 'dictionary'
@@ -195,7 +195,7 @@ export const OnFindEntity = async (value, fnReady) => {
 
                 assign(P, 'crossrefEntities', cont.CrossrefEntities, [])
 
-                assign(P, 'definition', cont.Definition, "", css_p_cls_inject, '\"inner-p1\"')
+                assign(P, 'definition', cont.Definition, "", css_p_id_inject, '\"def\"')
 
                 assign(P, 'expectedAttributes', cont.ExpectedAttributes, [])
 
@@ -206,7 +206,7 @@ export const OnFindEntity = async (value, fnReady) => {
 
                     P.legalDefinitions[i].Link = linkify(P.legalDefinitions[i].Link)
 
-                    assign(P.legalDefinitions[i], 'Definition', cont.LegalDefinitions[i].Definition, "", css_p_cls_inject, '\"inner-p2\"')
+                    assign(P.legalDefinitions[i], 'Definition', cont.LegalDefinitions[i].Definition, "", css_p_id_inject, '\"ld-def\"')
 
                     assign(P.legalDefinitions[i], 'Definition', P.legalDefinitions[i].Definition, "", css_ol_cls_inject, '\"inner-ol1\"')
 

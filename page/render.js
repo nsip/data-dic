@@ -43,28 +43,41 @@ let SearchVal = ''
 
 export const esa_dic = async (fastify, options) => {
 
+    // init page
     fastify.get('/', async (req, res) => {
 
-        {
-            P.res = res
-        }
+        P.res = res
 
         await OnListEntity(
             render_ejs
         )
     })
 
+    // search @ text input
     fastify.post('/search', async (req, res) => {
 
         SearchVal = req.body.content // input(text)-name@'content'
 
-        {
-            P.res = res
-        }
+        P.res = res
 
         await OnFindEntity(
             SearchVal.trim(),
             render_ejs,
         )
     })
+
+    // click @ local href
+    for (const entity of ['School', 'Campus']) {
+        fastify.get(`/${entity}`, async (req, res) => {
+
+            SearchVal = entity
+
+            P.res = res
+
+            await OnFindEntity(
+                SearchVal.trim(),
+                render_ejs,
+            )
+        })
+    }
 }

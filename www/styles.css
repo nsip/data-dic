@@ -28,6 +28,7 @@
 h1 {
     text-align: center;
     font-family: Arial, Helvetica, sans-serif;
+    font-size: 24px;
 }
 
 hr.line1 {
@@ -130,7 +131,7 @@ div.block {
 .block p span.meta-item  {
     padding-left: 20px;    
     font-size: 16px;
-    font-weight: bold;
+    font-weight: normal;
     width: 180px;
     display: inline-block;
 }
@@ -140,49 +141,40 @@ div.block {
     font-weight: normal;
 }
 
-.block p.inner-p1 {
-    padding-left: 20px;
-    margin-bottom: -10px;
-    font-size: 17px;
-    font-weight: normal;
-}
-
-.block p.inner-p2 {
-    padding-left: 40px;
-    margin-bottom: -10px;
-    font-size: 17px;
-    font-weight: normal;
-}
-
 .block ol.inner-ol1 {
-    padding-left: 60px;
-    margin-top: 20px;
+    padding-left: 225px;
+    margin-top: -10px;
     margin-bottom: -10px;
     font-size: 16px;
     font-weight: normal;
+    /* color: green; */
 }
 
 .block ol.inner-ola-1 {
-    padding-left: 80px;
-    margin-top: 20px;
+    padding-left: 240px;
+    margin-top: -10px;
     margin-bottom: -10px;
     font-size: 16px;
     font-weight: normal;
+    /* color: red; */
 }
 
 .block ol.inner-ola-2 {
     padding-left: 20px;
     margin-top: 0px;
-    margin-bottom: 10px;
+    margin-bottom: 0px;
     font-size: 16px;
     font-weight: normal;
+    /* color: purple; */
 }
 
 .block p.content span.field {
     padding-left: 0px;
     margin-bottom: -10px;
     font-size: 16px;
-    font-weight: bold;
+    font-weight: normal;
+    display: inline-block;
+    width: 180px;
 }
 
 .block div p.field {
@@ -192,17 +184,99 @@ div.block {
     font-weight: bold;
 }
 
-.block div p.subitem {
-    padding-left: 40px;
-    margin-top: 15px;
-    margin-bottom: -15px;
+p#ent {
+    padding: 10px 0px 0px 205px;
+    margin: -20px 0px 10px 0px;
+    font-size: 19px;
+    font-weight: bold;
+}
+
+p#def {
+    padding: 10px 0px 0px 205px;
+    margin: -20px 0px 10px 0px;
     font-size: 16px;
     font-weight: normal;
 }
 
-.block span.shortarray {
+p#sif-xpath {
+    padding: 10px 0px 0px 205px;
+    margin: -20px 0px 10px 0px;
     font-size: 16px;
-    font-weight: bold;
+    font-weight: normal;
+}
+
+p#sif-def {
+    margin-top: -10px;
+    padding-left: 205px;
+    font-size: 16px;
+    font-weight: normal;
+}
+
+p#os-link {
+    padding: 10px 0px 0px 205px;
+    margin: -20px 0px 10px 0px;
+    font-size: 16px;
+    font-weight: normal;
+}
+
+p#os-path {
+    padding: 10px 0px 0px 205px;
+    margin: -20px 0px 10px 0px;
+    font-size: 16px;
+    font-weight: normal;
+}
+
+p#os-def {
+    margin-top: -10px;
+    padding-left: 205px;
+    font-size: 16px;
+    font-weight: normal;
+}
+
+p#os-cmt {
+    margin-top: -10px;
+    padding-left: 205px;
+    font-size: 16px;
+    font-weight: normal;
+}
+
+p#col-dm {
+    margin-top: -10px;
+    padding-left: 205px;
+    font-size: 16px;
+    font-weight: normal;
+}
+
+p#ld-def {
+    margin-top: -10px;
+    padding-left: 205px;
+    font-size: 16px;
+    font-weight: normal;
+    /* color: chocolate; */
+}
+
+p#ld-def-wrap {
+    margin-top: -10px;
+    padding-left: 205px;
+    font-size: 16px;
+    font-weight: normal;
+    /* color: chocolate; */
+}
+
+p#col-buss {
+    padding: 10px 0px 0px 205px;
+    margin: -20px 0px 10px 0px;
+    font-size: 16px;
+    font-weight: normal;
+    /* color: red; */
+}
+
+p#col-ele {
+    padding: 10px 0px 0px 205px;
+    margin: -20px 0px 10px 0px;
+    font-size: 16px;
+    font-weight: normal;
+    /* color: blueviolet; */
 }
 
 .block span.shortarray-link {
