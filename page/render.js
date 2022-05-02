@@ -1,5 +1,10 @@
-import * as ejs from 'ejs'
-import * as fs from 'fs'
+import ejs from 'ejs'
+import fs from 'fs'
+import util from 'util'
+import path from 'path'
+import { pipeline } from 'stream'
+const pump = util.promisify(pipeline)
+
 import { P, OnListEntity, OnFindEntity } from '../db/db-find.js'
 
 // running work dir for 'ejs'
@@ -66,7 +71,7 @@ export const esa_dic = async (fastify, options) => {
         )
     })
 
-    // click @ local href
+    // click @ local href for 'School', 'Campus'
     for (const entity of ['School', 'Campus']) {
         fastify.get(`/${entity}`, async (req, res) => {
 
@@ -80,4 +85,35 @@ export const esa_dic = async (fastify, options) => {
             )
         })
     }
+
+    // add Entity from JSON file, form with [enctype="multipart/form-data"] on submit
+    fastify.post('/add', async (req, res) => {
+
+        // process a single file
+        // also, consider that if you allow to upload multiple files
+        // you must consume all files otherwise the promise will never fulfill
+        const data = await req.file()
+
+        // data.file // stream
+        // data.fields // other parsed parts
+        // data.fieldname
+        // data.filename
+        // data.encoding
+        // data.mimetype
+
+        // to accumulate the file in memory! Be careful!
+        //
+        // await data.toBuffer() // Buffer
+        //
+        // or
+
+        await pump(data.file, fs.createWriteStream(`uploads/${data.filename}`))
+
+        // be careful of permission issues on disk and not overwrite
+        // sensitive files that could cause security risks
+
+        // also, consider that if the file stream is not consumed, the promise will never fulfill
+
+        res.code(200).send('SUCCESS')
+    })
 }

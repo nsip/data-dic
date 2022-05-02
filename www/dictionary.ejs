@@ -5,7 +5,9 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="jquery-3.6.0.min.js"></script>
+  <link rel="stylesheet" href="container.css">
   <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="line.css">
   <title>Education Data Dictionary</title>
 
   <script>
@@ -63,9 +65,9 @@
   <!----------------------------------------------------------------------------------------------------------------------------->
   <div id="container">
 
-    <div id="leftThing">
+    <div id="left">
 
-      <form id="search-form" action="/search" method="post" onsubmit="check_form(this); return false">
+      <form id="search-form" action="/search" method="post" onsubmit="check_search_form(this); return false">
 
         <!------------------------------------------------------- Search Input ------------------------------------------------------->
         <div id="search-div">
@@ -89,6 +91,14 @@
 
       </form>
 
+      <!------------------------------------------------------- Add Entity ------------------------------------------------------->
+      <form id="add-form" action="/add" method="post" enctype="multipart/form-data">
+
+        <input id="fileInput" type="file" style="display:none;" name="entity" onchange="$('#add-form').submit()" />
+        <input id="add-entity" type="button" value="Add Entity" onclick="$('#fileInput').click();" />
+
+      </form>
+
     </div>
 
     <!---------------------------------------------------------------------------------------------------------------------------------------->
@@ -99,7 +109,7 @@
 
       <!------------------------------------------------------- Entity ------------------------------------------------------->
       <div class="block" id="Entity">
-        Entity: <% if (content !=null) { %>
+        Entity <% if (content !=null) { %>
           <p id="ent">
             <%=entity%>
           </p>
@@ -461,7 +471,7 @@
       $('#main')[0].scrollTop = 0
     }
 
-    const check_form = async (form) => {
+    const check_search_form = async (form) => {
 
       let sv = $('#search-entity').val()
 

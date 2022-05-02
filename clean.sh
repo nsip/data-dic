@@ -2,5 +2,6 @@
 
 set -e
 
-rm ./data/preproc/preproc
+rm -rf ./data/preproc/preproc
 
+rm -rf ./uploads/*.* ./uploads/*

@@ -1,38 +1,14 @@
 {
-  "type": "module",
-  "dependencies": {
-    "cloudinary": "^1.28.1",
-    "ejs": "^3.0.2",
-    "fastify": "^3.27.1",
-    "fastify-cors": "^6.0.3",
-    "fastify-file-upload": "^4.0.0",
-    "fastify-formbody": "^5.2.0",
-    "fastify-multer": "^2.0.2",
-    "fastify-multipart": "^5.3.1",
-    "fastify-server-timeout": "^0.1.1",
-    "fastify-static": "^4.5.0",
-    "fastify-swagger": "^5.0.0",
-    "jquery": "^3.6.0",
-    "mongodb": "^4.4.0"
-  },
-  "scripts": {
-    "build": "pkg . -t node16-linux-x64 -o ../dd -d",
-    "start": "node server.js"
-  },
-  "bin": "./server.js",
-  "name": "data-dic",
-  "description": "ESA Data dictionary",
-  "version": "1.0.0",
-  "main": "config.js",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/nsip/data-dic.git"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/nsip/data-dic/issues"
-  },
-  "homepage": "https://github.com/nsip/data-dic#readme"
+    "type": "module",
+    "dependencies": {
+        "@fastify/cors": "^7.0.0",
+        "@fastify/formbody": "^6.0.0",
+        "@fastify/multipart": "^6.0.0",
+        "@fastify/static": "^5.0.0",
+        "ejs": "^3.1.7",
+        "fastify": "^3.29.0",
+        "mongodb": "^4.5.0",
+        "pump": "^3.0.0",
+        "stream": "^0.0.2"
+    }
 }

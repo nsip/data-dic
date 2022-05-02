@@ -186,6 +186,7 @@ export const css_ol1_cls_inject = (p, cls) => {
     }
     return p.replaceAll("<ol type='1'>", `<ol type="1" class=${cls}>`)
 }
+
 /////////////////////////////////////////////////////////////
 
 export const linkify = (s) => {

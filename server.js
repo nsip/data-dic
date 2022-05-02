@@ -1,10 +1,10 @@
 import path from 'path'
 import { fileURLToPath } from 'url';
 import fastifyFac from 'fastify'
-import multipart from 'fastify-multipart'
-import formbody from 'fastify-formbody'
-import stat from 'fastify-static'
-import cors from 'fastify-cors'
+import multipart from '@fastify/multipart'
+import formbody from '@fastify/formbody'
+import stat from '@fastify/static'
+import cors from '@fastify/cors'
 
 import { config } from './config.js'
 import { esa_dic } from './page/render.js'

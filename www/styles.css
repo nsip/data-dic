@@ -1,29 +1,5 @@
-#container {
-    height: 100%;
-    width: 100%;
-    display: flex;
-}
 
-#leftThing {
-    width: 15%;
-    overflow-y: scroll;
-    padding-top: 10px;
-    background-color: rgb(230, 230, 230);
-}
-
-#content {
-    width: 95%;
-    margin-left: 10px;
-    overflow-y: scroll;
-}
-
-#rightThing {
-    width: 0%;
-    overflow-y: scroll;
-    background-color: yellow;
-}
-
-/* ///////////////// */
+/* header */
 
 h1 {
     text-align: center;
@@ -31,44 +7,15 @@ h1 {
     font-size: 24px;
 }
 
-hr.line1 {
-    height: 1.5px;
-    background-color: rgb(20, 20, 20);
-    border: none;
-    margin: -10px 0px -8px 0px;
-}
-
-.block hr.line2 {
-    height: 1px;
-    background-color: rgb(255, 255, 255);
-    border: none;
-    margin: 20px 20px 10px 20px;
-}
-
-.block hr.line3 {
-    height: 1px;
-    background-color: rgb(120, 120, 120);
-    border: none;
-    margin: 25px 35px 0px 15px;
-}
-
-#nav-path
-{
+#nav-path {
     float: left;
-}
-
-#nav-field
-{
-    float: right;
-}
-
-div.nav-path {
     margin: 0px 0px 10px 20px;    
     font-weight: bold;
     font-family: Arial, Helvetica, sans-serif;
 }
 
-div#nav-field {
+#nav-field {
+    float: right;
     margin: 0px 10px 10px 0px;
     font-weight: normal;
     font-family: Arial, Helvetica, sans-serif;
@@ -80,10 +27,12 @@ div span.nav {
 }
 
 div span.nav:hover {
-    color: #00f;
+    color: blue;
     text-decoration: underline;
     cursor: pointer;
 }
+
+/* left panel */
 
 div#search-div {
     margin-left: 20px;
@@ -111,6 +60,23 @@ ul.entity-list li.link span:hover {
     text-decoration: underline;
     cursor: pointer;
 }
+
+form#add-form {
+    margin-top: auto;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-bottom: 5px;
+}
+
+form input#add-entity {
+    font-size: 15px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    width: 100%;
+    display: inline-block;
+}
+
+/* right panel */
 
 div.block {
     padding: 20px 0px 0px 20px;
@@ -281,7 +247,7 @@ p#col-ele {
 
 .block span.shortarray-link {
     font-size: 16px;
-    font-weight: bold;
+    font-weight: normal;
     color: blue;
 }
 
