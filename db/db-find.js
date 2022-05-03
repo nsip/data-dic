@@ -95,28 +95,27 @@ const list_entity = async (db, colName) => {
 //     await client.close()
 // })
 
-export const P = {
-    entities: [],
-    content: null,
+export const P = {}
 
-    title: 'Education Data Dictionary',
-    entity: '',
-    collections: [],
-    crossrefEntities: [],
-    definition: '',
-    expectedAttributes: [],
-    identifier: '',
-    legalDefinitions: [],
-    otherNames: [],
-    otherStandards: [],
-    sif: [],
-    superclass: [],
-    type: [],
-    defParent: '',
-
-    error: '',
-
-    navPathCol: [], // [ [], []... ]
+export const InitP = () => {
+    P.entities = []
+    P.content = null
+    P.title = 'Education Data Dictionary'
+    P.entity = ''
+    P.collections = []
+    P.crossrefEntities = []
+    P.definition = ''
+    P.expectedAttributes = []
+    P.identifier = ''
+    P.legalDefinitions = []
+    P.otherNames = []
+    P.otherStandards = []
+    P.sif = []
+    P.superclass = []
+    P.type = []
+    P.defParent = ''
+    P.error = ''
+    P.navPathCol = [] // [ [], []... ]
 }
 
 export const OnListEntity = async (fnReady) => {
@@ -162,6 +161,8 @@ export const OnFindEntity = async (value, fnReady) => {
             value = String(value).padStart(4, '0')
         }
         // console.log("-------------", field, ":", value)
+
+        //////////////////////////////
 
         let cont = await find_dic(db, 'entity', true, field, value)
         if (cont == null) {

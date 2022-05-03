@@ -5,7 +5,7 @@ import path from 'path'
 import { pipeline } from 'stream'
 const pump = util.promisify(pipeline)
 
-import { P, OnListEntity, OnFindEntity } from '../db/db-find.js'
+import { P, InitP, OnListEntity, OnFindEntity } from '../db/db-find.js'
 
 // running work dir for 'ejs'
 const template = fs.readFileSync('./www/dictionary.ejs', 'utf-8')
@@ -16,7 +16,6 @@ const render_ejs = (P, code) => {
         title: P.title,
         entities: P.entities,
         content: P.content,
-
         entity: P.entity,
         collections: P.collections,
         crossrefEntities: P.crossrefEntities,
@@ -30,11 +29,8 @@ const render_ejs = (P, code) => {
         superclass: P.superclass,
         type: P.type,
         defParent: P.defParent,
-
         error: P.error,
-
         search_value: SearchVal,
-
         navPathCol: P.navPathCol,
     })
 
@@ -58,6 +54,12 @@ export const esa_dic = async (fastify, options) => {
 
     // init page
     fastify.get('/', async (req, res) => {
+
+        // console.log("-------------------------------------INIT-------------------------------------")
+
+        SearchVal = ''
+
+        InitP()
         P.res = res
         await OnListEntity(
             render_ejs
@@ -66,6 +68,9 @@ export const esa_dic = async (fastify, options) => {
 
     // search @ text input
     fastify.post('/search', async (req, res) => {
+
+        // console.log("-------------------------------------SEARCH-------------------------------------")
+
         SearchVal = getValue(req.body.content) // input(text)-name@'content'
         P.res = res
         await OnFindEntity(
@@ -77,6 +82,9 @@ export const esa_dic = async (fastify, options) => {
     // click @ local url href for 'School', 'Campus'
     for (const entity of ['School', 'Campus']) {
         fastify.get(`/${entity}`, async (req, res) => {
+
+            // console.log("-------------------------------------CLICK URL-------------------------------------")
+
             SearchVal = entity
             P.res = res
             await OnFindEntity(
@@ -88,6 +96,8 @@ export const esa_dic = async (fastify, options) => {
 
     // add Entity from JSON file, form with [enctype="multipart/form-data"] on submit
     fastify.post('/add', async (req, res) => {
+
+        console.log("-------------------------------------ADD ENTITY-------------------------------------")
 
         // process a single file, also, consider that if you allow to upload multiple files
         // consume all files otherwise the promise will never fulfill
@@ -108,7 +118,7 @@ export const esa_dic = async (fastify, options) => {
 
         ///////////////////////////////////////////////////////////////////////
 
-        
+
 
         ///////////////////////////////////////////////////////////////////////
 
