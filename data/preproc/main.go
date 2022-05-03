@@ -12,6 +12,7 @@ import (
 
 func main() {
 
+	// clear current directory json files
 	filepath.Walk("./", func(path string, info fs.FileInfo, err error) error {
 		var e error
 		if strings.HasSuffix(path, ".json") {
@@ -19,7 +20,9 @@ func main() {
 		}
 		return e
 	})
-	Preproc() // create './out' in this function
+
+	// create './out' in this function
+	Preproc("../")
 
 	/////////////////////////////////////////////////////////////////////
 

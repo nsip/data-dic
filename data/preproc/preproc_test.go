@@ -18,5 +18,5 @@ func TestPreproc(t *testing.T) {
 		return e
 	})
 
-	Preproc()
+	Preproc("../")
 }

@@ -54,8 +54,8 @@ func fixErrComma(s string) string {
 	return strs.RangeReplace(s, spanls, []string{" "})
 }
 
-func Preproc() {
-	filepath.Walk("../", func(path string, info fs.FileInfo, err error) error {
+func Preproc(datadir string) {
+	filepath.Walk(datadir, func(path string, info fs.FileInfo, err error) error {
 		if strings.HasSuffix(path, ".json") {
 
 			fmt.Println(path)
