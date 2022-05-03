@@ -45,14 +45,20 @@ const render_ejs = (P, code) => {
 }
 
 let SearchVal = ''
+const dfltEntity = '' // 'ACARA ID'
+
+const getValue = (val) => {
+    if (val.length == 0) {
+        return dfltEntity
+    }
+    return val
+}
 
 export const esa_dic = async (fastify, options) => {
 
     // init page
     fastify.get('/', async (req, res) => {
-
         P.res = res
-
         await OnListEntity(
             render_ejs
         )
@@ -60,11 +66,8 @@ export const esa_dic = async (fastify, options) => {
 
     // search @ text input
     fastify.post('/search', async (req, res) => {
-
-        SearchVal = req.body.content // input(text)-name@'content'
-
+        SearchVal = getValue(req.body.content) // input(text)-name@'content'
         P.res = res
-
         await OnFindEntity(
             SearchVal.trim(),
             render_ejs,
@@ -74,11 +77,8 @@ export const esa_dic = async (fastify, options) => {
     // click @ local href for 'School', 'Campus'
     for (const entity of ['School', 'Campus']) {
         fastify.get(`/${entity}`, async (req, res) => {
-
             SearchVal = entity
-
             P.res = res
-
             await OnFindEntity(
                 SearchVal.trim(),
                 render_ejs,
@@ -89,9 +89,8 @@ export const esa_dic = async (fastify, options) => {
     // add Entity from JSON file, form with [enctype="multipart/form-data"] on submit
     fastify.post('/add', async (req, res) => {
 
-        // process a single file
-        // also, consider that if you allow to upload multiple files
-        // you must consume all files otherwise the promise will never fulfill
+        // process a single file, also, consider that if you allow to upload multiple files
+        // consume all files otherwise the promise will never fulfill
         const data = await req.file()
 
         // data.file // stream
@@ -101,19 +100,22 @@ export const esa_dic = async (fastify, options) => {
         // data.encoding
         // data.mimetype
 
-        // to accumulate the file in memory! Be careful!
-        //
         // await data.toBuffer() // Buffer
-        //
-        // or
-
         await pump(data.file, fs.createWriteStream(`uploads/${data.filename}`))
 
-        // be careful of permission issues on disk and not overwrite
-        // sensitive files that could cause security risks
-
+        // be careful of permission issues on disk and not overwrite, sensitive files that could cause security risks
         // also, consider that if the file stream is not consumed, the promise will never fulfill
 
-        res.code(200).send('SUCCESS')
+        P.res = res
+        if (SearchVal.length == 0) {
+            await OnListEntity(
+                render_ejs
+            )
+        } else {
+            await OnFindEntity(
+                SearchVal.trim(),
+                render_ejs,
+            )
+        }
     })
 }

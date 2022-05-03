@@ -94,7 +94,7 @@
       <!------------------------------------------------------- Add Entity ------------------------------------------------------->
       <form id="add-form" action="/add" method="post" enctype="multipart/form-data">
 
-        <input id="fileInput" type="file" style="display:none;" name="entity" onchange="$('#add-form').submit()" />
+        <input id="fileInput" type="file" style="display:none;" name="entity" accept=".json" onchange="$('#add-form').submit()" />
         <input id="add-entity" type="button" value="Add Entity" onclick="$('#fileInput').click();" />
 
       </form>
@@ -109,7 +109,7 @@
 
       <!------------------------------------------------------- Entity ------------------------------------------------------->
       <div class="block" id="Entity">
-        Entity <% if (content !=null) { %>
+        Entity<% if (content !=null) { %>
           <p id="ent">
             <%=entity%>
           </p>
@@ -119,7 +119,7 @@
 
       <!------------------------------------------------------- Definition ------------------------------------------------------->
       <div class="block" id="Definition">
-        Definition:<% if (content !=null) { %>
+        Definition<% if (content !=null) { %>
           <p id="def">
             <%- definition %>
           </p>
