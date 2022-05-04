@@ -1,7 +1,10 @@
+'use strict'
+
 import cp from 'child_process'
 import process from 'process'
+import fs from 'fs'
 
-export const invoke = (exePath) => {    
+export const invoke = (exePath) => {
     console.log("Current directory:", process.cwd());
     console.log(`invoking: ${exePath}`);
 
@@ -16,3 +19,12 @@ export const invoke = (exePath) => {
 
 // process.chdir("../data/preproc/")
 // invoke("./preproc")
+
+export const createIfNeeded = (path) => {
+    if (fs.existsSync(path)) {
+        return
+    }
+    fs.mkdirSync(path, { recursive: true })
+}
+
+// createIfNeeded("./uploaded")

@@ -182,7 +182,6 @@ export const OnFindEntity = async (value, fnReady) => {
 
             {
                 P.content = cont
-                P.error = ''
 
                 searchEntity = cont.Entity
 

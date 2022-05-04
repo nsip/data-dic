@@ -1,7 +1,11 @@
+'use strict'
+
 import ejs from 'ejs'
 import fs from 'fs'
 import util from 'util'
 import path from 'path'
+import { createIfNeeded } from './tool.js'
+import { validateEntity } from './validate.js'
 import { pipeline } from 'stream'
 const pump = util.promisify(pipeline)
 
@@ -57,10 +61,11 @@ export const esa_dic = async (fastify, options) => {
 
         // console.log("-------------------------------------INIT-------------------------------------")
 
-        SearchVal = ''
-
         InitP()
         P.res = res
+
+        SearchVal = ''
+
         await OnListEntity(
             render_ejs
         )
@@ -71,8 +76,11 @@ export const esa_dic = async (fastify, options) => {
 
         // console.log("-------------------------------------SEARCH-------------------------------------")
 
-        SearchVal = getValue(req.body.content) // input(text)-name@'content'
+        P.error = ''
         P.res = res
+
+        SearchVal = getValue(req.body.content) // input(text)-name@'content'
+
         await OnFindEntity(
             SearchVal.trim(),
             render_ejs,
@@ -85,8 +93,11 @@ export const esa_dic = async (fastify, options) => {
 
             // console.log("-------------------------------------CLICK URL-------------------------------------")
 
-            SearchVal = entity
+            P.error = ''
             P.res = res
+
+            SearchVal = entity
+
             await OnFindEntity(
                 SearchVal.trim(),
                 render_ejs,
@@ -99,6 +110,9 @@ export const esa_dic = async (fastify, options) => {
 
         console.log("-------------------------------------ADD ENTITY-------------------------------------")
 
+        P.error = ''
+        P.res = res
+
         // process a single file, also, consider that if you allow to upload multiple files
         // consume all files otherwise the promise will never fulfill
         const data = await req.file()
@@ -109,20 +123,44 @@ export const esa_dic = async (fastify, options) => {
         // data.filename
         // data.encoding
         // data.mimetype
-
         // await data.toBuffer() // Buffer
-        await pump(data.file, fs.createWriteStream(`uploads/${data.filename}`))
+
+        createIfNeeded('./data')
+        const uploadpath = `data/${data.filename}`
+        await pump(data.file, fs.createWriteStream(uploadpath))
 
         // be careful of permission issues on disk and not overwrite, sensitive files that could cause security risks
         // also, consider that if the file stream is not consumed, the promise will never fulfill
 
         ///////////////////////////////////////////////////////////////////////
+        // validate inbound entity json file
 
+        const rawdata = fs.readFileSync(uploadpath)
+        const entity = JSON.parse(rawdata)
+        console.log("entity ----------------", entity)
 
+        if (!validateEntity(entity)) {
+            P.error = `invalid upload entity@ ${data.filename}`
+            console.log("error ----------------", P.error)
+            fs.unlinkSync(uploadpath)
+        }
+
+        ///////////////////////////////////////////////////////////////////////
+        // re-preprocess all
+
+        if (P.error.length == 0) {
+
+        }
+
+        ///////////////////////////////////////////////////////////////////////
+        // re-ingest all
+
+        if (P.error.length == 0) {
+
+        }
 
         ///////////////////////////////////////////////////////////////////////
 
-        P.res = res
         if (SearchVal.length == 0) {
             await OnListEntity(
                 render_ejs
