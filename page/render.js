@@ -3,9 +3,9 @@
 import ejs from 'ejs'
 import fs from 'fs'
 import util from 'util'
-import path from 'path'
-import { createIfNeeded } from './tool.js'
+import { createIfNeeded, invoke } from './tool.js'
 import { validateEntity } from './validate.js'
+import { ingestEntity, ingestClassLinkage } from '../db/db-ingest.js'
 import { pipeline } from 'stream'
 const pump = util.promisify(pipeline)
 
@@ -105,10 +105,62 @@ export const esa_dic = async (fastify, options) => {
         })
     }
 
+    fastify.post('/new', async (req, res) => {
+
+        // console.log('body    ---', req.body)           // from body
+        // console.log('query   ---', req.query)          // from url
+        // console.log('params  ---', req.params.entity)  // from /url:param
+        // console.log('headers ---', req.headers)
+
+        console.log("\n-------------------------------------NEW ENTITY-------------------------------------\n")
+
+        P.error = ''
+        P.res = res
+
+        const filename = req.body.Entity
+        createIfNeeded('./data')
+        const uploadpath = `data/${filename}.json`
+
+        fs.writeFile(uploadpath, JSON.stringify(req.body), (err) => {
+            if (err) {
+                console.log("-------------------", err)
+            }
+        })
+
+        // waiting for file saving is finished !
+        while (!fs.existsSync(uploadpath)) {
+            await new Promise(resolve => setTimeout(resolve, 50));
+        }
+
+        ///////////////////////////////////////////////////////////////////////
+        // re-preprocess all
+
+        invoke("./data/preproc/preproc")
+
+        ///////////////////////////////////////////////////////////////////////
+        // re-ingest all
+
+        ingestEntity('./data/preproc/out', 'entity')
+        ingestClassLinkage('./data/preproc/out/class-link.json', 'class')
+
+        ///////////////////////////////////////////////////////////////////////
+
+        if (SearchVal.length == 0) {
+            await OnListEntity(
+                render_ejs
+            )
+        } else {
+            await OnFindEntity(
+                SearchVal.trim(),
+                render_ejs,
+            )
+        }
+    })
+
     // add Entity from JSON file, form with [enctype="multipart/form-data"] on submit
     fastify.post('/add', async (req, res) => {
 
-        console.log("-------------------------------------ADD ENTITY-------------------------------------")
+        console.log("\n-------------------------------------ADD ENTITY-------------------------------------\n")
 
         P.error = ''
         P.res = res
@@ -149,14 +201,15 @@ export const esa_dic = async (fastify, options) => {
         // re-preprocess all
 
         if (P.error.length == 0) {
-
+            invoke("./data/preproc/preproc")
         }
 
         ///////////////////////////////////////////////////////////////////////
         // re-ingest all
 
         if (P.error.length == 0) {
-
+            ingestEntity('./data/preproc/out', 'entity')
+            ingestClassLinkage('./data/preproc/out/class-link.json', 'class')
         }
 
         ///////////////////////////////////////////////////////////////////////

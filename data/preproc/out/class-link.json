@@ -1,1 +1,38 @@
-{"Person":["Person"],"Name":["Name"],"Organisation":["Organisation"],"Campus":["Organisation--School--Campus"],"ACARA ID":["Identifier--ACARA ID"],"AGE ID (old)":["Identifier--AGE ID (old)"],"Contact":["Person--Contact"],"Person^DOTFamilyName":["Name--Person.FamilyName"],"School Name":["Name--School Name"],"School":["Organisation--School"],"Identifier":["Identifier"],"Statewide School ID":["Identifier--Statewide School ID"]}
+{
+    "Person^DOTFamilyName": [
+        "Name--Person.FamilyName"
+    ],
+    "School Name": [
+        "Name--School Name"
+    ],
+    "Organisation": [
+        "Organisation"
+    ],
+    "Campus": [
+        "Organisation--School--Campus"
+    ],
+    "Identifier": [
+        "Identifier"
+    ],
+    "AGE ID (old)": [
+        "Identifier--AGE ID (old)"
+    ],
+    "Contact": [
+        "Person--Contact"
+    ],
+    "Name": [
+        "Name"
+    ],
+    "School": [
+        "Organisation--School"
+    ],
+    "ACARA ID": [
+        "Identifier--ACARA ID"
+    ],
+    "Statewide School ID": [
+        "Identifier--Statewide School ID"
+    ],
+    "Person": [
+        "Person"
+    ]
+}

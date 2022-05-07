@@ -263,17 +263,29 @@ export const OnFindEntity = async (value, fnReady) => {
 
             cont = await find_dic(db, 'class', true, '', null, field)
 
-            const pathCol = cont[field]
-            if (Array.isArray(pathCol)) {
-                P.navPathCol = []
-                for (let path of pathCol) {
-                    P.navPathCol.push(path.split('--'))
-                }
-            }
+            // console.log("\n-----", cont)
 
-            const firstPathCol = P.navPathCol[0]
-            if (firstPathCol.length > 1) {
-                P.defParent = firstPathCol[firstPathCol.length - 2]
+            if (Object.keys(cont).length === 0) {
+
+                P.navPathCol = []
+                P.defParent = ''
+
+            } else {
+
+                const pathCol = cont[field]
+                if (Array.isArray(pathCol)) {
+                    P.navPathCol = []
+                    for (let path of pathCol) {
+                        P.navPathCol.push(path.split('--'))
+                    }
+                }
+                if ('navPathCol' in P && P.navPathCol.length > 0) {
+                    const firstPathCol = P.navPathCol[0]
+                    if ('length' in firstPathCol && firstPathCol.length > 1) {
+                        P.defParent = firstPathCol[firstPathCol.length - 2]
+                    }
+                }
+
             }
         }
 

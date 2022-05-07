@@ -57,7 +57,7 @@ export const ingestEntity = (dirPath, colName) => {
 
 }
 
-ingestEntity('../data/preproc/out', 'entity')
+// ingestEntity('../data/preproc/out', 'entity')
 
 // linkFilePath: '../data/preproc/out/class-link.json'
 export const ingestClassLinkage = (linkFilePath, colName) => {
@@ -80,4 +80,4 @@ export const ingestClassLinkage = (linkFilePath, colName) => {
 
 }
 
-ingestClassLinkage('../data/preproc/out/class-link.json', 'class')
+// ingestClassLinkage('../data/preproc/out/class-link.json', 'class')

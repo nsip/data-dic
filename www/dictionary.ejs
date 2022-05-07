@@ -67,6 +67,7 @@
 
     <div id="left">
 
+      <!-- real submitting is in 'check_search_form' -->
       <form id="search-form" action="/search" method="post" onsubmit="check_search_form(this); return false">
 
         <!------------------------------------------------------- Search Input ------------------------------------------------------->
@@ -77,6 +78,7 @@
         </div>
 
         <!------------------------------------------------------- Entity List ------------------------------------------------------->
+        <!-- set selected item into above text input, then submit form -->
         <ul class="entity-list">
           <% for(const entity of entities) { %>
             <li class="link" onclick="
@@ -92,10 +94,14 @@
       </form>
 
       <!------------------------------------------------------- Add Entity ------------------------------------------------------->
+      <!-- upload file by select box. Different from normal, below do submitting when closing select box -->
       <form id="add-form" action="/add" method="post" enctype="multipart/form-data">
 
-        <input id="fileInput" type="file" style="display:none;" name="entity" accept=".json" onchange="$('#add-form').submit()" />
-        <input id="add-entity" type="button" value="Add Entity" onclick="$('#fileInput').click();" />
+        <input id="new-entity" type="button" value="New Entity" onclick="new_entity()" />
+
+        <input id="fileInput" type="file" style="display:none;" name="entity" accept=".json"
+          onchange="$('#add-form').submit()" />
+        <input id="load-entity" type="button" value="Load Entity" onclick="$('#fileInput').click();" />
 
       </form>
 
@@ -471,6 +477,7 @@
       $('#main')[0].scrollTop = 0
     }
 
+    // before real submitting, check background in advance 
     const check_search_form = async (form) => {
 
       let sv = $('#search-entity').val()
@@ -499,6 +506,42 @@
       }
 
       alert(`Couldn't find ${sv}`)
+    }
+
+    // normal POST action
+    const new_entity = async () => {
+
+      let entityName = prompt('Please entre new entity name:', '')
+      if (entityName.length == 0) {
+        return
+      }
+
+      let newEntity = {
+        Entity: entityName,
+        Definition: "",
+        SIF: [],
+        OtherStandards: [],
+        LegalDefinitions: [],
+        Collections: [],
+        Meta: "",
+      }
+
+      const resp = await fetch(
+        `http://localhost:3000/new`,
+        {
+          method: 'POST',
+          mode: 'cors',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(newEntity),
+        }
+      )
+
+      const code = await resp.status
+      if (code == 200) {
+        return
+      }
     }
 
   </script>

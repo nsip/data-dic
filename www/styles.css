@@ -68,7 +68,15 @@ form#add-form {
     margin-bottom: 5px;
 }
 
-form input#add-entity {
+form input#new-entity {
+    font-size: 15px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    width: 100%;
+    display: inline-block;
+}
+
+form input#load-entity {
     font-size: 15px;
     padding-top: 5px;
     padding-bottom: 5px;
