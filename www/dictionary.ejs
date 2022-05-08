@@ -97,10 +97,12 @@
       <!-- upload file by select box. Different from normal, below do submitting when closing select box -->
       <form id="add-form" action="/add" method="post" enctype="multipart/form-data">
 
-        <input id="new-entity" type="button" value="New Entity" onclick="new_entity()" />
+        <input id="new-entity" type="button" value="New Entity"
+          onclick="new_entity($('#search-form'), $('#search-entity'))" />
 
         <input id="fileInput" type="file" style="display:none;" name="entity" accept=".json"
           onchange="$('#add-form').submit()" />
+
         <input id="load-entity" type="button" value="Load Entity" onclick="$('#fileInput').click();" />
 
       </form>
@@ -509,7 +511,7 @@
     }
 
     // normal POST action
-    const new_entity = async () => {
+    const new_entity = async (search_form, search_input) => {
 
       let entityName = prompt('Please entre new entity name:', '')
       if (entityName.length == 0) {
@@ -540,6 +542,13 @@
 
       const code = await resp.status
       if (code == 200) {
+        setTimeout(() => {
+
+          window.location.replace(`http://localhost:3000`); // reload entity list
+          search_input.val(entityName);                     // new entity for searching
+          search_form.submit();                             // get empty new entity content for editing 
+
+        }, 200)
         return
       }
     }

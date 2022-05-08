@@ -135,13 +135,12 @@ export const esa_dic = async (fastify, options) => {
         ///////////////////////////////////////////////////////////////////////
         // re-preprocess all
 
-        invoke("./data/preproc/preproc")
-
-        ///////////////////////////////////////////////////////////////////////
-        // re-ingest all
-
-        ingestEntity('./data/preproc/out', 'entity')
-        ingestClassLinkage('./data/preproc/out/class-link.json', 'class')
+        invoke("./data/preproc/preproc", () => {
+            ///////////////////////////////////////////////////////////////////////
+            // re-ingest all
+            ingestEntity('./data/preproc/out', 'entity')
+            ingestClassLinkage('./data/preproc/out/class-link.json', 'class')
+        })
 
         ///////////////////////////////////////////////////////////////////////
 
@@ -201,15 +200,12 @@ export const esa_dic = async (fastify, options) => {
         // re-preprocess all
 
         if (P.error.length == 0) {
-            invoke("./data/preproc/preproc")
-        }
-
-        ///////////////////////////////////////////////////////////////////////
-        // re-ingest all
-
-        if (P.error.length == 0) {
-            ingestEntity('./data/preproc/out', 'entity')
-            ingestClassLinkage('./data/preproc/out/class-link.json', 'class')
+            invoke("./data/preproc/preproc", () => {
+                ///////////////////////////////////////////////////////////////////////
+                // re-ingest all
+                ingestEntity('./data/preproc/out', 'entity')
+                ingestClassLinkage('./data/preproc/out/class-link.json', 'class')
+            })
         }
 
         ///////////////////////////////////////////////////////////////////////

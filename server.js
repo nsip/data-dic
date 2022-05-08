@@ -5,6 +5,7 @@ import multipart from '@fastify/multipart'
 import formbody from '@fastify/formbody'
 import stat from '@fastify/static'
 import cors from '@fastify/cors'
+import cookie from '@fastify/cookie'
 
 import { config } from './config.js'
 import { esa_dic } from './page/render.js'

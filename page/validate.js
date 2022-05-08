@@ -10,16 +10,16 @@ export const validateEntity = (entity) => {
     return true
 }
 
-console.log(
-    validateEntity(
-        {
-            "Entity": 1,
-            "Definition": 1,
-            "SIF": 1,
-            "OtherStandards": 1,
-            "LegalDefinitions": 1,
-            "Collections": 1,
-            "Metadata": 1,
-        }
-    )
-)
+// console.log(
+//     validateEntity(
+//         {
+//             "Entity": 1,
+//             "Definition": 1,
+//             "SIF": 1,
+//             "OtherStandards": 1,
+//             "LegalDefinitions": 1,
+//             "Collections": 1,
+//             "Metadata": 1,
+//         }
+//     )
+// )

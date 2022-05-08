@@ -1,6 +1,6 @@
 import * as mongodb from 'mongodb'
 import * as assert from 'assert'
-import {  xpath2object } from './tool.js'
+import { xpath2object } from './tool.js'
 
 export const MongoClient = mongodb.MongoClient
 export const dbName = 'dictionary'
@@ -39,16 +39,44 @@ export const del_dic = async (db, colName, oneFlag, attr, value) => {
 }
 
 // delete empty Entity
-MongoClient.connect(url, async (err, client) => {
+// MongoClient.connect(url, async (err, client) => {
 
-    assert.equal(null, err)
-    console.log("Connected successfully to server")
+//     assert.equal(null, err)
+//     console.log("Connected successfully to server")
 
-    const db = client.db(dbName) // create if not existing
-    const colName = 'entity'
+//     const db = client.db(dbName) // create if not existing
+//     const colName = 'entity'
 
-    const delquery = await del_dic(db, colName, false, 'Entity', null)
-    console.log(delquery)
+//     const delquery = await del_dic(db, colName, false, 'Entity', null)
+//     console.log(delquery)
 
-    await client.close()
-})
+//     await client.close()
+// })
+
+export const DelEntities = (...rmEntities) => {
+
+    rmEntities.forEach(entity => {
+
+        MongoClient.connect(url, async (err, client) => {
+
+            assert.equal(null, err)
+            console.log("Connected successfully to server")
+
+            const db = client.db(dbName) // create if not existing
+            const colName = 'entity'
+
+            const delquery = await del_dic(db, colName, true, 'Entity', entity)
+            console.log(delquery)
+
+            await client.close()
+        })
+
+    })
+}
+
+DelEntities(
+    'AAA', 'BBB', 'CCC', 'DDD', 'EEE', 'FFF', 'GGG',
+    'HHH', 'III', 'JJJ', 'KKK', 'LLL', 'MMM', 'NNN',
+    'OOO', 'PPP', 'QQQ', 'RRR', 'SSS', 'TTT', 'UUU',
+    'VVV', 'WWW', 'XXX', 'YYY', 'ZZZ',
+)
