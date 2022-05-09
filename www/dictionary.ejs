@@ -1,3 +1,5 @@
+<!-- <!DOCTYPE html> -->
+
 <html lang="en">
 
 <head>
@@ -68,11 +70,11 @@
     <div id="left">
 
       <!-- real submitting is in 'check_search_form' -->
-      <form id="search-form" action="/search" method="post" onsubmit="check_search_form(this); return false">
+      <form id="search-form" action="/" method="post" onsubmit="check_search_form(this); return false">
 
         <!------------------------------------------------------- Search Input ------------------------------------------------------->
         <div id="search-div">
-          <input type="text" id="search-entity" name="content" placeholder="Entity or Identifier"
+          <input type="text" id="search-entity" name="entity" placeholder="Entity or Identifier"
             value="<%= search_value %>" style="padding: 5px 0px 5px 10px;">
           <input type="submit" value="go" style="padding: 5px 10px 5px 10px; font-size: 14px;">
         </div>
@@ -97,8 +99,7 @@
       <!-- upload file by select box. Different from normal, below do submitting when closing select box -->
       <form id="add-form" action="/add" method="post" enctype="multipart/form-data">
 
-        <input id="new-entity" type="button" value="New Entity"
-          onclick="new_entity($('#search-form'), $('#search-entity'))" />
+        <input id="new-entity" type="button" value="New Entity" onclick="new_entity()" />
 
         <input id="fileInput" type="file" style="display:none;" name="entity" accept=".json"
           onchange="$('#add-form').submit()" />
@@ -511,14 +512,29 @@
     }
 
     // normal POST action
-    const new_entity = async (search_form, search_input) => {
+    const new_entity = async () => {
 
       let entityName = prompt('Please entre new entity name:', '')
       if (entityName.length == 0) {
         return
       }
 
-      let newEntity = {
+      // existing check
+      const respChk = await fetch(
+        `http://localhost:3000/api/entity/${entityName}`,
+        {
+          method: 'GET',
+          mode: 'cors',
+        }
+      )
+      const codeChk = await respChk.status
+      if (codeChk == 200) {
+        alert(`[${entityName}] is already existing`)
+        return
+      }
+
+      // new an empty entity
+      const newEntity = {
         Entity: entityName,
         Definition: "",
         SIF: [],
@@ -528,7 +544,7 @@
         Meta: "",
       }
 
-      const resp = await fetch(
+      const respNew = await fetch(
         `http://localhost:3000/new`,
         {
           method: 'POST',
@@ -540,16 +556,14 @@
         }
       )
 
-      const code = await resp.status
-      if (code == 200) {
-        setTimeout(() => {
+      const codeNew = await respNew.status
+      if (codeNew == 200) {
 
-          window.location.replace(`http://localhost:3000`); // reload entity list
-          search_input.val(entityName);                     // new entity for searching
-          search_form.submit();                             // get empty new entity content for editing 
+        await (async () => {
+          await new Promise(resolve => setTimeout(resolve, 200));
+          window.location.replace(`http://localhost:3000/?entity=${entityName}`)
+        })()
 
-        }, 200)
-        return
       }
     }
 

@@ -56,42 +56,47 @@ const getValue = (val) => {
 
 export const esa_dic = async (fastify, options) => {
 
+    // https://github.com/fastify/fastify/blob/main/docs/Reference/Request.md
+
+    // console.log('body    ---', req.body)           // from body
+    // console.log('query   ---', req.query)          // from url
+    // console.log('params  ---', req.params.entity)  // from /url/:entity
+    // console.log('headers ---', req.headers)
+
     // init page
     fastify.get('/', async (req, res) => {
 
-        // console.log("-------------------------------------INIT-------------------------------------")
+        // console.log('query   ---', req.query.entity)
 
-        InitP()
-        P.res = res
+        console.log("\n-------------------------------------INIT-------------------------------------")
 
         SearchVal = ''
 
-        await OnListEntity(
-            render_ejs
-        )
-    })
+        if ('entity' in req.query) {
+            SearchVal = req.query.entity.trim()
+        }
 
-    // search @ text input
-    fastify.post('/search', async (req, res) => {
+        if (SearchVal.length == 0) {
 
-        // console.log("-------------------------------------SEARCH-------------------------------------")
+            InitP()
+            P.res = res
 
-        P.error = ''
-        P.res = res
+            await OnListEntity(render_ejs)
 
-        SearchVal = getValue(req.body.content) // input(text)-name@'content'
+        } else {
 
-        await OnFindEntity(
-            SearchVal.trim(),
-            render_ejs,
-        )
+            P.error = ''
+            P.res = res
+
+            await OnFindEntity(SearchVal, render_ejs)
+        }
     })
 
     // click @ local url href for 'School', 'Campus'
     for (const entity of ['School', 'Campus']) {
         fastify.get(`/${entity}`, async (req, res) => {
 
-            // console.log("-------------------------------------CLICK URL-------------------------------------")
+            console.log("\n-------------------------------------CLICK URL-------------------------------------")
 
             P.error = ''
             P.res = res
@@ -105,12 +110,27 @@ export const esa_dic = async (fastify, options) => {
         })
     }
 
-    fastify.post('/new', async (req, res) => {
+    // if [entity] is empty, input(text) applies on form submit
+    fastify.post(`/:entity`, async (req, res) => {
 
-        // console.log('body    ---', req.body)           // from body
-        // console.log('query   ---', req.query)          // from url
-        // console.log('params  ---', req.params.entity)  // from /url:param
-        // console.log('headers ---', req.headers)
+        console.log("\n------------------------------------- POST SEARCH -------------------------------------")
+
+        P.error = ''
+        P.res = res
+
+        SearchVal = req.params.entity
+
+        if (SearchVal.length == 0) {
+            SearchVal = getValue(req.body.entity) // input(text)-name@'entity' ref. dictionary.ejs ln77
+        }
+
+        await OnFindEntity(
+            SearchVal.trim(),
+            render_ejs,
+        )
+    })
+
+    fastify.post('/new', async (req, res) => {
 
         console.log("\n-------------------------------------NEW ENTITY-------------------------------------\n")
 
@@ -132,11 +152,8 @@ export const esa_dic = async (fastify, options) => {
             await new Promise(resolve => setTimeout(resolve, 50));
         }
 
-        ///////////////////////////////////////////////////////////////////////
         // re-preprocess all
-
         invoke("./data/preproc/preproc", () => {
-            ///////////////////////////////////////////////////////////////////////
             // re-ingest all
             ingestEntity('./data/preproc/out', 'entity')
             ingestClassLinkage('./data/preproc/out/class-link.json', 'class')
@@ -144,16 +161,18 @@ export const esa_dic = async (fastify, options) => {
 
         ///////////////////////////////////////////////////////////////////////
 
-        if (SearchVal.length == 0) {
-            await OnListEntity(
-                render_ejs
-            )
-        } else {
-            await OnFindEntity(
-                SearchVal.trim(),
-                render_ejs,
-            )
-        }
+        await OnListEntity(render_ejs)
+
+        // if (SearchVal.length == 0) {
+        //     await OnListEntity(
+        //         render_ejs
+        //     )
+        // } else {
+        //     await OnFindEntity(
+        //         SearchVal.trim(),
+        //         render_ejs,
+        //     )
+        // }
     })
 
     // add Entity from JSON file, form with [enctype="multipart/form-data"] on submit
@@ -196,12 +215,9 @@ export const esa_dic = async (fastify, options) => {
             fs.unlinkSync(uploadpath)
         }
 
-        ///////////////////////////////////////////////////////////////////////
         // re-preprocess all
-
         if (P.error.length == 0) {
             invoke("./data/preproc/preproc", () => {
-                ///////////////////////////////////////////////////////////////////////
                 // re-ingest all
                 ingestEntity('./data/preproc/out', 'entity')
                 ingestClassLinkage('./data/preproc/out/class-link.json', 'class')
@@ -210,15 +226,17 @@ export const esa_dic = async (fastify, options) => {
 
         ///////////////////////////////////////////////////////////////////////
 
-        if (SearchVal.length == 0) {
-            await OnListEntity(
-                render_ejs
-            )
-        } else {
-            await OnFindEntity(
-                SearchVal.trim(),
-                render_ejs,
-            )
-        }
+        await OnListEntity(render_ejs)
+
+        // if (SearchVal.length == 0) {
+        //     await OnListEntity(
+        //         render_ejs
+        //     )
+        // } else {
+        //     await OnFindEntity(
+        //         SearchVal.trim(),
+        //         render_ejs,
+        //     )
+        // }
     })
 }

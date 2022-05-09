@@ -35,3 +35,8 @@ rm -f ./data/WWW.json
 rm -f ./data/XXX.json
 rm -f ./data/YYY.json
 rm -f ./data/ZZZ.json
+
+# clean test entities in db
+cd ./db
+node ./db-del.js
+cd -

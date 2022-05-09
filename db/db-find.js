@@ -128,10 +128,9 @@ export const OnListEntity = async (fnReady) => {
         console.log("Connected successfully to server")
 
         const db = client.db(dbName) // create if not existing
-        const colName = 'entity'
 
         {
-            P.entities = await list_entity(db, colName)
+            P.entities = await list_entity(db, 'entity')
             P.content = null
         }
 
@@ -155,6 +154,12 @@ export const OnFindEntity = async (value, fnReady) => {
         let searchEntity = ''
 
         const db = client.db(dbName) // create if not existing
+
+        ////////////////////////////////////////////////////////////////////////////////////////
+        // Refresh List
+        ////////////
+
+        P.entities = await list_entity(db, 'entity')
 
         ////////////////////////////////////////////////////////////////////////////////////////
         // Content
