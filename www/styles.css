@@ -87,171 +87,71 @@ form input#load-entity {
 /* right panel */
 
 div.block {
-    padding: 20px 0px 0px 20px;
-    margin: 0px, 0px, -5px, 0px;
-    font-size: 17px;
-    font-weight: bold;
-    font-family: Arial, Helvetica, sans-serif;    
-    background-color: rgb(230, 230, 230);
+    padding: 15px 0px 15px 10px;
+    margin-bottom: 2px;
+    font-size: 17px;    
+    font-family: Arial, Helvetica, sans-serif, monospace;    
+    background-color: rgb(200, 200, 200);
+    display: flex;
+    flex-direction: row;
 }
 
-.block p.content {
-    padding-left: 20px;
-    margin-bottom: -10px;
-    font-size: 17px;
-    font-weight: normal;
-}
-
-.block p span.meta-item  {
-    padding-left: 20px;    
-    font-size: 16px;
-    font-weight: normal;
-    width: 180px;
-    display: inline-block;
-}
-
-.block p span {    
-    font-size: 16px;
-    font-weight: normal;
-}
-
-.block ol.inner-ol1 {
-    padding-left: 225px;
-    margin-top: -10px;
-    margin-bottom: -10px;
-    font-size: 16px;
-    font-weight: normal;
-    /* color: green; */
-}
-
-.block ol.inner-ola-1 {
-    padding-left: 240px;
-    margin-top: -10px;
-    margin-bottom: -10px;
-    font-size: 16px;
-    font-weight: normal;
-    /* color: red; */
-}
-
-.block ol.inner-ola-2 {
-    padding-left: 20px;
-    margin-top: 0px;
-    margin-bottom: 0px;
-    font-size: 16px;
-    font-weight: normal;
-    /* color: purple; */
-}
-
-.block p.content span.field {
-    padding-left: 0px;
-    margin-bottom: -10px;
-    font-size: 16px;
-    font-weight: normal;
-    display: inline-block;
-    width: 180px;
-}
-
-.block div p.field {
-    padding-left: 20px;
-    margin-bottom: -10px;
-    font-size: 16px;
+div span.category {
+    width: 10%;
+    font-size: 18;
     font-weight: bold;
 }
 
-p#ent {
-    padding: 10px 0px 0px 205px;
-    margin: -20px 0px 10px 0px;
-    font-size: 19px;
-    font-weight: bold;
+div span.content-flex {
+    margin-right: 20px;
+    width: 88%;
+    font-weight: normal;
+    
+    display: flex;
+    flex-direction: column;    
 }
 
-p#def {
-    padding: 10px 0px 0px 205px;
-    margin: -20px 0px 10px 0px;
-    font-size: 16px;
+div span.content-whole {
+    margin-right: 20px;
+    width: 88%;   
     font-weight: normal;
 }
 
-p#sif-xpath {
-    padding: 10px 0px 0px 205px;
-    margin: -20px 0px 10px 0px;
-    font-size: 16px;
-    font-weight: normal;
+/*  */
+
+div span div.cat-val {
+    display: flex;
+    flex-direction: row;
+    margin-top: 0px;  
+    margin-bottom: 10px;   
 }
 
-p#sif-def {
-    margin-top: -10px;
-    padding-left: 205px;
-    font-size: 16px;
+div span div span.sub-cat {    
     font-weight: normal;
+    text-decoration: underline;
+    width: 220px;
+    /* background-color: rgb(172, 180, 178); */
 }
 
-p#os-link {
-    padding: 10px 0px 0px 205px;
-    margin: -20px 0px 10px 0px;
-    font-size: 16px;
-    font-weight: normal;
+div span div span.sub-val {    
+    /* color: brown; */
+    width: 100%;
+    margin: auto;
 }
 
-p#os-path {
-    padding: 10px 0px 0px 205px;
-    margin: -20px 0px 10px 0px;
-    font-size: 16px;
-    font-weight: normal;
+div span div button.edit {
+    width: 3%;
+    color: rebeccapurple;
 }
 
-p#os-def {
-    margin-top: -10px;
-    padding-left: 205px;
-    font-size: 16px;
-    font-weight: normal;
+/*  */
+
+div#bottom-padding {
+    background-color: rgb(200, 200, 200);
+    margin-top: 80px;
 }
 
-p#os-cmt {
-    margin-top: -10px;
-    padding-left: 205px;
-    font-size: 16px;
-    font-weight: normal;
-}
-
-p#col-dm {
-    margin-top: -10px;
-    padding-left: 205px;
-    font-size: 16px;
-    font-weight: normal;
-}
-
-p#ld-def {
-    margin-top: -10px;
-    padding-left: 205px;
-    font-size: 16px;
-    font-weight: normal;
-    /* color: chocolate; */
-}
-
-p#ld-def-wrap {
-    margin-top: -10px;
-    padding-left: 205px;
-    font-size: 16px;
-    font-weight: normal;
-    /* color: chocolate; */
-}
-
-p#col-buss {
-    padding: 10px 0px 0px 205px;
-    margin: -20px 0px 10px 0px;
-    font-size: 16px;
-    font-weight: normal;
-    /* color: red; */
-}
-
-p#col-ele {
-    padding: 10px 0px 0px 205px;
-    margin: -20px 0px 10px 0px;
-    font-size: 16px;
-    font-weight: normal;
-    /* color: blueviolet; */
-}
+/*  */
 
 .block span.shortarray-link {
     font-size: 16px;

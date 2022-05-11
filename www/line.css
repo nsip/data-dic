@@ -7,14 +7,7 @@ hr.line1 {
 
 hr.line2 {
     height: 1px;
-    background-color: rgb(255, 255, 255);
+    background-color: rgb(71, 51, 248);
     border: none;
-    margin: 20px 20px 10px 20px;
-}
-
-hr.line3 {
-    height: 1px;
-    background-color: rgb(120, 120, 120);
-    border: none;
-    margin: 25px 35px 0px 15px;
+    margin: 6px 0px 15px 0px;
 }

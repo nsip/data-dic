@@ -29,7 +29,7 @@
 
 <body id="main">
 
-  <!------------------------------------------------------- Title ------------------------------------------------------->
+  <!------------------- Title ------------------->
   <h1>
     <%= title %>
   </h1>
@@ -37,7 +37,7 @@
   <hr class="line1">
   <br>
 
-  <!------------------------------------------------------- Entity Class Path ------------------------------------------------------->
+  <!------------------- Entity Class Path ------------------->
   <div id="nav-path" class="nav-path">
     <% for (const path of navPathCol) { %>
       <% for (const [i, seg] of path.entries()) { %>
@@ -53,7 +53,7 @@
               <% } %>
   </div>
 
-  <!------------------------------------------------------- Level 1 Field ------------------------------------------------------->
+  <!------------------- Level 1 Field ------------------->
   <div id="nav-field">
     <span class="nav" onclick="scrollToTop('Entity')">Entity</span>&ensp;
     <span class="nav" onclick="scrollToTop('Definition')">Definition</span>&ensp;
@@ -64,7 +64,7 @@
     <span class="nav" onclick="scrollToTop('Metadata')">Metadata</span>&ensp;
   </div>
 
-  <!----------------------------------------------------------------------------------------------------------------------------->
+  <!----------------------------------------------------->
   <div id="container">
 
     <div id="left">
@@ -72,14 +72,14 @@
       <!-- real submitting is in 'check_search_form' -->
       <form id="search-form" action="/" method="post" onsubmit="check_search_form(this); return false">
 
-        <!------------------------------------------------------- Search Input ------------------------------------------------------->
+        <!------------------- Search Input ------------------->
         <div id="search-div">
           <input type="text" id="search-entity" name="entity" placeholder="Entity or Identifier"
             value="<%= search_value %>" style="padding: 5px 0px 5px 10px;">
           <input type="submit" value="go" style="padding: 5px 10px 5px 10px; font-size: 14px;">
         </div>
 
-        <!------------------------------------------------------- Entity List ------------------------------------------------------->
+        <!------------------- Entity List ------------------->
         <!-- set selected item into above text input, then submit form -->
         <ul class="entity-list">
           <% for(const entity of entities) { %>
@@ -95,7 +95,7 @@
 
       </form>
 
-      <!------------------------------------------------------- Add Entity ------------------------------------------------------->
+      <!------------------- Add Entity ------------------->
       <!-- upload file by select box. Different from normal, below do submitting when closing select box -->
       <form id="add-form" action="/add" method="post" enctype="multipart/form-data">
 
@@ -110,363 +110,447 @@
 
     </div>
 
-    <!---------------------------------------------------------------------------------------------------------------------------------------->
-    <!---------------------------------------------------------------------------------------------------------------------------------------->
-    <!---------------------------------------------------------------------------------------------------------------------------------------->
+    <!---------------------------------------------------------------->
+    <!---------------------------------------------------------------->
+    <!---------------------------------------------------------------->
 
     <div id="content">
 
-      <!------------------------------------------------------- Entity ------------------------------------------------------->
+      <!------------------- Entity ------------------->
       <div class="block" id="Entity">
-        Entity<% if (content !=null) { %>
-          <p id="ent">
+
+        <span class="category">Entity</span>
+
+        <% if (content !=null) { %>
+          <span class="content-whole">
             <%=entity%>
-          </p>
+          </span>
           <% } %>
-            <hr class="line2">
+
       </div>
 
-      <!------------------------------------------------------- Definition ------------------------------------------------------->
+      <!------------------- Definition ------------------->
       <div class="block" id="Definition">
-        Definition<% if (content !=null) { %>
-          <p id="def">
+
+        <span class="category">Definition</span>
+
+        <% if (content !=null) { %>
+          <span class="content-whole">
             <%- definition %>
-          </p>
+          </span>
           <% } %>
-            <hr class="line2">
+
       </div>
 
-      <!------------------------------------------------------- SIF ------------------------------------------------------->
+      <!------------------- SIF ------------------->
       <div class="block" id="SIF">
-        SIF<% if (content !=null) { %>
 
-          <% for(const [i, s] of sif.entries()) { %>
+        <span class="category">SIF</span>
 
-            <% if ('XPath' in s && s.XPath.length> 0) { %>
-              <div>
-                <p class="content"> <span class="field">XPath:</span>
-                  <% for(let xpath of s.XPath) { %>
-                    <p id="sif-xpath">
+        <% if (content !=null) { %>
+
+          <span class="content-flex" contenteditable="false">
+
+            <% for(const [i, s] of sif.entries()) { %>
+
+              <div class="cat-val">
+                <span class="sub-cat">XPath:</span>
+                <span class="sub-val">
+                  <% if ('XPath' in s && s.XPath.length> 0) { %>
+                    <% for(const [i, xpath] of s.XPath.entries()) { %>
                       <%- xpath %>
-                    </p>
+                        <br>
+                        <% } %>
+                          <% } %>
+                </span>
+                <button type="button" class="edit">edit</button>
+              </div>
+
+              <div class="cat-val">
+                <span class="sub-cat">Definition:</span>
+                <span class="sub-val">
+                  <%= s.Definition %>
+                </span>
+              </div>
+
+              <div class="cat-val">
+                <span class="sub-cat">Commentary:</span>
+                <span class="sub-val">
+                  <%= s.Commentary %>
+                </span>
+              </div>
+
+              <div class="cat-val">
+                <span class="sub-cat">Datestamp:</span>
+                <span class="sub-val">
+                  <%= s.Datestamp %>
+                </span>
+              </div>
+
+              <% if ( i < sif.length - 1 ) { %>
+                <hr class="line2">
+                <% } %>
+
+                  <% } %>
+
+          </span>
+
+          <% } %>
+
+      </div>
+
+      <!------------------- OtherStandards ------------------->
+      <div class="block" id="OtherStandards">
+
+        <span class="category">OtherStandards</span>
+
+        <% if (content !=null) { %>
+
+          <span class="content-flex">
+
+            <% for(const [i, os] of otherStandards.entries()) { %>
+
+              <% if ('Standard' in os && os.Standard.length> 0) { %>
+                <div class="cat-val">
+                  <span class="sub-cat">Standard:</span>
+                  <span class="sub-val">
+                    <%= os.Standard %>
+                  </span>
+                </div>
+                <% } %>
+
+                  <% if ('Link' in os && os.Link.length> 0) { %>
+                    <div class="cat-val">
+                      <span class="sub-cat">Link:</span>
+                      <span class="sub-val">
+                        <% for(const link of os.Link) { %>
+                          <%- link %>
+                            <% } %>
+                      </span>
+                    </div>
                     <% } %>
-                </p>
+
+                      <% if ('Path' in os && os.Path.length> 0) { %>
+                        <div class="cat-val">
+                          <span class="sub-cat">Path:</span>
+                          <span class="sub-val">
+                            <% for(const path of os.Path) { %>
+                              <%= path %>
+                                <br>
+                                <% } %>
+                          </span>
+                        </div>
+                        <% } %>
+
+                          <% if ('Definition' in os && os.Definition.length> 0) { %>
+                            <div class="cat-val">
+                              <span class="sub-cat">Definition:</span>
+                              <span class="sub-val">
+                                <%= os.Definition %>
+                              </span>
+                            </div>
+                            <% } %>
+
+                              <% if ('Commentary' in os && os.Commentary.length> 0) { %>
+                                <div class="cat-val">
+                                  <span class="sub-cat">Commentary:</span>
+                                  <span class="sub-val">
+                                    <%- os.Commentary %>
+                                  </span>
+                                </div>
+                                <% } %>
+
+                                  <% if ('Datestamp' in os && os.Datestamp.length> 0) { %>
+                                    <div class="cat-val">
+                                      <span class="sub-cat">Datestamp:</span>
+                                      <span class="sub-val">
+                                        <%= os.Datestamp %>
+                                      </span>
+                                    </div>
+                                    <% } %>
+
+                                      <% if ( i < otherStandards.length - 1 ) { %>
+                                        <hr class="line2">
+                                        <% } %>
+
+                                          <% } %>
+
+          </span>
+
+          <% } %>
+
+      </div>
+
+      <!------------------- LegalDefinitions ------------------->
+      <div class="block" id="LegalDefinitions">
+
+        <span class="category">LegalDefinitions</span>
+
+        <% if (content !=null) { %>
+
+          <span class="content-flex">
+
+            <% for(const [i, ld] of legalDefinitions.entries()) { %>
+
+              <% if ('LegislationName'in ld && ld.LegislationName.length>0) { %>
+                <div class="cat-val">
+                  <span class="sub-cat">LegislationName:</span>
+                  <span class="sub-val">
+                    <%= ld.LegislationName %>
+                  </span>
+                </div>
+                <% } %>
+
+                  <% if ('Citation' in ld && ld.Citation.length>0) { %>
+                    <div class="cat-val">
+                      <span class="sub-cat">Citation:</span>
+                      <span class="sub-val">
+                        <%= ld.Citation %>
+                      </span>
+                    </div>
+                    <% } %>
+
+                      <% if ('Link' in ld && ld.Link.length>0) { %>
+                        <div class="cat-val">
+                          <span class="sub-cat">Link:</span>
+                          <span class="sub-val">
+                            <%- ld.Link %>
+                          </span>
+                        </div>
+                        <% } %>
+
+                          <% if ('Definition' in ld && ld.Definition.length>0) { %>
+                            <div class="cat-val">
+                              <span class="sub-cat">Definition:</span>
+                              <span class="sub-val">
+                                <%- ld.Definition %>
+                              </span>
+                            </div>
+                            <% } %>
+
+                              <% if ('Commentary' in ld && ld.Commentary.length>0) { %>
+                                <div class="cat-val">
+                                  <span class="sub-cat">Commentary:</span>
+                                  <span class="sub-val">
+                                    <%= ld.Commentary %>
+                                  </span>
+                                </div>
+                                <% } %>
+
+                                  <% if ('Datestamp' in ld && ld.Datestamp.length>0) { %>
+                                    <div class="cat-val">
+                                      <span class="sub-cat">Datestamp:</span>
+                                      <span class="sub-val">
+                                        <%= ld.Datestamp %>
+                                      </span>
+                                    </div>
+                                    <% } %>
+
+                                      <% if ( i < legalDefinitions.length - 1 ) { %>
+                                        <hr class="line2">
+                                        <% } %>
+
+                                          <% } %>
+
+          </span>
+
+          <% } %>
+
+      </div>
+
+
+      <!------------------- Collections ------------------->
+      <div class="block" id="Collections">
+
+        <span class="category">Collections</span>
+
+        <% if (content !=null) { %>
+
+          <span class="content-flex">
+
+            <% for(const [i, col] of collections.entries()) { %>
+
+              <% if ('Name' in col && col.Name.length> 0) { %>
+                <div class="cat-val">
+                  <span class="sub-cat">Name:</span>
+                  <span class="sub-val">
+                    <%= col.Name %>
+                  </span>
+                </div>
+                <% } %>
+
+                  <% if ('Description' in col && col.Description.length>0) { %>
+                    <div class="cat-val">
+                      <span class="sub-cat">Description:</span>
+                      <span class="sub-val">
+                        <%= col.Description %>
+                      </span>
+                    </div>
+                    <% } %>
+
+                      <% if ('BusinessRules' in col && col.BusinessRules.length>0) { %>
+                        <div class="cat-val">
+                          <span class="sub-cat">BusinessRules:</span>
+                          <span class="sub-val">
+                            <% for( let rule of col.BusinessRules) { %>
+                              <%= rule %>
+                                <br>
+                                <% } %>
+                          </span>
+                        </div>
+                        <% } %>
+
+                          <% if ('Standard' in col && col.Standard.length>0) { %>
+                            <div class="cat-val">
+                              <span class="sub-cat">Standard:</span>
+                              <span class="sub-val">
+                                <%= col.Standard %>
+                              </span>
+                            </div>
+                            <% } %>
+
+                              <% if ('Elements' in col && col.Elements.length>0) { %>
+                                <div class="cat-val">
+                                  <span class="sub-cat">Elements:</span>
+                                  <span class="sub-val">
+                                    <% for (let ele of col.Elements) { %>
+                                      <%= ele %>
+                                        <br>
+                                        <% } %>
+                                  </span>
+                                </div>
+                                <% } %>
+
+                                  <% if ('DefinitionModification' in col && col.DefinitionModification.length>0) {%>
+                                    <div class="cat-val">
+                                      <span class="sub-cat">DefinitionModification:</span>
+                                      <span class="sub-val">
+                                        <%= col.DefinitionModification %>
+                                      </span>
+                                    </div>
+                                    <% } %>
+
+                                      <% if ( i < collections.length - 1 ) { %>
+                                        <hr class="line2">
+                                        <% } %>
+
+                                          <% } %>
+
+          </span>
+
+          <% } %>
+
+      </div> <!-- Collections -->
+
+      <!------------------- Metadata ------------------->
+      <div class="block" id="Metadata">
+
+        <span class="category">Metadata</span>
+
+        <% if (content !=null) { %>
+
+          <span class="content-flex">
+
+            <% if (identifier.length>0) { %>
+              <div class="cat-val">
+                <span class="sub-cat">Identifier:</span>
+                <span class="sub-val">
+                  <%= identifier %>
+                </span>
               </div>
               <% } %>
 
-                <% if ('Definition' in s && s.Definition.length> 0) { %>
-                  <p class="content"> <span class="field">Definition:</span>
-                  <p id="sif-def">
-                    <%= s.Definition %>
-                  </p>
-                  </p>
-                  <% } %>
-
-                    <% if ('Commentary' in s && s.Commentary.length> 0) { %>
-                      <p class="content">
-                        <span class="field">Commentary:</span>
-                        <%- s.Commentary %>
-                      </p>
-                      <% } %>
-
-                        <% if ('Datestamp' in s && s.Datestamp.length> 0) { %>
-                          <p class="content"> <span class="field">Datestamp:</span>
-                            <%= s.Datestamp %>
-                          </p>
-                          <% } %>
-
-                            <div>
-                              <% if ( i < sif.length - 1 ) { %>
-                                <hr class="line3">
-                                <% } %>
-                            </div>
-
-                            <% } %>
-                              <% } %>
-                                <hr class="line2">
-      </div>
-
-      <!------------------------------------------------------- OtherStandards ------------------------------------------------------->
-      <div class="block" id="OtherStandards">
-        OtherStandards<% if (content !=null) { %>
-
-          <% for(const [i, os] of otherStandards.entries()) { %>
-
-            <% if ('Standard' in os && os.Standard.length> 0) { %>
-              <p class="content"> <span class="field">Standard:</span>
-                <%= os.Standard %>
-              </p>
-              <% } %>
-
-                <% if ('Link' in os && os.Link.length> 0) { %>
-                  <div>
-                    <p class="content"> <span class="field">Link:</span>
-                      <% for(const link of os.Link) { %>
-                        <p id="os-link">
-                          <%- link %>
-                        </p>
-                        <% } %>
-                    </p>
+                <% if (otherNames.length>0) { %>
+                  <div class="cat-val">
+                    <span class="sub-cat">OtherNames:</span>
+                    <span class="sub-val">
+                      <% for(const [i, on] of otherNames.entries()) { %>
+                        <%= on %>
+                          <% if (i < otherNames.length - 1) { %> &nbsp;|&nbsp; <% } } %>
+                    </span>
                   </div>
                   <% } %>
 
-                    <% if ('Path' in os && os.Path.length> 0) { %>
-                      <div>
-                        <p class="content"> <span class="field">Path:</span>
-                          <% for(const path of os.Path) { %>
-                            <p id="os-path">
-                              <%= path %>
-                            </p>
-                            <% } %>
-                        </p>
+                    <% if (type.length>0) { %>
+                      <div class="cat-val">
+                        <span class="sub-cat">Type:</span>
+                        <span class="sub-val">
+                          <%= type %>
+                        </span>
                       </div>
                       <% } %>
 
-                        <% if ('Definition' in os && os.Definition.length> 0) { %>
-                          <p class="content"> <span class="field">Definition:</span>
-                          <p id="os-def">
-                            <%= os.Definition %>
-                          </p>
-                          </p>
-                          <% } %>
-
-                            <% if ('Commentary' in os && os.Commentary.length> 0) { %>
-                              <p class="content"> <span class="field">Commentary:</span>
-                              <p id="os-cmt">
-                                <%- os.Commentary %>
-                              </p>
-                              </p>
-                              <% } %>
-
-                                <% if ('Datestamp' in os && os.Datestamp.length> 0) { %>
-                                  <p class="content"> <span class="field">Datestamp:</span>
-                                    <%= os.Datestamp %>
-                                  </p>
-                                  <% } %>
-
-                                    <% if ( i < otherStandards.length - 1 ) { %>
-                                      <hr class="line3">
-                                      <% } %>
-
-                                        <% } %>
-                                          <% } %>
-
-                                            <hr class="line2">
-      </div>
-
-      <!------------------------------------------------------- LegalDefinitions ------------------------------------------------------->
-      <div class="block" id="LegalDefinitions">
-        LegalDefinitions<% if (content !=null) { %>
-
-          <% for(const [i, ld] of legalDefinitions.entries()) { %>
-
-            <% if ('LegislationName'in ld && ld.LegislationName.length>0) { %>
-              <p class="content"> <span class="field">LegislationName:</span>
-                <%= ld.LegislationName %>
-              </p>
-              <% } %>
-
-                <% if ('Citation' in ld && ld.Citation.length>0) { %>
-                  <p class="content"> <span class="field">Citation:</span>
-                    <%= ld.Citation %>
-                  </p>
-                  <% } %>
-
-                    <% if ('Link' in ld && ld.Link.length>0) { %>
-                      <p class="content"> <span class="field">Link:</span>
-                        <%- ld.Link %>
-                      </p>
-                      <% } %>
-
-                        <% if ('Definition' in ld && ld.Definition.length>0) { %>
-                          <p class="content"> <span class="field">Definition:</span>
-                          <p id="ld-def-wrap">
-                            <%- ld.Definition %>
-                          </p>
-                          </p>
-                          <% } %>
-
-                            <% if ('Commentary' in ld && ld.Commentary.length>0) { %>
-                              <p class="content"> <span class="field">Commentary:</span>
-                                <%- ld.Commentary %>
-                              </p>
-                              <% } %>
-
-                                <% if ('Datestamp' in ld && ld.Datestamp.length>0) { %>
-                                  <p class="content"> <span class="field">Datestamp:</span>
-                                    <%= ld.Datestamp %>
-                                  </p>
-                                  <% } %>
-
-                                    <% if ( i < legalDefinitions.length - 1 ) { %>
-                                      <hr class="line3">
-                                      <% } %>
-
-                                        <% } %>
-                                          <% } %>
-
-                                            <hr class="line2">
-      </div>
-
-      <!------------------------------------------------------- Collections ------------------------------------------------------->
-      <div class="block" id="Collections">
-        Collections <% if (content !=null) { %>
-
-          <% for(const [i, col] of collections.entries()) { %>
-
-            <% if ('Name' in col && col.Name.length> 0) { %>
-              <p class="content"> <span class="field">Name:</span>
-                <%= col.Name %>
-              </p>
-              <% } %>
-
-                <% if ('Description' in col && col.Description.length>0) { %>
-                  <p class="content"> <span class="field">Description:</span>
-                    <%= col.Description %>
-                  </p>
-                  <% } %>
-
-                    <% if ('BusinessRules' in col && col.BusinessRules.length>0) { %>
-                      <div>
-                        <p class="content"> <span class="field">BusinessRules:</span>
-                          <% for( let rule of col.BusinessRules) { %>
-                            <p id="col-buss">
-                              <%= rule %>
-                            </p>
-                            <% } %>
-                        </p>
-                      </div>
-                      <% } %>
-
-                        <% if ('Standard' in col && col.Standard.length>0) { %>
-                          <p class="content"> <span class="field">Standard:</span>
-                            <%= col.Standard %>
-                          </p>
-                          <% } %>
-
-                            <% if ('Elements' in col && col.Elements.length>0) { %>
-                              <div>
-                                <p class="content"> <span class="field">Elements:</span>
-                                  <% for (let ele of col.Elements) { %>
-                                    <p id="col-ele">
-                                      <%= ele %>
-                                    </p>
+                        <% if (expectedAttributes.length>0) { %>
+                          <div class="cat-val">
+                            <span class="sub-cat">ExpectedAttributes:</span>
+                            <span class="sub-val">
+                              <% for(const [i, attr] of expectedAttributes.entries()) { %>
+                                <span class="shortarray-link"
+                                  onclick="$('#search-entity').val('<%= attr %>'); $('#search-form').submit();">
+                                  <%= attr %>
+                                </span>
+                                <% if ( i < expectedAttributes.length - 1) { %> &nbsp;|&nbsp; <% } %>
                                     <% } %>
-                                </p>
+                            </span>
+                          </div>
+                          <% } %>
+
+                            <% if (defParent.length>0) { %>
+                              <div class="cat-val">
+                                <span class="sub-cat">DefaultParent:</span>
+                                <span class="sub-val"
+                                  onclick="$('#search-entity').val('<%= defParent %>'); $('#search-form').submit();">
+                                  <%= defParent %>
+                                </span>
                               </div>
                               <% } %>
 
-                                <% if ('DefinitionModification' in col && col.DefinitionModification.length>0) { %>
-                                  <p class="content"> <span class="field">DefinitionModification:</span>
-                                  <p id="col-dm">
-                                    <%= col.DefinitionModification %>
-                                  </p>
-                                  </p>
+                                <% if (superclass.length>0) { %>
+                                  <div class="cat-val">
+                                    <span class="sub-cat">Superclass:</span>
+                                    <span class="sub-val">
+                                      <% for(const [i, sc] of superclass.entries()) { %>
+                                        <span class="shortarray-link"
+                                          onclick="$('#search-entity').val('<%= sc %>'); $('#search-form').submit();">
+                                          <%= sc %>
+                                        </span>
+                                        <% if ( i < superclass.length - 1) { %> &nbsp;|&nbsp; <% } %>
+                                            <% } %>
+                                    </span>
+                                  </div>
                                   <% } %>
 
-                                    <% if ( i < collections.length - 1 ) { %>
-                                      <hr class="line3">
+                                    <% if (crossrefEntities.length>0) { %>
+                                      <div class="cat-val">
+                                        <span class="sub-cat">CrossrefEntities:</span>
+                                        <span class="sub-val">
+                                          <% for(const [i, crf] of crossrefEntities.entries()) { %>
+                                            <span class="shortarray-link"
+                                              onclick="$('#search-entity').val('<%= crf %>'); $('#search-form').submit();">
+                                              <%= crf %>
+                                            </span>
+                                            <% if (i < crossrefEntities.length - 1) { %> &nbsp;|&nbsp; <% } %>
+                                                <% } %>
+                                        </span>
+                                      </div>
                                       <% } %>
 
-                                        <% } %>
-                                          <% } %>
+          </span>
 
-                                            <hr class="line2">
-      </div>
-
-      <!------------------------------------------------------- Metadata ------------------------------------------------------->
-
-      <div class="block" id="Metadata">
-        Metadata
-
-        <% if (identifier.length>0) { %>
-          <p>
-            <span class="meta-item">Identifier:</span>
-            <span>
-              <%= identifier %>
-            </span>
-          </p>
           <% } %>
 
-            <% if (otherNames.length>0) { %>
-              <p>
-                <span class="meta-item">OtherNames:</span>
-                <% for(const [i, on] of otherNames.entries()) { %>
-                  <span>
-                    <%= on %>
-                  </span>
-                  <% if (i < otherNames.length - 1) { %> &nbsp;|&nbsp; <% } } %>
-              </p>
-              <% } %>
+      </div> <!-- Metadata -->
 
-                <% if (type.length>0) { %>
-                  <p>
-                    <span class="meta-item">Type:</span>
-                    <span>
-                      <%= type %>
-                    </span>
-                  </p>
-                  <% } %>
+      <!---------------- END Block ---------------->
 
-                    <% if (expectedAttributes.length>0) { %>
-                      <p>
-                        <span class="meta-item">ExpectedAttributes:</span>
-                        <% for(const [i, attr] of expectedAttributes.entries()) { %>
-                          <span class="shortarray-link"
-                            onclick="$('#search-entity').val('<%= attr %>'); $('#search-form').submit();">
-                            <%= attr %>
-                          </span>
-                          <% if ( i < expectedAttributes.length - 1) { %> &nbsp;|&nbsp; <% } %>
-                              <% } %>
-                      </p>
-                      <% } %>
-
-                        <% if (defParent.length>0) { %>
-                          <p>
-                            <span class="meta-item">DefaultParent:</span>
-                            <span class="shortarray-link"
-                              onclick="$('#search-entity').val('<%= defParent %>'); $('#search-form').submit();">
-                              <%= defParent %>
-                            </span>
-                          </p>
-                          <% } %>
-
-                            <% if (superclass.length>0) { %>
-                              <p>
-                                <span class="meta-item">Superclass:</span>
-                                <% for(const [i, sc] of superclass.entries()) { %>
-                                  <span class="shortarray-link"
-                                    onclick="$('#search-entity').val('<%= sc %>'); $('#search-form').submit();">
-                                    <%= sc %>
-                                  </span>
-                                  <% if ( i < superclass.length - 1) { %> &nbsp;|&nbsp; <% } %>
-                                      <% } %>
-                              </p>
-                              <% } %>
-
-                                <% if (crossrefEntities.length>0) { %>
-                                  <p>
-                                    <span class="meta-item">CrossrefEntities:</span>
-                                    <% for(const [i, crf] of crossrefEntities.entries()) { %>
-                                      <span class="shortarray-link"
-                                        onclick="$('#search-entity').val('<%= crf %>'); $('#search-form').submit();">
-                                        <%= crf %>
-                                      </span>
-                                      <% if (i < crossrefEntities.length - 1) { %> &nbsp;|&nbsp; <% } %>
-                                          <% } %>
-                                  </p>
-                                  <% } %>
-
-                                    <hr class="line2" style="margin-bottom: 40px;">
+      <div id="bottom-padding">
       </div>
 
-      <!-- END -->
+    </div> <!-- content -->
 
-      <br> <br> <br>
+  </div> <!-- container -->
 
-    </div>
-
-  </div>
+  <!-------------------------------- END Page -------------------------------->
 
   <script>
 

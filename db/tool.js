@@ -159,33 +159,6 @@ export const mergeDeep = async (target, ...sources) => {
 //     console.log(util.inspect(merged, { showHidden: false, depth: null, colors: true }))
 // })()
 
-/////////////////////////////////////////////////////////////
-
-export const css_p_id_inject = (p, id) => {
-    return p.replaceAll('<p>', `<p id=${id}>`)
-}
-
-export const css_p_cls_inject = (p, cls) => {
-    return p.replaceAll('<p>', `<p class=${cls}>`)
-}
-
-export const css_ol_cls_inject = (p, cls) => {
-    return p.replaceAll('<ol>', `<ol class=${cls}>`)
-}
-
-export const css_ola_cls_inject = (p, cls) => {
-    if (p.includes("type=\"a\"")) {
-        return p.replaceAll('<ol type="a">', `<ol type="a" class=${cls}>`)
-    }
-    return p.replaceAll("<ol type='a'>", `<ol type="a" class=${cls}>`)
-}
-
-export const css_ol1_cls_inject = (p, cls) => {
-    if (p.includes("type=\"1\"")) {
-        return p.replaceAll('<ol type="1">', `<ol type="1" class=${cls}>`)
-    }
-    return p.replaceAll("<ol type='1'>", `<ol type="1" class=${cls}>`)
-}
 
 /////////////////////////////////////////////////////////////
 

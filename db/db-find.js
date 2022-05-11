@@ -1,6 +1,6 @@
 import * as mongodb from 'mongodb'
 import * as assert from 'assert'
-import { assign, isNumeric, xpath2object, css_p_cls_inject, css_p_id_inject, css_ol_cls_inject, css_ola_cls_inject, css_ol1_cls_inject, linkify } from './tool.js'
+import { assign, isNumeric, xpath2object, linkify } from './tool.js'
 
 export const MongoClient = mongodb.MongoClient
 export const dbName = 'dictionary'
@@ -205,44 +205,16 @@ export const OnFindEntity = async (value, fnReady) => {
 
                 assign(P, 'crossrefEntities', cont.CrossrefEntities, [])
 
-                assign(P, 'definition', cont.Definition, "", css_p_id_inject, '\"def\"')
+                assign(P, 'definition', cont.Definition, "")
 
                 assign(P, 'expectedAttributes', cont.ExpectedAttributes, [])
 
                 assign(P, 'identifier', cont.Identifier, "")
 
                 assign(P, 'legalDefinitions', cont.LegalDefinitions, [])
+
                 for (let i = 0; i < P.legalDefinitions.length; i++) {
-
                     P.legalDefinitions[i].Link = linkify(P.legalDefinitions[i].Link)
-
-                    assign(P.legalDefinitions[i], 'Definition', cont.LegalDefinitions[i].Definition, "", css_p_id_inject, '\"ld-def\"')
-
-                    assign(P.legalDefinitions[i], 'Definition', P.legalDefinitions[i].Definition, "", css_ol_cls_inject, '\"inner-ol1\"')
-
-                    assign(P.legalDefinitions[i], 'Definition', P.legalDefinitions[i].Definition, "", css_ol1_cls_inject, '\"inner-ol1\"')
-
-                    switch (P.legalDefinitions[i].LegislationName) {
-
-                        case 'Commonwealth Education Act 2013':
-                            assign(P.legalDefinitions[i], 'Definition', P.legalDefinitions[i].Definition, "", css_ola_cls_inject, '\"inner-ola-1\"')
-                            break;
-
-                        case 'Education Regulations 2013':
-                            assign(P.legalDefinitions[i], 'Definition', P.legalDefinitions[i].Definition, "", css_ola_cls_inject, '\"inner-ola-2\"')
-                            break;
-
-                        case 'EDUCATION ACT 2004 (ACT)':
-                            assign(P.legalDefinitions[i], 'Definition', P.legalDefinitions[i].Definition, "", css_ola_cls_inject, '\"inner-ola-2\"')
-                            break;
-
-                        case 'EDUCATION AND EARLY CHILDHOOD SERVICES (REGISTRATION AND STANDARDS) ACT 2011 (SA)':
-                            assign(P.legalDefinitions[i], 'Definition', P.legalDefinitions[i].Definition, "", css_ola_cls_inject, '\"inner-ola-1\"')
-                            break;
-
-                        case '':
-                            break;
-                    }
                 }
 
                 assign(P, 'otherNames', cont.OtherNames, [])

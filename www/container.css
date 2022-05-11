@@ -18,6 +18,8 @@
     width: 95%;
     margin-left: 10px;
     overflow-y: scroll;
+    display: flex;
+    flex-direction: column;
 }
 
 #right {

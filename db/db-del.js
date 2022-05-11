@@ -18,24 +18,34 @@ export const del_dic = async (db, colName, oneFlag, attr, value) => {
     }
     const col = db.collection(colName)
 
-    let query = { [attr]: value }
-    if (attr !== '' && value !== null) {
-        // escape original regex symbols
-        value = value.replaceAll('(', '\\(')
-        value = value.replaceAll(')', '\\)')
+    if (attr != null && attr.length != 0) {
 
-        // regex for case insensitive
-        const rVal = new RegExp('^' + value + '$', 'i')
+        let query = { [attr]: value }
+        if (value !== null) {
+            // escape original regex symbols
+            value = value.replaceAll('(', '\\(')
+            value = value.replaceAll(')', '\\)')
 
-        // make query object 
-        query = await xpath2object(attr, rVal)
+            // regex for case insensitive
+            const rVal = new RegExp('^' + value + '$', 'i')
+
+            // make query object 
+            query = await xpath2object(attr, rVal)
+        }
+        console.log("query:", query)
+
+        if (oneFlag) {
+            return await col.deleteOne(query)
+        }
+        return await col.deleteMany(query)
+
+    } else {
+
+        if (!oneFlag) {
+            return await col.deleteMany({})
+        }
+
     }
-    console.log("query:", query)
-
-    if (oneFlag) {
-        return await col.deleteOne(query)
-    }
-    return await col.deleteMany(query)
 }
 
 // delete empty Entity
@@ -74,9 +84,23 @@ export const DelEntities = (...rmEntities) => {
     })
 }
 
-DelEntities(
-    'AAA', 'BBB', 'CCC', 'DDD', 'EEE', 'FFF', 'GGG',
-    'HHH', 'III', 'JJJ', 'KKK', 'LLL', 'MMM', 'NNN',
-    'OOO', 'PPP', 'QQQ', 'RRR', 'SSS', 'TTT', 'UUU',
-    'VVV', 'WWW', 'XXX', 'YYY', 'ZZZ',
-)
+export const DelAllFiles = (colName) => {
+
+    MongoClient.connect(url, async (err, client) => {
+
+        assert.equal(null, err)
+        console.log("Connected successfully to server")
+
+        const db = client.db(dbName) // create if not existing
+
+        const delquery = await del_dic(db, colName, false, null, null)
+        console.log(delquery)
+
+        await client.close()
+    })
+
+}
+
+DelAllFiles('entity')
+DelAllFiles('class')
+

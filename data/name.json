@@ -1,8 +1,8 @@
 {
-"Entity": "Name",
-"Definition": "<p>The name of an entity.</p>",
-"Identifier": "0006",
-"Type": "Abstract Element",
-"DefaultParent": [],
-"Superclass": []
+    "Entity": "Name",
+    "Definition": "The name of an entity.",
+    "Identifier": "0006",
+    "Type": "Abstract Element",
+    "DefaultParent": [],
+    "Superclass": []
 }
