@@ -112,6 +112,14 @@ div span.content-flex {
 }
 
 div span.content-whole {
+    color: black;
+    margin-right: 20px;
+    width: 88%;   
+    font-weight: normal;
+}
+
+div span.content-whole:hover {
+    color: brown;
     margin-right: 20px;
     width: 88%;   
     font-weight: normal;
@@ -134,14 +142,15 @@ div span div span.sub-cat {
 }
 
 div span div span.sub-val {    
-    /* color: brown; */
+    color: black;
     width: 100%;
     margin: auto;
 }
 
-div span div button.edit {
-    width: 3%;
-    color: rebeccapurple;
+div span div span.sub-val:hover {    
+    color: brown; 
+    width: 100%;
+    margin: auto;
 }
 
 /*  */
