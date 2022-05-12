@@ -12,6 +12,40 @@ export const dic_api = async (fastify, options) => {
             .send(hw)
     })
 
+    fastify.get('/api/entity-path/:entity', async (req, res) => {
+
+        MongoClient.connect(url, async (err, client) => {
+            assert.equal(null, err)
+            console.log("Connected successfully to server")
+
+            let field = req.params.entity
+            field = field.replaceAll(".", "^DOT")
+
+            const db = client.db(dbName) // create if not existing
+
+            const cont = await find_dic(db, 'class', true, '', null, field)
+            const navPathCol = []
+            let code = 200
+
+            if (Object.keys(cont).length !== 0) {
+                const pathCol = cont[field]
+                if (Array.isArray(pathCol)) {
+                    for (let path of pathCol) {
+                        navPathCol.push(path.split('--'))
+                    }
+                }
+            } else {
+                code = 404
+            }
+
+            res.code(code)
+                .header('Content-Type', 'application/json; charset=utf-8')
+                .send(navPathCol)
+
+            await client.close()
+        })
+    })
+
     fastify.get('/api/entity/:entity', async (req, res) => {
 
         // console.log('body    ---', req.body)           // from body
@@ -24,9 +58,8 @@ export const dic_api = async (fastify, options) => {
             console.log("Connected successfully to server")
 
             const db = client.db(dbName) // create if not existing
-            const colName = 'entity'
 
-            const cont = await find_dic(db, colName, true, 'Entity', req.params.entity)
+            const cont = await find_dic(db, 'entity', true, 'Entity', req.params.entity)
             let code = 200
             if (cont == null) {
                 code = 404
@@ -47,9 +80,8 @@ export const dic_api = async (fastify, options) => {
             console.log("Connected successfully to server")
 
             const db = client.db(dbName) // create if not existing
-            const colName = 'entity'
 
-            const cont = await find_dic(db, colName, true, 'Identifier', req.params.identifier)
+            const cont = await find_dic(db, 'entity', true, 'Identifier', req.params.identifier)
             let code = 200
             if (cont == null) {
                 code = 404
