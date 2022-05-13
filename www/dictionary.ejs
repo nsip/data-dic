@@ -117,7 +117,9 @@
       <!------------------- Entity ------------------->
       <div class="block" id="Entity">
 
-        <span class="category" id="<%=entity%>#Entity" ondblclick="OnEdit(this)">Entity</span>
+        <!-- Entity Name Cannot be editable -->
+        <!-- <span class="category" id="<%=entity%>#Entity" ondblclick="OnEdit(this)">Entity</span> -->
+        <span class="category" id="<%=entity%>#Entity">Entity</span>
 
         <% if (content !=null) { %>
           <span class="content-whole">
@@ -130,7 +132,7 @@
       <!------------------- Definition ------------------->
       <div class="block" id="Definition">
 
-        <span class="category" id="<%=entity%>#Definition" ondblclick="OnEdit(this)">Definition</span>
+        <span class="category editable" id="<%=entity%>#Definition" ondblclick="OnEdit(this)">Definition</span>
 
         <% if (content !=null) { %>
           <span class="content-whole">
@@ -152,7 +154,7 @@
             <% for(const [i, s] of sif.entries()) { %>
 
               <div class="cat-val">
-                <span class="sub-cat" id="<%=entity%>#SIF#<%= i.toString() %>#XPath" ondblclick="OnEdit(this)">XPath:</span>
+                <span class="sub-cat editable" id="<%=entity%>#SIF#<%= i.toString() %>#XPath" ondblclick="OnEdit(this)">XPath:</span>
                 <span class="sub-val">
                   <% if ('XPath' in s && s.XPath.length> 0) { %>
                     <% for(const [i, xpath] of s.XPath.entries()) { %>
@@ -164,21 +166,21 @@
               </div>
 
               <div class="cat-val">
-                <span class="sub-cat" id="<%=entity%>#SIF#<%= i.toString() %>#Definition" ondblclick="OnEdit(this)">Definition:</span>
+                <span class="sub-cat editable" id="<%=entity%>#SIF#<%= i.toString() %>#Definition" ondblclick="OnEdit(this)">Definition:</span>
                 <span class="sub-val">
                   <%= s.Definition %>
                 </span>
               </div>
 
               <div class="cat-val">
-                <span class="sub-cat" id="<%=entity%>#SIF#<%= i.toString() %>#Commentary" ondblclick="OnEdit(this)">Commentary:</span>
+                <span class="sub-cat editable" id="<%=entity%>#SIF#<%= i.toString() %>#Commentary" ondblclick="OnEdit(this)">Commentary:</span>
                 <span class="sub-val">
                   <%= s.Commentary %>
                 </span>
               </div>
 
               <div class="cat-val">
-                <span class="sub-cat" id="<%=entity%>#SIF#<%= i.toString() %>#Datestamp" ondblclick="OnEdit(this)">Datestamp:</span>
+                <span class="sub-cat editable" id="<%=entity%>#SIF#<%= i.toString() %>#Datestamp" ondblclick="OnEdit(this)">Datestamp:</span>
                 <span class="sub-val">
                   <%= s.Datestamp %>
                 </span>
@@ -209,7 +211,7 @@
 
               <% if ('Standard' in os && os.Standard.length> 0) { %>
                 <div class="cat-val">
-                  <span class="sub-cat" id="<%=entity%>#OtherStandards#<%= i.toString() %>#Standard" ondblclick="OnEdit(this)">Standard:</span>
+                  <span class="sub-cat editable" id="<%=entity%>#OtherStandards#<%= i.toString() %>#Standard" ondblclick="OnEdit(this)">Standard:</span>
                   <span class="sub-val">
                     <%= os.Standard %>
                   </span>
@@ -218,7 +220,7 @@
 
                   <% if ('Link' in os && os.Link.length> 0) { %>
                     <div class="cat-val">
-                      <span class="sub-cat" id="<%=entity%>#OtherStandards#<%= i.toString() %>#Link" ondblclick="OnEdit(this)">Link:</span>
+                      <span class="sub-cat editable" id="<%=entity%>#OtherStandards#<%= i.toString() %>#Link" ondblclick="OnEdit(this)">Link:</span>
                       <span class="sub-val">
                         <% for(const link of os.Link) { %>
                           <%- link %>
@@ -229,7 +231,7 @@
 
                       <% if ('Path' in os && os.Path.length> 0) { %>
                         <div class="cat-val">
-                          <span class="sub-cat" id="<%=entity%>#OtherStandards#<%= i.toString() %>#Path" ondblclick="OnEdit(this)">Path:</span>
+                          <span class="sub-cat editable" id="<%=entity%>#OtherStandards#<%= i.toString() %>#Path" ondblclick="OnEdit(this)">Path:</span>
                           <span class="sub-val">
                             <% for(const path of os.Path) { %>
                               <%= path %>
@@ -241,7 +243,7 @@
 
                           <% if ('Definition' in os && os.Definition.length> 0) { %>
                             <div class="cat-val">
-                              <span class="sub-cat" id="<%=entity%>#OtherStandards#<%= i.toString() %>#Definition" ondblclick="OnEdit(this)">Definition:</span>
+                              <span class="sub-cat editable" id="<%=entity%>#OtherStandards#<%= i.toString() %>#Definition" ondblclick="OnEdit(this)">Definition:</span>
                               <span class="sub-val">
                                 <%= os.Definition %>
                               </span>
@@ -250,7 +252,7 @@
 
                               <% if ('Commentary' in os && os.Commentary.length> 0) { %>
                                 <div class="cat-val">
-                                  <span class="sub-cat" id="<%=entity%>#OtherStandards#<%= i.toString() %>#Commentary" ondblclick="OnEdit(this)">Commentary:</span>
+                                  <span class="sub-cat editable" id="<%=entity%>#OtherStandards#<%= i.toString() %>#Commentary" ondblclick="OnEdit(this)">Commentary:</span>
                                   <span class="sub-val">
                                     <%- os.Commentary %>
                                   </span>
@@ -259,7 +261,7 @@
 
                                   <% if ('Datestamp' in os && os.Datestamp.length> 0) { %>
                                     <div class="cat-val">
-                                      <span class="sub-cat" id="<%=entity%>#OtherStandards#<%= i.toString() %>#Datestamp" ondblclick="OnEdit(this)">Datestamp:</span>
+                                      <span class="sub-cat editable" id="<%=entity%>#OtherStandards#<%= i.toString() %>#Datestamp" ondblclick="OnEdit(this)">Datestamp:</span>
                                       <span class="sub-val">
                                         <%= os.Datestamp %>
                                       </span>
@@ -291,7 +293,7 @@
 
               <% if ('LegislationName'in ld && ld.LegislationName.length>0) { %>
                 <div class="cat-val">
-                  <span class="sub-cat" id="<%=entity%>#LegalDefinitions#<%= i.toString() %>#LegislationName" ondblclick="OnEdit(this)">LegislationName:</span>
+                  <span class="sub-cat editable" id="<%=entity%>#LegalDefinitions#<%= i.toString() %>#LegislationName" ondblclick="OnEdit(this)">LegislationName:</span>
                   <span class="sub-val">
                     <%= ld.LegislationName %>
                   </span>
@@ -300,7 +302,7 @@
 
                   <% if ('Citation' in ld && ld.Citation.length>0) { %>
                     <div class="cat-val">
-                      <span class="sub-cat" id="<%=entity%>#LegalDefinitions#<%= i.toString() %>#Citation" ondblclick="OnEdit(this)">Citation:</span>
+                      <span class="sub-cat editable" id="<%=entity%>#LegalDefinitions#<%= i.toString() %>#Citation" ondblclick="OnEdit(this)">Citation:</span>
                       <span class="sub-val">
                         <%= ld.Citation %>
                       </span>
@@ -309,7 +311,7 @@
 
                       <% if ('Link' in ld && ld.Link.length>0) { %>
                         <div class="cat-val">
-                          <span class="sub-cat" id="<%=entity%>#LegalDefinitions#<%= i.toString() %>#Link" ondblclick="OnEdit(this)">Link:</span>
+                          <span class="sub-cat editable" id="<%=entity%>#LegalDefinitions#<%= i.toString() %>#Link" ondblclick="OnEdit(this)">Link:</span>
                           <span class="sub-val">
                             <%- ld.Link %>
                           </span>
@@ -318,7 +320,7 @@
 
                           <% if ('Definition' in ld && ld.Definition.length>0) { %>
                             <div class="cat-val">
-                              <span class="sub-cat" id="<%=entity%>#LegalDefinitions#<%= i.toString() %>#Definition" ondblclick="OnEdit(this)">Definition:</span>
+                              <span class="sub-cat editable" id="<%=entity%>#LegalDefinitions#<%= i.toString() %>#Definition" ondblclick="OnEdit(this)">Definition:</span>
                               <span class="sub-val">
                                 <%- ld.Definition %>
                               </span>
@@ -327,7 +329,7 @@
 
                               <% if ('Commentary' in ld && ld.Commentary.length>0) { %>
                                 <div class="cat-val">
-                                  <span class="sub-cat" id="<%=entity%>#LegalDefinitions#<%= i.toString() %>#Commentary" ondblclick="OnEdit(this)">Commentary:</span>
+                                  <span class="sub-cat editable" id="<%=entity%>#LegalDefinitions#<%= i.toString() %>#Commentary" ondblclick="OnEdit(this)">Commentary:</span>
                                   <span class="sub-val">
                                     <%= ld.Commentary %>
                                   </span>
@@ -336,7 +338,7 @@
 
                                   <% if ('Datestamp' in ld && ld.Datestamp.length>0) { %>
                                     <div class="cat-val">
-                                      <span class="sub-cat" id="<%=entity%>#LegalDefinitions#<%= i.toString() %>#Datestamp" ondblclick="OnEdit(this)">Datestamp:</span>
+                                      <span class="sub-cat editable" id="<%=entity%>#LegalDefinitions#<%= i.toString() %>#Datestamp" ondblclick="OnEdit(this)">Datestamp:</span>
                                       <span class="sub-val">
                                         <%= ld.Datestamp %>
                                       </span>
@@ -369,7 +371,7 @@
 
               <% if ('Name' in col && col.Name.length> 0) { %>
                 <div class="cat-val">
-                  <span class="sub-cat" id="<%=entity%>#Collections#<%= i.toString() %>#Name" ondblclick="OnEdit(this)">Name:</span>
+                  <span class="sub-cat editable" id="<%=entity%>#Collections#<%= i.toString() %>#Name" ondblclick="OnEdit(this)">Name:</span>
                   <span class="sub-val">
                     <%= col.Name %>
                   </span>
@@ -378,7 +380,7 @@
 
                   <% if ('Description' in col && col.Description.length>0) { %>
                     <div class="cat-val">
-                      <span class="sub-cat" id="<%=entity%>#Collections#<%= i.toString() %>#Description" ondblclick="OnEdit(this)">Description:</span>
+                      <span class="sub-cat editable" id="<%=entity%>#Collections#<%= i.toString() %>#Description" ondblclick="OnEdit(this)">Description:</span>
                       <span class="sub-val">
                         <%= col.Description %>
                       </span>
@@ -387,7 +389,7 @@
 
                       <% if ('BusinessRules' in col && col.BusinessRules.length>0) { %>
                         <div class="cat-val">
-                          <span class="sub-cat" id="<%=entity%>#Collections#<%= i.toString() %>#BusinessRules" ondblclick="OnEdit(this)">BusinessRules:</span>
+                          <span class="sub-cat editable" id="<%=entity%>#Collections#<%= i.toString() %>#BusinessRules" ondblclick="OnEdit(this)">BusinessRules:</span>
                           <span class="sub-val">
                             <% for( let rule of col.BusinessRules) { %>
                               <%= rule %>
@@ -399,7 +401,7 @@
 
                           <% if ('Standard' in col && col.Standard.length>0) { %>
                             <div class="cat-val">
-                              <span class="sub-cat" id="<%=entity%>#Collections#<%= i.toString() %>#Standard" ondblclick="OnEdit(this)">Standard:</span>
+                              <span class="sub-cat editable" id="<%=entity%>#Collections#<%= i.toString() %>#Standard" ondblclick="OnEdit(this)">Standard:</span>
                               <span class="sub-val">
                                 <%= col.Standard %>
                               </span>
@@ -408,7 +410,7 @@
 
                               <% if ('Elements' in col && col.Elements.length>0) { %>
                                 <div class="cat-val">
-                                  <span class="sub-cat" id="<%=entity%>#Collections#<%= i.toString() %>#Elements" ondblclick="OnEdit(this)">Elements:</span>
+                                  <span class="sub-cat editable" id="<%=entity%>#Collections#<%= i.toString() %>#Elements" ondblclick="OnEdit(this)">Elements:</span>
                                   <span class="sub-val">
                                     <% for (let ele of col.Elements) { %>
                                       <%= ele %>
@@ -420,7 +422,7 @@
 
                                   <% if ('DefinitionModification' in col && col.DefinitionModification.length>0) {%>
                                     <div class="cat-val">
-                                      <span class="sub-cat" id="<%=entity%>#Collections#<%= i.toString() %>#DefinitionModification" ondblclick="OnEdit(this)">DefinitionModification:</span>
+                                      <span class="sub-cat editable" id="<%=entity%>#Collections#<%= i.toString() %>#DefinitionModification" ondblclick="OnEdit(this)">DefinitionModification:</span>
                                       <span class="sub-val">
                                         <%= col.DefinitionModification %>
                                       </span>
@@ -450,7 +452,7 @@
 
             <% if (identifier.length>0) { %>
               <div class="cat-val">
-                <span class="sub-cat" id="<%=entity%>#Metadata#Identifier" ondblclick="OnEdit(this)">Identifier:</span>
+                <span class="sub-cat editable" id="<%=entity%>#Metadata#Identifier" ondblclick="OnEdit(this)">Identifier:</span>
                 <span class="sub-val">
                   <%= identifier %>
                 </span>
@@ -459,7 +461,7 @@
 
                 <% if (otherNames.length>0) { %>
                   <div class="cat-val">
-                    <span class="sub-cat" id="<%=entity%>#Metadata#OtherNames" ondblclick="OnEdit(this)">OtherNames:</span>
+                    <span class="sub-cat editable" id="<%=entity%>#Metadata#OtherNames" ondblclick="OnEdit(this)">OtherNames:</span>
                     <span class="sub-val">
                       <% for(const [i, on] of otherNames.entries()) { %>
                         <%= on %>
@@ -470,7 +472,7 @@
 
                     <% if (type.length>0) { %>
                       <div class="cat-val">
-                        <span class="sub-cat" id="<%=entity%>#Metadata#Type" ondblclick="OnEdit(this)">Type:</span>
+                        <span class="sub-cat editable" id="<%=entity%>#Metadata#Type" ondblclick="OnEdit(this)">Type:</span>
                         <span class="sub-val">
                           <%= type %>
                         </span>
@@ -479,7 +481,7 @@
 
                         <% if (expectedAttributes.length>0) { %>
                           <div class="cat-val">
-                            <span class="sub-cat" id="<%=entity%>#Metadata#ExpectedAttributes" ondblclick="OnEdit(this)">ExpectedAttributes:</span>
+                            <span class="sub-cat editable" id="<%=entity%>#Metadata#ExpectedAttributes" ondblclick="OnEdit(this)">ExpectedAttributes:</span>
                             <span class="sub-val">
                               <% for(const [i, attr] of expectedAttributes.entries()) { %>
                                 <span class="shortarray-link" onclick="$('#search-entity').val('<%= attr %>'); $('#search-form').submit();">
@@ -493,7 +495,7 @@
 
                             <% if (defParent.length>0) { %>
                               <div class="cat-val">
-                                <span class="sub-cat" id="<%=entity%>#Metadata#DefaultParent" ondblclick="OnEdit(this)">DefaultParent:</span>
+                                <span class="sub-cat editable" id="<%=entity%>#Metadata#DefaultParent" ondblclick="OnEdit(this)">DefaultParent:</span>
                                 <span class="sub-val" onclick="$('#search-entity').val('<%= defParent %>'); $('#search-form').submit();">
                                   <%= defParent %>
                                 </span>
@@ -502,7 +504,7 @@
 
                                 <% if (superclass.length>0) { %>
                                   <div class="cat-val">
-                                    <span class="sub-cat" id="<%=entity%>#Metadata#Superclass" ondblclick="OnEdit(this)">Superclass:</span>
+                                    <span class="sub-cat editable" id="<%=entity%>#Metadata#Superclass" ondblclick="OnEdit(this)">Superclass:</span>
                                     <span class="sub-val">
                                       <% for(const [i, sc] of superclass.entries()) { %>
                                         <span class="shortarray-link" onclick="$('#search-entity').val('<%= sc %>'); $('#search-form').submit();">
@@ -516,7 +518,7 @@
 
                                     <% if (crossrefEntities.length>0) { %>
                                       <div class="cat-val">
-                                        <span class="sub-cat" id="<%=entity%>#Metadata#CrossrefEntities" ondblclick="OnEdit(this)">CrossrefEntities:</span>
+                                        <span class="sub-cat editable" id="<%=entity%>#Metadata#CrossrefEntities" ondblclick="OnEdit(this)">CrossrefEntities:</span>
                                         <span class="sub-val">
                                           <% for(const [i, crf] of crossrefEntities.entries()) { %>
                                             <span class="shortarray-link" onclick="$('#search-entity').val('<%= crf %>'); $('#search-form').submit();">

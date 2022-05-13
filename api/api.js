@@ -12,6 +12,7 @@ export const dic_api = async (fastify, options) => {
             .send(hw)
     })
 
+    // could be multiple paths
     fastify.get('/api/entity-path/:entity', async (req, res) => {
 
         MongoClient.connect(url, async (err, client) => {

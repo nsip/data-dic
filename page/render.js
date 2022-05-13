@@ -2,6 +2,7 @@
 
 import ejs from 'ejs'
 import fs from 'fs'
+import fsp from 'fs/promises'
 import util from 'util'
 import { createIfNeeded, invoke } from './tool.js'
 import { validateEntity } from './validate.js'
@@ -152,6 +153,10 @@ export const esa_dic = async (fastify, options) => {
             await new Promise(resolve => setTimeout(resolve, 50));
         }
 
+        if (fs.existsSync(uploadpath)) {
+            await fsp.readFile(uploadpath, { encoding: 'utf8' })
+        }
+
         // re-preprocess all
         invoke("./data/preproc/preproc", () => {
             // re-ingest all
@@ -163,16 +168,6 @@ export const esa_dic = async (fastify, options) => {
 
         await OnListEntity(render_ejs)
 
-        // if (SearchVal.length == 0) {
-        //     await OnListEntity(
-        //         render_ejs
-        //     )
-        // } else {
-        //     await OnFindEntity(
-        //         SearchVal.trim(),
-        //         render_ejs,
-        //     )
-        // }
     })
 
     // add Entity from JSON file, form with [enctype="multipart/form-data"] on submit
@@ -228,15 +223,5 @@ export const esa_dic = async (fastify, options) => {
 
         await OnListEntity(render_ejs)
 
-        // if (SearchVal.length == 0) {
-        //     await OnListEntity(
-        //         render_ejs
-        //     )
-        // } else {
-        //     await OnFindEntity(
-        //         SearchVal.trim(),
-        //         render_ejs,
-        //     )
-        // }
     })
 }

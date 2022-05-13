@@ -24,7 +24,8 @@ export const invoke = (exePath, done) => {
     console.log(`invoking: ${executable}`);
     cp.execFile(executable, (err, data) => {
         if (err !== null) {
-            console.log(err)
+            console.log("INVOKE ERROR")
+            console.log(JSON.stringify(err, null, 2))
             process.exit(1)
         }
         console.log(data.toString());

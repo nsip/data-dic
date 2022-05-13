@@ -12,6 +12,8 @@ import (
 
 func main() {
 
+	// lk.Log2F(true, "./preproc.log")
+
 	// clear current directory json files
 	filepath.Walk("./", func(path string, info fs.FileInfo, err error) error {
 		var e error

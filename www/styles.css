@@ -100,6 +100,16 @@ div span.category {
     width: 10%;
     font-size: 18;
     font-weight: bold;
+    cursor: default;
+}
+
+div span.editable {
+    text-decoration: underline;
+}
+
+div span.editable:hover {
+    text-decoration: underline;
+    color: brown;
 }
 
 div span.content-flex {
@@ -118,13 +128,6 @@ div span.content-whole {
     font-weight: normal;
 }
 
-div span.content-whole:hover {
-    color: brown;
-    margin-right: 20px;
-    width: 88%;   
-    font-weight: normal;
-}
-
 /*  */
 
 div span div.cat-val {
@@ -136,21 +139,15 @@ div span div.cat-val {
 
 div span div span.sub-cat {    
     font-weight: normal;
-    text-decoration: underline;
     width: 220px;
     /* background-color: rgb(172, 180, 178); */
+    cursor: default;
 }
 
 div span div span.sub-val {    
     color: black;
     width: 100%;
-    margin: auto;
-}
-
-div span div span.sub-val:hover {    
-    color: brown; 
-    width: 100%;
-    margin: auto;
+    margin: auto;    
 }
 
 /*  */

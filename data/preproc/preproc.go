@@ -58,7 +58,12 @@ func Preproc(datadir string) {
 	filepath.Walk(datadir, func(path string, info fs.FileInfo, err error) error {
 		if strings.HasSuffix(path, ".json") {
 
-			fmt.Println(path)
+			// pathExe, err := os.Executable()
+			// lk.FailOnErr("%v", err)
+			// lk.Log("%v", pathExe)
+
+			lk.Log("processing...  %v", path)
+
 			data, err := os.ReadFile(path)
 			if err != nil {
 				return err

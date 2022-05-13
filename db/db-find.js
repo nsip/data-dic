@@ -122,7 +122,7 @@ export const OnListEntity = async (fnReady) => {
 
     MongoClient.connect(url, async (err, client) => {
 
-        console.log('-------------------------------------------- < OnListEntity > --------------------------------------------')
+        console.log('------------------------- < OnListEntity > -------------------------')
 
         assert.equal(null, err)
         console.log("Connected successfully to server")
@@ -145,7 +145,7 @@ export const OnFindEntity = async (value, fnReady) => {
 
     MongoClient.connect(url, async (err, client) => {
 
-        console.log('-------------------------------------------- < OnFindEntity > --------------------------------------------')
+        console.log('------------------------- < OnFindEntity > -------------------------')
 
         assert.equal(null, err)
         console.log("Connected successfully to server")
@@ -177,7 +177,7 @@ export const OnFindEntity = async (value, fnReady) => {
         let cont = await find_dic(db, 'entity', true, field, value)
         if (cont == null) {
 
-            console.log('-------------------------------------------- < NULL ENTITY > --------------------------------------------')
+            console.log('------------------------- < NULL ENTITY > -------------------------')
 
             {
                 P.content = null
@@ -188,7 +188,7 @@ export const OnFindEntity = async (value, fnReady) => {
 
         } else {
 
-            console.log('-------------------------------------------- < GOT CONTENT > --------------------------------------------')
+            console.log('------------------------- < GOT CONTENT > -------------------------')
 
             {
                 P.content = cont
