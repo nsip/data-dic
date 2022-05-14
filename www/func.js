@@ -139,7 +139,7 @@ const OnEdit = async (span) => {
         defParent = entityPaths[0][entityPaths[0].length - 2]
     }
 
-    let value = ``
+    let value = null
     switch (flag) {
         case 3:
             value = entityObj[cat][idx_subcat][subcat]
@@ -160,10 +160,27 @@ const OnEdit = async (span) => {
             break
     }
 
+    // check value type: [string or array]
+    let valType = 'string'
+    if (Array.isArray(value)) {
+        valType = 'array'
+    }
+
+    // if value is array, join with '<br>'
+    if (valType === 'array') {
+        value = value.join('<br>')
+    }
+
     // popup input box & modify entityObject
-    const modified = prompt(prompt_msg, value)
+    let modified = null
+    modified = prompt(prompt_msg, value)
     if (modified === null) {
         return
+    }
+
+    // if original value is array, restore modified value back to array from string
+    if (valType === 'array') {
+        modified = modified.split('<br>')
     }
 
     switch (flag) {

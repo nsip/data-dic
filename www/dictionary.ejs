@@ -30,40 +30,55 @@
 
 <body id="main">
 
-  <!------------------- Title ------------------->
-  <h1>
-    <%= title %>
-  </h1>
+  <div id="container-header">
 
-  <hr class="line1">
-  <br>
+    <!-- <div id="logo">
+      <img src="ESA1.png" alt="ESA logo" width="100" height="100">
+    </div> -->
+    <!-- logo -->
 
-  <!------------------- Entity Class Path ------------------->
-  <div id="nav-path" class="nav-path">
-    <% for (const path of navPathCol) { %>
-      <% for (const [i, seg] of path.entries()) { %>
-        <span class="nav" onclick="
+    <div id="title">
+
+      <!------------------- Title ------------------->
+      <h1>
+        <%= title %>
+      </h1>
+
+      <hr class="line1">
+      <br>
+
+      <!------------------- Entity Class Path, e.g. 'Organisation/School' ------------------->
+      <div id="nav-path" class="nav-path">
+        <% if (Array.isArray(navPathCol)) { for (const path of navPathCol) { %>
+          <% for (const [i, seg] of path.entries()) { %>
+            <span class="nav" onclick="
         $('#search-entity').val('<%= seg %>');
         $('#search-form').submit();">
-          <%= seg %>
-        </span>
-        <% if (i < path.length-1) { %> <span> / </span>
-          <% } %>
-            <% } %>
-              <br>
+              <%= seg %>
+            </span>
+            <% if (i < path.length-1) { %> <span> / </span>
               <% } %>
-  </div>
+                <% } %>
+                  <br>
+                  <% } } %>
+      </div>
 
-  <!------------------- Level 1 Field ------------------->
-  <div id="nav-field">
-    <span class="nav" onclick="scrollToTop('Entity')">Entity</span>&ensp;
-    <span class="nav" onclick="scrollToTop('Definition')">Definition</span>&ensp;
-    <span class="nav" onclick="scrollToTop('SIF')">SIF</span>&ensp;
-    <span class="nav" onclick="scrollToTop('OtherStandards')">OtherStandards</span>&ensp;
-    <span class="nav" onclick="scrollToTop('LegalDefinitions')">LegalDefinitions</span>&ensp;
-    <span class="nav" onclick="scrollToTop('Collections')">Collections</span>&ensp;
-    <span class="nav" onclick="scrollToTop('Metadata')">Metadata</span>&ensp;
+      <!------------------- Category ------------------->
+      <div id="nav-field">
+        <span class="nav" onclick="scrollToTop('Entity')">Entity</span>&ensp;
+        <span class="nav" onclick="scrollToTop('Definition')">Definition</span>&ensp;
+        <span class="nav" onclick="scrollToTop('SIF')">SIF</span>&ensp;
+        <span class="nav" onclick="scrollToTop('OtherStandards')">OtherStandards</span>&ensp;
+        <span class="nav" onclick="scrollToTop('LegalDefinitions')">LegalDefinitions</span>&ensp;
+        <span class="nav" onclick="scrollToTop('Collections')">Collections</span>&ensp;
+        <span class="nav" onclick="scrollToTop('Metadata')">Metadata</span>&ensp;
+      </div>
+
+    </div>
+    <!-- title -->
+
   </div>
+  <!-- header -->
 
   <!----------------------------------------------------->
   <div id="container">
@@ -82,7 +97,7 @@
         <!------------------- Entity List ------------------->
         <!-- set selected item into above text input, then submit form -->
         <ul class="entity-list">
-          <% for(const entity of entities) { %>
+          <% if (Array.isArray(entities)) { for(const entity of entities) { %>
             <li class="link" onclick="
                     $('#search-entity').val('<%= entity %>');
                     $('#search-form').submit();">
@@ -90,7 +105,7 @@
                 <%= entity %>
               </span>
             </li>
-            <% } %>
+            <% } } %>
         </ul>
 
       </form>
@@ -156,7 +171,7 @@
               <div class="cat-val">
                 <span class="sub-cat editable" id="<%=entity%>#SIF#<%= i.toString() %>#XPath" ondblclick="OnEdit(this)">XPath:</span>
                 <span class="sub-val">
-                  <% if ('XPath' in s && s.XPath.length> 0) { %>
+                  <% if ('XPath' in s && Array.isArray(s.XPath) && s.XPath.length> 0) { %>
                     <% for(const [i, xpath] of s.XPath.entries()) { %>
                       <%- xpath %>
                         <br>
