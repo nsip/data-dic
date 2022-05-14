@@ -23,6 +23,9 @@ func main() {
 		return e
 	})
 
+	// make sure each file's name is its entity value
+	FixFilename("../")
+
 	// create './out' in this function
 	Preproc("../")
 

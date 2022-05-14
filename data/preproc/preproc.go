@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"fmt"
 	"io/fs"
+	"log"
 	"os"
 	"path/filepath"
 	"regexp"
@@ -13,6 +14,7 @@ import (
 	"github.com/digisan/gotk/strs"
 	jt "github.com/digisan/json-tool"
 	lk "github.com/digisan/logkit"
+	"github.com/tidwall/gjson"
 )
 
 // 1) Escape quotation marks used around HTML attributes like so <img src=\"someimage.png\" />
@@ -91,4 +93,35 @@ func Preproc(datadir string) {
 		}
 		return nil
 	})
+}
+
+func FixFilename(datadir string) {
+
+	files, err := os.ReadDir(datadir)
+	if err != nil {
+		log.Fatalln(err)
+	}
+
+	for _, file := range files {
+		fpath := filepath.Join(datadir, file.Name())
+		// fmt.Println(fpath)
+
+		if strings.HasSuffix(fpath, ".json") {
+			data, err := os.ReadFile(fpath)
+			if err != nil {
+				log.Fatalln(err)
+			}
+			fmt.Println("reading...", fpath)
+
+			entity := gjson.Get(string(data), "Entity").String()
+			fdir := strs.SplitPartFromLast(fpath, "/", 2)
+			fname := entity + ".json"
+			fpathNew := filepath.Join(fdir, fname)
+			fmt.Println("destination...", fpathNew)
+
+			if err = os.Rename(fpath, fpathNew); err != nil {
+				log.Fatalln(err)
+			}
+		}
+	}
 }

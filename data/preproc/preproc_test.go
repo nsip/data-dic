@@ -20,3 +20,7 @@ func TestPreproc(t *testing.T) {
 
 	Preproc("../")
 }
+
+func TestFixFilename(t *testing.T) {
+	FixFilename("../")
+}

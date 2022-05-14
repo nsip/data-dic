@@ -168,10 +168,12 @@ const OnEdit = async (span) => {
 
     switch (flag) {
         case 3:
+            console.log('--- updating idx subcat ---')
             entityObj[cat][idx_subcat][subcat] = modified
             break
 
         case 2:
+            console.log('--- updating subcat ---')
             if (cat == "Metadata") {
                 if (idx_subcat != "DefaultParent") {
                     entityObj[idx_subcat] = modified
@@ -180,6 +182,7 @@ const OnEdit = async (span) => {
             break
 
         case 1:
+            console.log('--- updating cat ---')
             entityObj[cat] = modified
             break
     }
@@ -198,12 +201,9 @@ const OnEdit = async (span) => {
     )
 
     if (respUpdate.status == 200) {
-
-        console.log('--- HERE ---')
-
         await (async () => {
             await new Promise(resolve => setTimeout(resolve, 200));
-            window.location.replace(`http://localhost:3000/?entity=${entityName}`)
+            window.location.replace(`http://localhost:3000/?entity=${entity}`)
         })()
     }
 }
