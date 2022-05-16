@@ -174,7 +174,7 @@ const OnEdit = async (span) => {
     // popup input box & modify entityObject
     let modified = null
     modified = prompt(prompt_msg, value)
-    if (modified === null) {
+    if (modified === null || modified === value) {
         return
     }
 

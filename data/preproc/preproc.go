@@ -95,6 +95,7 @@ func Preproc(datadir string) {
 	})
 }
 
+// make sure each file's name is its entity value
 func FixFilename(datadir string) {
 
 	files, err := os.ReadDir(datadir)
