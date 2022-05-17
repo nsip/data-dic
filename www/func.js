@@ -182,12 +182,13 @@ const OnEdit = async (span) => {
     // old dialog
     // modified = prompt(prompt_msg, value) // -------------------------------------- INPUT 1
 
-    // new dialog -------------------------------------- INPUT 2
+    // new dialog ------------------------------------------------------------------- INPUT 2
     const doModal = () => {
-        $("#dialog").prop('hidden', false)
-        $("#dialog").prop('title', prompt_msg)
-        $("#dialog").prop('innerHTML', value) // alert($("#dialog").text())
-        $("#dialog").dialog({
+        $("#dialog-wrapper").prop('hidden', false)
+        $("#dialog-wrapper").prop('title', prompt_msg)
+        // $("#dialog-wrapper").prop('innerHTML', value) // alert($("#dialog-wrapper").text())  // div usage
+        $("#dialog").val(value)                                                 // textarea usage
+        $("#dialog-wrapper").dialog({
             resizable: true,
             width: 800,
             height: 300,
@@ -216,7 +217,9 @@ const OnEdit = async (span) => {
         return
     }
 
-    modified = $("#dialog").text()
+    modified = $("#dialog").val()
+
+    // console.log("---:", modified)
 
     //////////////////////////////////////////////////////////////////////
 

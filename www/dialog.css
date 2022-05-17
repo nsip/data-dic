@@ -1,0 +1,10 @@
+div#dialog-wrapper {
+    padding: 10px;
+    margin: 2px 2px 2px 2px;
+}
+
+textarea#dialog {
+    font-size: 18px;
+    width: 100%;
+    height: 100%;
+}
