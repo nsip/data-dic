@@ -1,3 +1,5 @@
+"use strict";
+
 const scrollToTop = (eleID) => {
     $('#' + eleID)[0].scrollIntoView(true)
     $('#main')[0].scrollTop = 0
@@ -101,14 +103,14 @@ const OnEdit = async (span) => {
     const subcat = arr[3]
 
     let flag = 3
-    let prompt_msg = `Modify:    [${entity}] @${cat}.${idx_subcat}.${subcat}`
+    let prompt_msg = `[${entity}] @${cat}.${idx_subcat}.${subcat}:`
     if (subcat === undefined) {
         flag = 2
-        prompt_msg = `Modify:    [${entity}] @${cat}.${idx_subcat}`
+        prompt_msg = `[${entity}] @${cat}.${idx_subcat}:`
     }
     if (idx_subcat === undefined) {
         flag = 1
-        prompt_msg = `Modify:    [${entity}] @${cat}`
+        prompt_msg = `[${entity}] @${cat}:`
     }
 
     console.log("flag:  ", flag)
@@ -171,9 +173,53 @@ const OnEdit = async (span) => {
         value = value.join('<br>')
     }
 
+    ////////////////////////////////////////////////////////////////////////////
+
     // popup input box & modify entityObject
     let modified = null
-    modified = prompt(prompt_msg, value)
+    let ready = false
+
+    // old dialog
+    // modified = prompt(prompt_msg, value) // -------------------------------------- INPUT 1
+
+    // new dialog -------------------------------------- INPUT 2
+    const doModal = () => {
+        $("#dialog").prop('hidden', false)
+        $("#dialog").prop('title', prompt_msg)
+        $("#dialog").prop('innerHTML', value) // alert($("#dialog").text())
+        $("#dialog").dialog({
+            resizable: true,
+            width: 800,
+            height: 300,
+            modal: true,
+            buttons: {
+                OK: function () {
+                    ready = true
+                    $(this).dialog("close")
+                },
+                Cancel: function () {
+                    $(this).dialog("close")
+                }
+            }
+        });
+    }
+    doModal()
+
+    // waiting for dialog closed
+    await (async () => {
+        while (!ready) {
+            await new Promise(resolve => setTimeout(resolve, 200));
+        }
+    })()
+
+    if (!ready) {
+        return
+    }
+
+    modified = $("#dialog").text()
+
+    //////////////////////////////////////////////////////////////////////
+
     if (modified === null || modified === value) {
         return
     }
