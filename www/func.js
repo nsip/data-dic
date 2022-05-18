@@ -93,6 +93,48 @@ const new_entity = async () => {
     }
 }
 
+const Dialog = (prompt_msg, value) => {
+    return new Promise(async (resolve, reject) => {
+        let ready = false
+        let ok = false
+
+        $("#dialog-wrapper").prop('hidden', false)
+        $("#dialog-wrapper").prop('title', prompt_msg)
+        // $("#dialog-wrapper").prop('innerHTML', value) // get $("#dialog-wrapper").text() // div usage
+        $("#dialog").val(value)                          // textarea usage
+        $("#dialog-wrapper").dialog({
+            resizable: true,
+            width: 800,
+            height: 300,
+            modal: true,
+            buttons: {
+                OK: function () {
+                    ready = true
+                    ok = true
+                    $(this).dialog("close")
+                },
+                Cancel: function () {
+                    ready = true
+                    ok = false
+                    $(this).dialog("close")
+                }
+            }
+        });
+
+        await (async () => {
+            while (!ready) {
+                await new Promise(resolve => setTimeout(resolve, 200));
+            }
+        })()
+
+        if (ok) {
+            resolve($("#dialog").val())
+        } else {
+            reject('canceled')
+        }
+    });
+}
+
 // double click content
 const OnEdit = async (span) => {
 
@@ -177,53 +219,21 @@ const OnEdit = async (span) => {
 
     // popup input box & modify entityObject
     let modified = null
-    let ready = false
 
-    // old dialog
     // modified = prompt(prompt_msg, value) // -------------------------------------- INPUT 1
+    // if (modified === null) {
+    //     return
+    // }
 
-    // new dialog ------------------------------------------------------------------- INPUT 2
-    const doModal = () => {
-        $("#dialog-wrapper").prop('hidden', false)
-        $("#dialog-wrapper").prop('title', prompt_msg)
-        // $("#dialog-wrapper").prop('innerHTML', value) // alert($("#dialog-wrapper").text())  // div usage
-        $("#dialog").val(value)                                                 // textarea usage
-        $("#dialog-wrapper").dialog({
-            resizable: true,
-            width: 800,
-            height: 300,
-            modal: true,
-            buttons: {
-                OK: function () {
-                    ready = true
-                    $(this).dialog("close")
-                },
-                Cancel: function () {
-                    $(this).dialog("close")
-                }
-            }
-        });
-    }
-    doModal()
-
-    // waiting for dialog closed
-    await (async () => {
-        while (!ready) {
-            await new Promise(resolve => setTimeout(resolve, 200));
-        }
-    })()
-
-    if (!ready) {
+    try {
+        modified = await Dialog(prompt_msg, value) // -------------------------------------- INPUT 2
+    } catch (e) {
+        console.log(e)
         return
     }
-
-    modified = $("#dialog").val()
-
     // console.log("---:", modified)
 
-    //////////////////////////////////////////////////////////////////////
-
-    if (modified === null || modified === value) {
+    if (modified === value) {
         return
     }
 
