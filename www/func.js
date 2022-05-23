@@ -42,56 +42,56 @@ const check_search_form = async (form) => {
 }
 
 // normal POST action
-const new_entity = async () => {
+// const new_entity = async () => {
 
-    let entityName = prompt('Please entre new entity name:', '')
-    if (entityName.length == 0) {
-        return
-    }
+//     let entityName = prompt('Please entre new entity name:', '')
+//     if (entityName.length == 0) {
+//         return
+//     }
 
-    // existing check
-    const respChk = await fetch(
-        `http://localhost:3000/api/entity/${entityName}`,
-        {
-            method: 'GET',
-            mode: 'cors',
-        }
-    )
-    if (respChk.status == 200) {
-        alert(`[${entityName}] is already existing`)
-        return
-    }
+//     // existing check
+//     const respChk = await fetch(
+//         `http://localhost:3000/api/entity/${entityName}`,
+//         {
+//             method: 'GET',
+//             mode: 'cors',
+//         }
+//     )
+//     if (respChk.status == 200) {
+//         alert(`[${entityName}] is already existing`)
+//         return
+//     }
 
-    // new an empty entity
-    const newEntity = {
-        Entity: entityName,
-        Definition: "",
-        SIF: [],
-        OtherStandards: [],
-        LegalDefinitions: [],
-        Collections: [],
-        Meta: "",
-    }
+//     // new an empty entity
+//     const newEntity = {
+//         Entity: entityName,
+//         Definition: "",
+//         SIF: [],
+//         OtherStandards: [],
+//         LegalDefinitions: [],
+//         Collections: [],
+//         Meta: "",
+//     }
 
-    const respNew = await fetch(
-        `http://localhost:3000/new`,
-        {
-            method: 'POST',
-            mode: 'cors',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(newEntity),
-        }
-    )
+//     const respNew = await fetch(
+//         `http://localhost:3000/new`,
+//         {
+//             method: 'POST',
+//             mode: 'cors',
+//             headers: {
+//                 'Content-Type': 'application/json',
+//             },
+//             body: JSON.stringify(newEntity),
+//         }
+//     )
 
-    if (respNew.status == 200) {
-        await (async () => {
-            await new Promise(resolve => setTimeout(resolve, 200));
-            window.location.replace(`http://localhost:3000/?entity=${entityName}`)
-        })()
-    }
-}
+//     if (respNew.status == 200) {
+//         await (async () => {
+//             await new Promise(resolve => setTimeout(resolve, 200));
+//             window.location.replace(`http://localhost:3000/?entity=${entityName}`)
+//         })()
+//     }
+// }
 
 const Dialog = (prompt_msg, value) => {
     return new Promise(async (resolve, reject) => {
@@ -164,41 +164,30 @@ const OnEdit = async (span) => {
         mode: 'cors',
     })
     const entityObj = await respEntity.json()
+    // console.log("**************************")
     // console.log("%o", entityObj)
 
     // remove '_id' field
     delete entityObj._id
 
     // load from db --- 'class' collection
-    const respEntityPath = await fetch(
-        `http://localhost:3000/api/entity-path/${entity}`, {
-        method: 'GET',
-        mode: 'cors',
-    })
-    const entityPaths = await respEntityPath.json()
-    console.log("--- %o ---", entityPaths)
-
-    let defParent = 'NULL'
-    if (entityPaths.length > 0 && entityPaths[0].length > 1) {
-        defParent = entityPaths[0][entityPaths[0].length - 2]
-    }
+    // const respEntityPath = await fetch(
+    //     `http://localhost:3000/api/entity-path/${entity}`, {
+    //     method: 'GET',
+    //     mode: 'cors',
+    // })
+    // const entityPaths = await respEntityPath.json()
+    // console.log("--------------------------")
+    // console.log("%o", entityPaths)
 
     let value = null
     switch (flag) {
         case 3:
             value = entityObj[cat][idx_subcat][subcat]
             break
-
         case 2:
-            if (cat == "Metadata") {
-                if (idx_subcat == "DefaultParent") {
-                    value = defParent
-                } else {
-                    value = entityObj[idx_subcat]
-                }
-            }
+            value = entityObj[cat][idx_subcat]
             break
-
         case 1:
             value = entityObj[cat]
             break
@@ -244,21 +233,12 @@ const OnEdit = async (span) => {
 
     switch (flag) {
         case 3:
-            console.log('--- updating idx subcat ---')
             entityObj[cat][idx_subcat][subcat] = modified
             break
-
         case 2:
-            console.log('--- updating subcat ---')
-            if (cat == "Metadata") {
-                if (idx_subcat != "DefaultParent") {
-                    entityObj[idx_subcat] = modified
-                }
-            }
+            entityObj[cat][idx_subcat] = modified
             break
-
         case 1:
-            console.log('--- updating cat ---')
             entityObj[cat] = modified
             break
     }

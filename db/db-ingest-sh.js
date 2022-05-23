@@ -1,5 +1,5 @@
 import { ingestEntity, ingestClassLinkage } from './db-ingest.js'
 
-ingestEntity('../data/preproc/out', 'entity')
+ingestEntity('../data/out', 'entity')
 
-ingestClassLinkage('../data/preproc/out/class-link.json', 'class')
+ingestClassLinkage('../data/out/class-link.json', 'class')

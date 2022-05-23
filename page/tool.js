@@ -7,6 +7,10 @@ import path from 'path'
 
 export const invoke = (exePath, done) => {
 
+    const oriDir = process.cwd()
+    console.log("\nOriginal directory:", oriDir)
+
+    exePath = path.resolve(exePath)
     const executable = "./" + path.parse(exePath).base;
     const exeDir = path.parse(exePath).dir;
 
@@ -15,31 +19,29 @@ export const invoke = (exePath, done) => {
         process.exit(1)
     }
 
-    const oriDir = process.cwd()
-    console.log("\nOriginal directory:", oriDir);
-
     process.chdir(exeDir)
-    console.log("\nCurrent directory:", exeDir);
+    console.log("\nCurrent directory:", exeDir)
 
-    console.log(`invoking: ${executable}`);
+    console.log(`\nInvoking: ${executable}`)
+
     cp.execFile(executable, (err, data) => {
         if (err !== null) {
-            console.log("INVOKE ERROR")
+            console.log("\nINVOKE ERROR")
             console.log(JSON.stringify(err, null, 2))
             process.exit(1)
-        }
-        console.log(data.toString());
-
-        process.chdir(oriDir)
-        console.log("\nBack to directory:", oriDir);
-
-        if (done != null) {
-            done()
+        } else {
+            console.log(data.toString());
+            process.chdir(oriDir)
+            console.log("\nOK, Back to directory:", oriDir)
+            if (done != null) {
+                done()
+            }
         }
     });
 }
 
-// invoke("../data/preproc/preproc")
+// comment this out if not testing
+// invoke("../preproc")
 
 export const createIfNeeded = (path) => {
     if (fs.existsSync(path)) {

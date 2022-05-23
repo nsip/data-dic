@@ -2,9 +2,8 @@
 
 set -e
 
-cd ./data/preproc
+./rename
 ./preproc
-cd -
 
 cd ./db
 node ./db-ingest-sh.js

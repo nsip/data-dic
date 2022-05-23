@@ -58,7 +58,7 @@ MongoClient.connect(url, async (err, client) => {
 
     //////////////////////////////////////////////////////////   
 
-    await insert_file(db, 'school', '../data/preproc/out/school.json')
+    await insert_file(db, 'school', '../data/out/school.json')
 
     //////////////////////////////////////////////////////////
 

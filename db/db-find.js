@@ -98,22 +98,19 @@ const list_entity = async (db, colName) => {
 export const P = {}
 
 export const InitP = () => {
+
+    P.title = 'Education Data Dictionary'
     P.entities = []
     P.content = null
-    P.title = 'Education Data Dictionary'
+
     P.entity = ''
-    P.collections = []
-    P.crossrefEntities = []
     P.definition = ''
-    P.expectedAttributes = []
-    P.identifier = ''
-    P.legalDefinitions = []
-    P.otherNames = []
-    P.otherStandards = []
     P.sif = []
-    P.superclass = []
-    P.type = []
-    P.defParent = ''
+    P.otherStandards = []
+    P.legalDefinitions = []
+    P.collections = []
+    P.metadata = null // Identifier, OtherNames, Type, ExpectedAttributes, DefaultParent, Superclass, CrossrefEntities
+
     P.error = ''
     P.navPathCol = [] // [ [], []... ]
 }
@@ -197,38 +194,17 @@ export const OnFindEntity = async (value, fnReady) => {
 
                 assign(P, 'entity', cont.Entity, "")
 
-                assign(P, 'collections', cont.Collections, [])
-                for (let i = 0; i < P.collections.length; i++) {
-                    assign(P.collections[i], 'Elements', cont.Collections[i].Elements, [])
-                    assign(P.collections[i], 'BusinessRules', cont.Collections[i].BusinessRules, [])
-                }
-
-                assign(P, 'crossrefEntities', cont.CrossrefEntities, [])
-
                 assign(P, 'definition', cont.Definition, "")
-
-                assign(P, 'expectedAttributes', cont.ExpectedAttributes, [])
-
-                assign(P, 'identifier', cont.Identifier, "")
-
-                assign(P, 'legalDefinitions', cont.LegalDefinitions, [])
-
-                for (let i = 0; i < P.legalDefinitions.length; i++) {
-                    P.legalDefinitions[i].Link = linkify(P.legalDefinitions[i].Link)
-                }
-
-                assign(P, 'otherNames', cont.OtherNames, [])
-
-                assign(P, 'otherStandards', cont.OtherStandards, [])
-                for (let i = 0; i < P.otherStandards.length; i++) {
-                    P.otherStandards[i].Link = linkify(P.otherStandards[i].Link)
-                }
 
                 assign(P, 'sif', cont.SIF, [])
 
-                assign(P, 'superclass', cont.Superclass, [])
+                assign(P, 'otherStandards', cont.OtherStandards, [])
 
-                assign(P, 'type', cont.Type, "")
+                assign(P, 'legalDefinitions', cont.LegalDefinitions, [])
+
+                assign(P, 'collections', cont.Collections, [])
+
+                assign(P, 'metadata', cont.Metadata, null)
             }
 
             status = 200

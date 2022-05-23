@@ -18,25 +18,22 @@ const template = fs.readFileSync('./www/dictionary.ejs', 'utf-8')
 const render_ejs = (P, code) => {
 
     const data = ejs.render(template, {
+
         title: P.title,
         entities: P.entities,
         content: P.content,
+
         entity: P.entity,
-        collections: P.collections,
-        crossrefEntities: P.crossrefEntities,
         definition: P.definition,
-        expectedAttributes: P.expectedAttributes,
-        identifier: P.identifier,
-        legalDefinitions: P.legalDefinitions,
-        otherNames: P.otherNames,
-        otherStandards: P.otherStandards,
         sif: P.sif,
-        superclass: P.superclass,
-        type: P.type,
-        defParent: P.defParent,
-        error: P.error,
+        otherStandards: P.otherStandards,
+        legalDefinitions: P.legalDefinitions,
+        collections: P.collections,
+        metadata: P.metadata,
+
         search_value: SearchVal,
         navPathCol: P.navPathCol,
+        error: P.error,
     })
 
     P.res
@@ -158,16 +155,15 @@ export const esa_dic = async (fastify, options) => {
         }
 
         // re-preprocess all
-        invoke("./data/preproc/preproc", () => {
+        invoke("./preproc", () => {
             // re-ingest all
-            ingestEntity('./data/preproc/out', 'entity')
-            ingestClassLinkage('./data/preproc/out/class-link.json', 'class')
+            ingestEntity('./data/out', 'entity')
+            ingestClassLinkage('./data/out/class-link.json', 'class')
         })
 
         ///////////////////////////////////////////////////////////////////////
 
         await OnListEntity(render_ejs)
-
     })
 
     // add Entity from JSON file, form with [enctype="multipart/form-data"] on submit
@@ -212,16 +208,15 @@ export const esa_dic = async (fastify, options) => {
 
         // re-preprocess all
         if (P.error.length == 0) {
-            invoke("./data/preproc/preproc", () => {
+            invoke("./preproc", () => {
                 // re-ingest all
-                ingestEntity('./data/preproc/out', 'entity')
-                ingestClassLinkage('./data/preproc/out/class-link.json', 'class')
+                ingestEntity('./data/out', 'entity')
+                ingestClassLinkage('./data/out/class-link.json', 'class')
             })
         }
 
         ///////////////////////////////////////////////////////////////////////
 
         await OnListEntity(render_ejs)
-
     })
 }

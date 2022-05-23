@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html> -->
 
 <html lang="en">
 
@@ -106,12 +106,10 @@
         <!-- set selected item into above text input, then submit form -->
         <ul class="entity-list">
           <% if (Array.isArray(entities)) { for(const entity of entities) { %>
-            <li class="link" onclick="
-                    $('#search-entity').val('<%= entity %>');
-                    $('#search-form').submit();">
-              <span>
-                <%= entity %>
-              </span>
+            <li class="link ellip" title="<%= entity %>" onclick="
+              $('#search-entity').val('<%= entity %>');
+              $('#search-form').submit();">
+              <%= entity %>
             </li>
             <% } } %>
         </ul>
@@ -122,7 +120,8 @@
       <!-- upload file by select box. Different from normal, below do submitting when closing select box -->
       <form id="add-form" action="/add" method="post" enctype="multipart/form-data">
 
-        <input id="new-entity" type="button" value="New Entity" onclick="new_entity()" />
+        <!-- use template json for adding a new entity -->
+        <!-- <input id="new-entity" type="button" value="New Entity" onclick="new_entity()" /> -->
 
         <input id="fileInput" type="file" style="display:none;" name="entity" accept=".json" onchange="$('#add-form').submit()" />
         <input id="load-entity" type="button" value="Load Entity" onclick="$('#fileInput').click();" />
@@ -380,7 +379,6 @@
 
       </div>
 
-
       <!------------------- Collections ------------------->
       <div class="block" id="Collections">
 
@@ -462,92 +460,92 @@
 
           <% } %>
 
-      </div> <!-- Collections -->
+      </div>
 
       <!------------------- Metadata ------------------->
       <div class="block" id="Metadata">
-
         <span class="category">Metadata</span>
 
         <% if (content !=null) { %>
 
           <span class="content-flex">
 
-            <% if (identifier.length>0) { %>
+            <% if (metadata.Identifier !==undefined && metadata.Identifier.length>0) { %>
               <div class="cat-val">
                 <span class="sub-cat editable" id="<%=entity%>#Metadata#Identifier" ondblclick="OnEdit(this)">Identifier:</span>
                 <span class="sub-val">
-                  <%= identifier %>
+                  <%= metadata.Identifier %>
                 </span>
               </div>
               <% } %>
 
-                <% if (otherNames.length>0) { %>
+                <% if (metadata.OtherNames !==undefined && metadata.OtherNames.length>0) { %>
                   <div class="cat-val">
                     <span class="sub-cat editable" id="<%=entity%>#Metadata#OtherNames" ondblclick="OnEdit(this)">OtherNames:</span>
                     <span class="sub-val">
-                      <% for(const [i, on] of otherNames.entries()) { %>
+                      <% for(const [i, on] of metadata.OtherNames.entries()) { %>
                         <%= on %>
-                          <% if (i < otherNames.length - 1) { %> &nbsp;|&nbsp; <% } } %>
+                          <% if (i < metadata.OtherNames.length - 1) { %> &nbsp;|&nbsp; <% } } %>
                     </span>
                   </div>
                   <% } %>
 
-                    <% if (type.length>0) { %>
+                    <% if (metadata.Type !==undefined && metadata.Type.length>0) { %>
                       <div class="cat-val">
                         <span class="sub-cat editable" id="<%=entity%>#Metadata#Type" ondblclick="OnEdit(this)">Type:</span>
                         <span class="sub-val">
-                          <%= type %>
+                          <%= metadata.Type %>
                         </span>
                       </div>
                       <% } %>
 
-                        <% if (expectedAttributes.length>0) { %>
+                        <% if (metadata.ExpectedAttributes !==undefined && metadata.ExpectedAttributes.length>0) { %>
                           <div class="cat-val">
                             <span class="sub-cat editable" id="<%=entity%>#Metadata#ExpectedAttributes" ondblclick="OnEdit(this)">ExpectedAttributes:</span>
                             <span class="sub-val">
-                              <% for(const [i, attr] of expectedAttributes.entries()) { %>
+                              <% for(const [i, attr] of metadata.ExpectedAttributes.entries()) { %>
                                 <span class="shortarray-link" onclick="$('#search-entity').val('<%= attr %>'); $('#search-form').submit();">
                                   <%= attr %>
                                 </span>
-                                <% if ( i < expectedAttributes.length - 1) { %> &nbsp;|&nbsp; <% } %>
+                                <% if ( i < metadata.ExpectedAttributes.length - 1) { %> &nbsp;|&nbsp; <% } %>
                                     <% } %>
                             </span>
                           </div>
                           <% } %>
 
-                            <% if (defParent.length>0) { %>
+                            <!--  -->
+                            <% if (metadata.DefParent !==undefined && metadata.DefParent.length>0) { %>
                               <div class="cat-val">
                                 <span class="sub-cat editable" id="<%=entity%>#Metadata#DefaultParent" ondblclick="OnEdit(this)">DefaultParent:</span>
-                                <span class="sub-val" onclick="$('#search-entity').val('<%= defParent %>'); $('#search-form').submit();">
-                                  <%= defParent %>
+                                <span class="sub-val" onclick="$('#search-entity').val('<%= metadata.DefParent %>'); $('#search-form').submit();">
+                                  <%= metadata.DefParent %>
                                 </span>
                               </div>
                               <% } %>
 
-                                <% if (superclass.length>0) { %>
+                                <% if (metadata.Superclass !==undefined && metadata.Superclass.length>0) { %>
                                   <div class="cat-val">
                                     <span class="sub-cat editable" id="<%=entity%>#Metadata#Superclass" ondblclick="OnEdit(this)">Superclass:</span>
                                     <span class="sub-val">
-                                      <% for(const [i, sc] of superclass.entries()) { %>
+                                      <% for(const [i, sc] of metadata.Superclass.entries()) { %>
                                         <span class="shortarray-link" onclick="$('#search-entity').val('<%= sc %>'); $('#search-form').submit();">
                                           <%= sc %>
                                         </span>
-                                        <% if ( i < superclass.length - 1) { %> &nbsp;|&nbsp; <% } %>
+                                        <% if ( i < metadata.Superclass.length - 1) { %> &nbsp;|&nbsp; <% } %>
                                             <% } %>
                                     </span>
                                   </div>
                                   <% } %>
 
-                                    <% if (crossrefEntities.length>0) { %>
+                                    <% if (metadata.CrossrefEntities !==undefined && metadata.CrossrefEntities.length>0) { %>
                                       <div class="cat-val">
                                         <span class="sub-cat editable" id="<%=entity%>#Metadata#CrossrefEntities" ondblclick="OnEdit(this)">CrossrefEntities:</span>
                                         <span class="sub-val">
-                                          <% for(const [i, crf] of crossrefEntities.entries()) { %>
+                                          <% for(const [i, crf] of metadata.CrossrefEntities.entries()) { %>
                                             <span class="shortarray-link" onclick="$('#search-entity').val('<%= crf %>'); $('#search-form').submit();">
                                               <%= crf %>
                                             </span>
-                                            <% if (i < crossrefEntities.length - 1) { %> &nbsp;|&nbsp; <% } %>
+                                            <% if (i < metadata.CrossrefEntities.length - 1) { %> &nbsp;|&nbsp; <% } %>
                                                 <% } %>
                                         </span>
                                       </div>
@@ -557,7 +555,7 @@
 
           <% } %>
 
-      </div> <!-- Metadata -->
+      </div>
 
       <!---------------- END Block ---------------->
 

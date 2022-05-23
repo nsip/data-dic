@@ -1,8 +1,0 @@
-{
-    "Entity": "Name",
-    "Definition": "The name of an entity.",
-    "Identifier": "0006",
-    "Type": "Abstract Element",
-    "DefaultParent": [],
-    "Superclass": []
-}

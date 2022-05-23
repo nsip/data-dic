@@ -103,8 +103,4 @@ dist
 # TernJS port file
 .tern-port
 
-data/preproc/preproc
-
 prelease/prelease
-
-data/example-entities

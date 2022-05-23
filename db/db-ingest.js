@@ -27,7 +27,7 @@ const insert_file = async (db, colName, filepath) => {
     await col.updateOne({ Entity: obj.Entity }, { $set: obj }, { upsert: true })
 }
 
-// dirPath: '../data/preproc/out'
+// dirPath: '../data/out'
 export const ingestEntity = (dirPath, colName) => {
 
     MongoClient.connect(url, async (err, client) => {
@@ -57,7 +57,7 @@ export const ingestEntity = (dirPath, colName) => {
 
 }
 
-// linkFilePath: '../data/preproc/out/class-link.json'
+// linkFilePath: '../data/out/class-link.json'
 export const ingestClassLinkage = (linkFilePath, colName) => {
 
     MongoClient.connect(url, async (err, client) => {
