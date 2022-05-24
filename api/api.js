@@ -82,7 +82,7 @@ export const dic_api = async (fastify, options) => {
 
             const db = client.db(dbName) // create if not existing
 
-            const cont = await find_dic(db, 'entity', true, 'Identifier', req.params.identifier)
+            const cont = await find_dic(db, 'entity', true, 'Metadata.Identifier', req.params.identifier)
             let code = 200
             if (cont == null) {
                 code = 404

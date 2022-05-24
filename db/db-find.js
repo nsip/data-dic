@@ -32,6 +32,9 @@ export const find_dic = async (db, colName, oneFlag, attr, value, ...out_attrs) 
     }
     const col = db.collection(colName)
 
+    // console.log(attr)
+    // console.log(value)
+
     let query = {}
     if (attr !== '' && value !== null) {
 
@@ -43,8 +46,8 @@ export const find_dic = async (db, colName, oneFlag, attr, value, ...out_attrs) 
         const rVal = new RegExp('^' + value + '$', 'i')
 
         // make query object 
-        // query = { [attr]: rVal }
-        query = await xpath2object(attr, rVal)
+        query = { [attr]: rVal } // this one is "Query on Nested Field" 
+        // query = await xpath2object(attr, rVal) // this one is "Match an Embedded/Nested Document"
     }
     console.log(query)
 
@@ -164,10 +167,10 @@ export const OnFindEntity = async (value, fnReady) => {
 
         let field = 'Entity'
         if (isNumeric(value)) { // const idNum = value.replaceAll(/^0+|0+$/g, '')
-            field = 'Identifier'
-            value = String(value).padStart(4, '0')
+            field = 'Metadata.Identifier'
+            value = String(value).padStart(8, '0')
         }
-        // console.log("-------------", field, ":", value)
+        // console.log("---------------------------------------", field, ":", value)
 
         //////////////////////////////
 
@@ -225,8 +228,8 @@ export const OnFindEntity = async (value, fnReady) => {
 
             if (Object.keys(cont).length === 0) {
 
-                P.navPathCol = []
-                P.defParent = ''
+                P.navPathCol = []                   // pathCol is 2D array
+                P.navPathCol.push([field])
 
             } else {
 
@@ -235,12 +238,6 @@ export const OnFindEntity = async (value, fnReady) => {
                     P.navPathCol = []
                     for (let path of pathCol) {
                         P.navPathCol.push(path.split('--'))
-                    }
-                }
-                if ('navPathCol' in P && P.navPathCol.length > 0) {
-                    const firstPathCol = P.navPathCol[0]
-                    if ('length' in firstPathCol && firstPathCol.length > 1) {
-                        P.defParent = firstPathCol[firstPathCol.length - 2]
                     }
                 }
 

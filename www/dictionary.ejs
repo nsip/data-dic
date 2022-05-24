@@ -103,16 +103,19 @@
         </div>
 
         <!------------------- Entity List ------------------->
-        <!-- set selected item into above text input, then submit form -->
-        <ul class="entity-list">
-          <% if (Array.isArray(entities)) { for(const entity of entities) { %>
-            <li class="link ellip" title="<%= entity %>" onclick="
+
+        <div id="container-entities">
+          <!-- set selected item into above text input, then submit form -->
+          <ul class="entity-list">
+            <% if (Array.isArray(entities)) { for(const entity of entities) { %>
+              <li class="link ellip" title="<%= entity %>" onclick="
               $('#search-entity').val('<%= entity %>');
               $('#search-form').submit();">
-              <%= entity %>
-            </li>
-            <% } } %>
-        </ul>
+                <%= entity %>
+              </li>
+              <% } } %>
+          </ul>
+        </div>
 
       </form>
 

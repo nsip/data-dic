@@ -1,13 +1,10 @@
 hr.line1 {
-    height: 1.5px;
-    background-color: rgb(20, 20, 20);
-    border: none;
+    border-top: 1.5px solid rgb(20, 20, 20);
     margin: -10px 0px -8px 0px;
 }
 
 hr.line2 {
-    height: 1px;
-    background-color: rgb(71, 51, 248);
-    border: none;
+    border-top: 0.5px dotted rgb(100, 100, 100);
+    border-bottom: 0.5px dotted rgb(100, 100, 100);
     margin: 6px 0px 15px 0px;
 }

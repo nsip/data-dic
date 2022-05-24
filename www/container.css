@@ -33,13 +33,13 @@ body {
 }
 
 #left {
-    width: 15%;
-    overflow-y: scroll;
+    width: 15%;    
     padding-top: 10px;
     background-color: rgb(220, 220, 220);
     height: 91%;
+    /* overflow-y: scroll;
     display: flex;
-    flex-direction: column;
+    flex-direction: column; */
 }
 
 #content {
@@ -54,4 +54,15 @@ body {
     width: 0%;
     overflow-y: scroll;
     background-color: yellow;
+}
+
+#container-entities {
+    width: 87%;    
+    height: 90%;
+    margin: 10px 0px 0px 18px;  
+    border-style: groove;
+    border-color: rgb(230, 230, 230);
+    overflow-y: scroll;
+    display: flex;
+    flex-direction: column; 
 }

@@ -2,7 +2,7 @@
 
 set -e
 
-rm *.log
+rm -f *.log
 
 rm -rf ./uploads/*.* ./uploads/*
 

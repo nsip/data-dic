@@ -13,10 +13,10 @@ const scrollToBottom = (eleID) => {
 // before real submitting, check background in advance 
 const check_search_form = async (form) => {
 
-    let sv = $('#search-entity').val()
+    let sv = $('#search-entity').val().trim()
 
     if (!isNaN(sv)) {
-        sv = String(sv).padStart(4, '0')
+        sv = String(sv).padStart(8, '0')
     }
 
     let api_list = [
