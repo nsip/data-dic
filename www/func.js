@@ -99,10 +99,11 @@ const Dialog = (prompt_msg, value) => {
         let ok = false
 
         $("#dialog-wrapper").prop('hidden', false)
-        $("#dialog-wrapper").prop('title', prompt_msg)
         // $("#dialog-wrapper").prop('innerHTML', value) // get $("#dialog-wrapper").text() // div usage
         $("#dialog").val(value)                          // textarea usage
         $("#dialog-wrapper").dialog({
+            // autoOpen: false,
+            title: prompt_msg,
             resizable: true,
             width: 800,
             height: 300,
@@ -138,24 +139,42 @@ const Dialog = (prompt_msg, value) => {
 // double click content
 const OnEdit = async (span) => {
 
+    // id: 'Campus # Definition'
+    // id: 'Campus # Metadata # Identifier'
+    // id: 'Campus # SIF # 1 # XPath'
+
     const arr = span.id.split("#")
-    const entity = arr[0]
-    const cat = arr[1]
-    const idx_subcat = arr[2]
-    const subcat = arr[3]
+    let entity = arr[0]                 // 'Campus'
+    let cat = arr[1]                    // 'SIF'
+    let idx_subcat = ''                 // '1'
+    let subcat = ''                     // 'XPath'
 
-    let flag = 3
-    let prompt_msg = `[${entity}] @${cat}.${idx_subcat}.${subcat}:`
-    if (subcat === undefined) {
-        flag = 2
-        prompt_msg = `[${entity}] @${cat}.${idx_subcat}:`
-    }
-    if (idx_subcat === undefined) {
-        flag = 1
-        prompt_msg = `[${entity}] @${cat}:`
+    let flag = arr.length - 1
+    let prompt_msg = ''
+
+    // console.log("flag:  ", flag)
+
+    switch (flag) {
+        case 3:
+            idx_subcat = arr[2]
+            subcat = arr[3]
+            prompt_msg = `[${entity}] @${cat}.${idx_subcat}.${subcat}:`
+            break
+        case 2:
+            idx_subcat = arr[2]
+            prompt_msg = `[${entity}] @${cat}.${idx_subcat}:`
+            break
+        case 1:
+            prompt_msg = `[${entity}] @${cat}:`
+            break
+        default:
+            console.log('ERROR ID')
     }
 
-    console.log("flag:  ", flag)
+    console.log("entity:  ", entity)
+    console.log("cat:  ", cat)
+    console.log("idx_subcat:  ", idx_subcat)
+    console.log("subcat:  ", subcat)
 
     // load from db --- 'entity' collection
     const respEntity = await fetch(
@@ -164,7 +183,6 @@ const OnEdit = async (span) => {
         mode: 'cors',
     })
     const entityObj = await respEntity.json()
-    // console.log("**************************")
     // console.log("%o", entityObj)
 
     // remove '_id' field
@@ -177,7 +195,6 @@ const OnEdit = async (span) => {
     //     mode: 'cors',
     // })
     // const entityPaths = await respEntityPath.json()
-    // console.log("--------------------------")
     // console.log("%o", entityPaths)
 
     let value = null
