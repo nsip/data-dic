@@ -8,6 +8,7 @@
     "@fastify/static": "^5.0.2",
     "ejs": "^3.1.7",
     "fastify": "^3.29.0",
+    "flat": "^5.0.2",
     "mongodb": "^4.5.0",
     "pump": "^3.0.0",
     "stream": "^0.0.2"

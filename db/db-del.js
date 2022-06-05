@@ -103,4 +103,5 @@ export const DelAllFiles = (colName) => {
 
 DelAllFiles('entity')
 DelAllFiles('class')
+DelAllFiles('pathval')
 

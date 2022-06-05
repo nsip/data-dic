@@ -23,6 +23,10 @@ const insert_file = async (db, colName, filepath) => {
     const data = await getFileContent(filepath)
     const obj = JSON.parse(data)
 
+    if (filepath.includes('path_val')) {
+        console.log("%o", obj)
+    }
+
     // await col.insertOne(obj)
     await col.updateOne({ Entity: obj.Entity }, { $set: obj }, { upsert: true })
 }
@@ -44,7 +48,7 @@ export const ingestEntity = (dirPath, colName) => {
         console.log(names)
 
         for (let filename of names) {
-            if (filename === 'class-link.json') { // this doc will be put into 'class' collection, rather than 'entity'
+            if (filename === 'class-link.json' || filename === 'path_val') { // this doc & folder will be put into 'class' & 'pathval' collection, rather than 'entity'
                 continue
             }
             const filepath = path.join(dirPath, filename)
@@ -72,6 +76,33 @@ export const ingestClassLinkage = (linkFilePath, colName) => {
 
         console.log("storing: " + linkFilePath)
         await insert_file(db, colName, linkFilePath)
+
+        await client.close()
+    })
+
+}
+
+// dirPath: '../data/out/path_val'
+export const ingestEntityPathVal = (dirPath, colName) => {
+
+    MongoClient.connect(url, async (err, client) => {
+        assert.equal(null, err)
+        console.log("Connected successfully to server")
+
+        const db = client.db(dbName) // create if not existing
+
+        if (colName.length == 0) {
+            colName = 'pathval'
+        }
+
+        const names = await getDir(dirPath)
+        console.log(names)
+
+        for (let filename of names) {
+            const filepath = path.join(dirPath, filename)
+            console.log("storing: " + filepath)
+            await insert_file(db, colName, filepath)
+        }
 
         await client.close()
     })

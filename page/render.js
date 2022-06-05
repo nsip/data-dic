@@ -31,7 +31,7 @@ const render_ejs = (P, code) => {
         collections: P.collections,
         metadata: P.metadata,
 
-        search_value: SearchVal,
+        search_value: SearchVal.replace("$", ""),
         navPathCol: P.navPathCol,
         error: P.error,
     })
