@@ -20,11 +20,11 @@ export const dic_api = async (fastify, options) => {
             console.log("Connected successfully to server")
 
             let field = req.params.entity
-            field = field.replaceAll(".", "^DOT")
+            field = field.replaceAll(".", "[dot]")
 
             const db = client.db(dbName) // create if not existing
 
-            const cont = await find_dic(db, 'class', true, false, '', null, field)
+            const cont = await find_dic(db, 'class', true, true, '', null, field)
             const navPathCol = []
             let code = 200
 
@@ -70,7 +70,7 @@ export const dic_api = async (fastify, options) => {
 
             const db = client.db(dbName) // create if not existing
 
-            const cont = await find_dic(db, 'entity', false, false, attr, value)
+            const cont = await find_dic(db, 'entity', false, true, attr, value)
             let code = 200
             if (cont == null) {
                 code = 404
@@ -102,7 +102,7 @@ export const dic_api = async (fastify, options) => {
 
             const db = client.db(dbName) // create if not existing
 
-            const cont = await find_dic(db, 'entity', true, false, attr, value)
+            const cont = await find_dic(db, 'entity', true, true, attr, value)
             let code = 200
             if (cont == null) {
                 code = 404

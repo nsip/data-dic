@@ -238,7 +238,7 @@ export const OnFindEntity = async (value, fnReady) => {
         if (searchEntity.length > 0) {
 
             field = searchEntity
-            field = field.replaceAll(".", "^DOT")
+            field = field.replaceAll(".", "[dot]")
 
             cont = await find_dic(db, 'class', true, true, '', null, field)
 
