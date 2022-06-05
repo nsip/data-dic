@@ -4,7 +4,7 @@ set -e
 
 rm -f *.log
 
-rm -rf ./uploads/*.* ./uploads/*
+rm -f ./prelease/prelease
 
 rm -f ./data/*.json
 rm -rf ./data/out

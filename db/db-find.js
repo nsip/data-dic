@@ -20,7 +20,7 @@ export const url = 'mongodb://127.0.0.1:27017'
 //     return col.findOne({ Entity: entity })
 // }
 
-export const find_dic = async (db, colName, oneFlag, attr, value, ...out_attrs) => {
+export const find_dic = async (db, colName, single, strict, attr, value, ...out_attrs) => {
 
     try {
         await db.createCollection(colName)
@@ -42,8 +42,13 @@ export const find_dic = async (db, colName, oneFlag, attr, value, ...out_attrs) 
         value = value.replaceAll('(', '\\(')
         value = value.replaceAll(')', '\\)')
 
-        // regex for case insensitive
-        const rVal = new RegExp('^' + value + '$', 'i')
+        // regex for case insensitive, any part of word
+        let rVal = new RegExp('(^|\\s+)' + value + '(\\s+|$)', 'i') // filter mode
+
+        if (strict) {
+            // regex for case insensitive, whole word
+            rVal = new RegExp('^' + value + '$', 'i')               // click mode
+        }
 
         // make query object 
         query = { [attr]: rVal } // this one is "Query on Nested Field" 
@@ -52,7 +57,7 @@ export const find_dic = async (db, colName, oneFlag, attr, value, ...out_attrs) 
     console.log(query)
 
     if (out_attrs.length == 0) {
-        if (oneFlag) {
+        if (single) {
             return await col.findOne(query)
         }
         return await col.find(query).toArray()
@@ -64,14 +69,25 @@ export const find_dic = async (db, colName, oneFlag, attr, value, ...out_attrs) 
     }
     console.log(out)
 
-    if (oneFlag) {
+    if (single) {
         return await col.findOne(query, { projection: out })
     }
     return await col.find(query, { projection: out }).toArray()
 }
 
-const list_entity = async (db, colName) => {
-    let result = await find_dic(db, colName, false, '', '', 'Entity')
+const list_entity = async (db, colName, aimEntities) => {
+
+    // default is get all entity files
+    let attr = ''
+    let value = ''
+
+    // get aimed reg entity files
+    if (aimEntities !== undefined && aimEntities.length > 0) {
+        attr = 'Entity'
+        value = aimEntities
+    }
+
+    let result = await find_dic(db, colName, false, false, attr, value, 'Entity')
     const entities = []
     for (const item of result) {
         entities.push(item.Entity)
@@ -87,8 +103,8 @@ const list_entity = async (db, colName) => {
 //     const db = client.db(dbName) // create if not existing
 //     const colName = 'entity'
 
-//     // const item = await find_dic(db, colName, false, 'Entity', 'School', 'Type', 'Collections')
-//     // const item = await find_dic(db, colName, false, '', '', 'Type', 'Entity', 'Collections')
+//     // const item = await find_dic(db, colName, false, false, 'Entity', 'School', 'Type', 'Collections')
+//     // const item = await find_dic(db, colName, false, false, '', '', 'Type', 'Entity', 'Collections')
 //     // console.log(item)
 //     // console.log(item.Collections[0].Elements[0])
 
@@ -118,7 +134,7 @@ export const InitP = () => {
     P.navPathCol = [] // [ [], []... ]
 }
 
-export const OnListEntity = async (fnReady) => {
+export const OnListEntity = async (aimEntities, fnReady) => {
 
     MongoClient.connect(url, async (err, client) => {
 
@@ -130,7 +146,7 @@ export const OnListEntity = async (fnReady) => {
         const db = client.db(dbName) // create if not existing
 
         {
-            P.entities = await list_entity(db, 'entity')
+            P.entities = await list_entity(db, 'entity', aimEntities)
             P.content = null
         }
 
@@ -152,77 +168,78 @@ export const OnFindEntity = async (value, fnReady) => {
 
         let status = 200
         let searchEntity = ''
-
         const db = client.db(dbName) // create if not existing
+        let click_mode = true
 
         ////////////////////////////////////////////////////////////////////////////////////////
         // Refresh List
         ////////////
 
-        P.entities = await list_entity(db, 'entity')
+        if (!value.endsWith("$")) {
+            P.entities = await list_entity(db, 'entity', value)
+            click_mode = false
+        }
+
+        value = value.replace("$", "")
 
         ////////////////////////////////////////////////////////////////////////////////////////
         // Content
-        ////////////        
+        ////////////
 
-        let field = 'Entity'
-        if (isNumeric(value)) { // const idNum = value.replaceAll(/^0+|0+$/g, '')
-            field = 'Metadata.Identifier'
-            value = String(value).padStart(8, '0')
-        }
-        // console.log("---------------------------------------", field, ":", value)
+        let field = ''
+        let cont = null
 
-        //////////////////////////////
+        if (value.length > 0) {
 
-        let cont = await find_dic(db, 'entity', true, field, value)
-        if (cont == null) {
-
-            console.log('------------------------- < NULL ENTITY > -------------------------')
-
-            {
-                P.content = null
-                P.error = `could NOT find ${value} for ${field}`
+            field = 'Entity'
+            if (isNumeric(value)) { // const idNum = value.replaceAll(/^0+|0+$/g, '')
+                field = 'Metadata.Identifier'
+                value = String(value).padStart(8, '0')
             }
 
-            status = 404
+            cont = await find_dic(db, 'entity', true, click_mode, field, value)
+            if (cont == null) {
 
-        } else {
+                console.log('------------------------- < NULL ENTITY > -------------------------')
 
-            console.log('------------------------- < GOT CONTENT > -------------------------')
+                {
+                    P.content = null
+                    P.error = `Could NOT find: ${value} from ${field}`
+                }
 
-            {
-                P.content = cont
+                status = 404
 
-                searchEntity = cont.Entity
+            } else {
 
-                assign(P, 'entity', cont.Entity, "")
+                console.log('------------------------- < GOT CONTENT > -------------------------')
 
-                assign(P, 'definition', cont.Definition, "")
+                {
+                    P.content = cont
+                    searchEntity = cont.Entity
+                    assign(P, 'entity', cont.Entity, "")
+                    assign(P, 'definition', cont.Definition, "")
+                    assign(P, 'sif', cont.SIF, [])
+                    assign(P, 'otherStandards', cont.OtherStandards, [])
+                    assign(P, 'legalDefinitions', cont.LegalDefinitions, [])
+                    assign(P, 'collections', cont.Collections, [])
+                    assign(P, 'metadata', cont.Metadata, null)
+                }
 
-                assign(P, 'sif', cont.SIF, [])
-
-                assign(P, 'otherStandards', cont.OtherStandards, [])
-
-                assign(P, 'legalDefinitions', cont.LegalDefinitions, [])
-
-                assign(P, 'collections', cont.Collections, [])
-
-                assign(P, 'metadata', cont.Metadata, null)
+                status = 200
             }
 
-            status = 200
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////
         // Path
         /////////
 
-        if (searchEntity !== '') {
+        if (searchEntity.length > 0) {
 
             field = searchEntity
             field = field.replaceAll(".", "^DOT")
 
-            cont = await find_dic(db, 'class', true, '', null, field)
+            cont = await find_dic(db, 'class', true, true, '', null, field)
 
             // console.log("\n-----", cont)
 

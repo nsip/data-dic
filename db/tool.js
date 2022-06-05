@@ -8,7 +8,7 @@ const provided = (param) => {
 }
 
 export const isNumeric = (num) => {
-    return !isNaN(num)
+    return !isNaN(num) && num.length > 0
 }
 
 export const assign = (obj, fld, val, dflt_val, fn_css_class, css_class) => {

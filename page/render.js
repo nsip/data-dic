@@ -61,31 +61,27 @@ export const esa_dic = async (fastify, options) => {
     // console.log('params  ---', req.params.entity)  // from /url/:entity
     // console.log('headers ---', req.headers)
 
-    // init page
+    // init page, param 'search' 
     fastify.get('/', async (req, res) => {
-
-        // console.log('query   ---', req.query.entity)
 
         console.log("\n-------------------------------------INIT-------------------------------------")
 
         SearchVal = ''
 
-        if ('entity' in req.query) {
-            SearchVal = req.query.entity.trim()
+        if ('search' in req.query) {
+            SearchVal = req.query.search.trim()
         }
 
         if (SearchVal.length == 0) {
 
             InitP()
             P.res = res
-
-            await OnListEntity(render_ejs)
+            await OnListEntity(SearchVal, render_ejs)
 
         } else {
 
             P.error = ''
             P.res = res
-
             await OnFindEntity(SearchVal, render_ejs)
         }
     })
@@ -101,31 +97,25 @@ export const esa_dic = async (fastify, options) => {
 
             SearchVal = entity
 
-            await OnFindEntity(
-                SearchVal.trim(),
-                render_ejs,
-            )
+            await OnFindEntity(SearchVal.trim(), render_ejs)
         })
     }
 
     // if [entity] is empty, input(text) applies on form submit
-    fastify.post(`/:entity`, async (req, res) => {
+    fastify.post(`/:search`, async (req, res) => {
 
         console.log("\n------------------------------------- POST SEARCH -------------------------------------")
 
         P.error = ''
         P.res = res
 
-        SearchVal = req.params.entity
+        SearchVal = req.params.search // above param string ':search'
 
         if (SearchVal.length == 0) {
-            SearchVal = getValue(req.body.entity) // input(text)-name@'entity' ref. dictionary.ejs ln77
+            SearchVal = getValue(req.body.search) // input(text type)-name('search'). ref. dictionary.ejs ln101
         }
 
-        await OnFindEntity(
-            SearchVal.trim(),
-            render_ejs,
-        )
+        await OnFindEntity(SearchVal.trim(), render_ejs)
     })
 
     fastify.post('/new', async (req, res) => {
@@ -163,7 +153,7 @@ export const esa_dic = async (fastify, options) => {
 
         ///////////////////////////////////////////////////////////////////////
 
-        await OnListEntity(render_ejs)
+        await OnListEntity(filename, render_ejs)
     })
 
     // add Entity from JSON file, form with [enctype="multipart/form-data"] on submit
@@ -217,6 +207,6 @@ export const esa_dic = async (fastify, options) => {
 
         ///////////////////////////////////////////////////////////////////////
 
-        await OnListEntity(render_ejs)
+        await OnListEntity(entity.Entity, render_ejs)
     })
 }

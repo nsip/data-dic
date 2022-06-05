@@ -60,7 +60,7 @@
         <% if (Array.isArray(navPathCol)) { for (const path of navPathCol) { %>
           <% for (const [i, seg] of path.entries()) { %>
             <span class="nav" onclick="
-        $('#search-entity').val('<%= seg %>');
+        $('#search-entity').val('<%= seg %>$');
         $('#search-form').submit();">
               <%= seg %>
             </span>
@@ -93,13 +93,13 @@
 
     <div id="left">
 
-      <!-- real submitting is in 'check_search_form' -->
-      <form id="search-form" action="/" method="post" onsubmit="check_search_form(this); return false">
+      <!-- real submitting is in 'check_search' -->
+      <form id="search-form" action="/" method="post" onsubmit="check_search(this); return false">
 
         <!------------------- Search Input ------------------->
         <div id="search-div">
-          <input type="text" id="search-entity" name="entity" placeholder="Entity or Identifier" value="<%= search_value %>" style="padding: 5px 0px 5px 10px;">
-          <input type="submit" value="go" style="padding: 5px 10px 5px 10px; font-size: 14px;">
+          <input type="text" id="search-entity" name="search" placeholder="looking for ..." value="<%= search_value %>" style="padding: 5px 0px 5px 10px;">
+          <input type="submit" value="filter" style="padding: 5px 5px 5px 5px; font-size: 14px;">
         </div>
 
         <!------------------- Entity List ------------------->
@@ -109,7 +109,7 @@
           <ul class="entity-list">
             <% if (Array.isArray(entities)) { for(const entity of entities) { %>
               <li class="link ellip" title="<%= entity %>" onclick="
-              $('#search-entity').val('<%= entity %>');
+              $('#search-entity').val('<%= entity %>$');
               $('#search-form').submit();">
                 <%= entity %>
               </li>

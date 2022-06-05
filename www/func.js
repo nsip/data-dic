@@ -11,11 +11,11 @@ const scrollToBottom = (eleID) => {
 }
 
 // before real submitting, check background in advance 
-const check_search_form = async (form) => {
+const check_search = async (form) => {
 
     let sv = $('#search-entity').val().trim()
 
-    if (!isNaN(sv)) {
+    if (sv.length > 0 && !isNaN(sv)) {
         sv = String(sv).padStart(8, '0')
     }
 
@@ -38,7 +38,7 @@ const check_search_form = async (form) => {
         }
     }
 
-    alert(`Couldn't find ${sv}`)
+    alert(`Couldn't find: ${sv}`)
 }
 
 // normal POST action
@@ -88,7 +88,7 @@ const check_search_form = async (form) => {
 //     if (respNew.status == 200) {
 //         await (async () => {
 //             await new Promise(resolve => setTimeout(resolve, 200));
-//             window.location.replace(`http://localhost:3000/?entity=${entityName}`)
+//             window.location.replace(`http://localhost:3000/?search=${entityName}`)
 //         })()
 //     }
 // }
@@ -144,10 +144,10 @@ const OnEdit = async (span) => {
     // id: 'Campus # SIF # 1 # XPath'
 
     const arr = span.id.split("#")
-    let entity = arr[0]                 // 'Campus'
-    let cat = arr[1]                    // 'SIF'
-    let idx_subcat = ''                 // '1'
-    let subcat = ''                     // 'XPath'
+    let entity = arr[0]                 // e.g. 'Campus'
+    let cat = arr[1]                    // e.g. 'SIF'
+    let idx_subcat = ''                 // e.g. '1'
+    let subcat = ''                     // e.g. 'XPath'
 
     let flag = arr.length - 1
     let prompt_msg = ''
@@ -177,12 +177,13 @@ const OnEdit = async (span) => {
     console.log("subcat:  ", subcat)
 
     // load from db --- 'entity' collection
-    const respEntity = await fetch(
+    const respEntities = await fetch(
         `http://localhost:3000/api/entity/${entity}`, {
         method: 'GET',
         mode: 'cors',
     })
-    const entityObj = await respEntity.json()
+    const entityObjs = await respEntities.json()
+    const entityObj = entityObjs[0]
     // console.log("%o", entityObj)
 
     // remove '_id' field
@@ -273,10 +274,11 @@ const OnEdit = async (span) => {
         }
     )
 
+    // refresh page, invoke 'init page' in render.js
     if (respUpdate.status == 200) {
         await (async () => {
             await new Promise(resolve => setTimeout(resolve, 200));
-            window.location.replace(`http://localhost:3000/?entity=${entity}`)
+            window.location.replace(`http://localhost:3000/?search=${entity}$`)
         })()
     }
 }

@@ -24,7 +24,7 @@ export const dic_api = async (fastify, options) => {
 
             const db = client.db(dbName) // create if not existing
 
-            const cont = await find_dic(db, 'class', true, '', null, field)
+            const cont = await find_dic(db, 'class', true, false, '', null, field)
             const navPathCol = []
             let code = 200
 
@@ -54,13 +54,23 @@ export const dic_api = async (fastify, options) => {
         // console.log('params  ---', req.params.entity)  // from /url:param
         // console.log('headers ---', req.headers)
 
+        const entity = req.params.entity.trim()
+
+        let attr = ''
+        let value = ''
+
+        if (entity.length != 0) {
+            attr = 'Entity'
+            value = entity
+        }
+
         MongoClient.connect(url, async (err, client) => {
             assert.equal(null, err)
             console.log("Connected successfully to server")
 
             const db = client.db(dbName) // create if not existing
 
-            const cont = await find_dic(db, 'entity', true, 'Entity', req.params.entity)
+            const cont = await find_dic(db, 'entity', false, false, attr, value)
             let code = 200
             if (cont == null) {
                 code = 404
@@ -76,13 +86,23 @@ export const dic_api = async (fastify, options) => {
 
     fastify.get('/api/identifier/:identifier', async (req, res) => {
 
+        const id = req.params.identifier.trim()
+
+        let attr = ''
+        let value = ''
+
+        if (id.length != 0) {
+            attr = 'Metadata.Identifier'
+            value = id
+        }
+
         MongoClient.connect(url, async (err, client) => {
             assert.equal(null, err)
             console.log("Connected successfully to server")
 
             const db = client.db(dbName) // create if not existing
 
-            const cont = await find_dic(db, 'entity', true, 'Metadata.Identifier', req.params.identifier)
+            const cont = await find_dic(db, 'entity', true, false, attr, value)
             let code = 200
             if (cont == null) {
                 code = 404
