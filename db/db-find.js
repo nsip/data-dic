@@ -76,24 +76,85 @@ export const find_dic = async (db, colName, single, strict, attr, value, ...out_
     return await col.find(query, { projection: out }).toArray()
 }
 
-const list_entity = async (db, colName, aimEntities) => {
+export const iter_dic = async (db, colName) => {
+
+    try {
+        await db.createCollection(colName)
+    } catch (err) {
+        if (err.codeName != 'NamespaceExists') {
+            return
+        }
+        console.log(`${err.codeName}, use existing collection - ${colName}`)
+    }
+    const col = db.collection(colName)
+
+    let docs = []
+    await col.find().forEach(element => {
+        console.log(element)
+        docs.push(element)
+    });
+    return docs
+}
+
+const list_entity = async (db, colName, lookfor) => {
+
+    /*
+    * only for entity search    
+    */
 
     // default is get all entity files
-    let attr = ''
-    let value = ''
+    // let attr = ''
+    // let value = ''
 
     // get aimed reg entity files
-    if (aimEntities !== undefined && aimEntities.length > 0) {
-        attr = 'Entity'
-        value = aimEntities
+    // if (lookfor !== undefined && lookfor.length > 0) {
+    //     attr = 'Entity'
+    //     value = lookfor
+    // }
+
+    // let result = await find_dic(db, colName, false, false, attr, value, 'Entity')
+    // const entities = []
+    // for (const item of result) {
+    //     entities.push(item.Entity)
+    // }
+    // return entities.sort()
+
+    /*******************************************************************************/
+
+    /*
+    * all field value search
+    */
+
+    if (lookfor === undefined || lookfor.length === 0) {
+        let result = await find_dic(db, colName, false, false, '', '', 'Entity')
+        const entities = []
+        for (const item of result) {
+            entities.push(item.Entity)
+        }
+        return entities.sort()
     }
 
-    let result = await find_dic(db, colName, false, false, attr, value, 'Entity')
     const entities = []
-    for (const item of result) {
-        entities.push(item.Entity)
+    {
+        let attrs = []
+        let value = lookfor
+
+        let docs = await iter_dic(db, colName)
+        console.log(docs.length)
+        for (const doc of docs) {
+            for (let k of Object.keys(doc)) {
+                attrs.push(k)
+            }
+        }
+        for (const attr of attrs) {
+            for (const item of await find_dic(db, colName, false, false, attr, value, 'Entity')) {
+                entities.push(item.Entity)
+            }
+        }
     }
-    return entities.sort()
+
+    let uniq = a => [...new Set(a)]
+    return uniq(entities.sort())
 }
 
 // referred by 'render.js'
@@ -135,7 +196,7 @@ export const InitP = () => {
     P.navPathCol = [] // [ [], []... ]
 }
 
-export const OnListEntity = async (aimEntities, fnReady) => {
+export const OnListEntity = async (lookfor, fnReady) => {
 
     MongoClient.connect(url, async (err, client) => {
 
@@ -147,7 +208,7 @@ export const OnListEntity = async (aimEntities, fnReady) => {
         const db = client.db(dbName) // create if not existing
 
         {
-            P.entities = await list_entity(db, 'entity', aimEntities)
+            P.entities = await list_entity(db, 'entity', lookfor)
             P.content = null
         }
 
