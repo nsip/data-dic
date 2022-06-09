@@ -56,7 +56,6 @@ export const dic_api = async (fastify, options) => {
         // console.log('headers ---', req.headers)
 
         try {
-
             const entity = req.params.entity.trim()
 
             let attr = ''
@@ -87,37 +86,36 @@ export const dic_api = async (fastify, options) => {
         }
     })
 
-    fastify.get('/api/identifier/:identifier', async (req, res) => {
+    // fastify.get('/api/identifier/:identifier', async (req, res) => {
 
-        try {
+    //     try {
+    //         const id = req.params.identifier.trim()
 
-            const id = req.params.identifier.trim()
+    //         let attr = ''
+    //         let value = ''
 
-            let attr = ''
-            let value = ''
+    //         if (id.length != 0) {
+    //             attr = 'Metadata.Identifier'
+    //             value = id
+    //         }
 
-            if (id.length != 0) {
-                attr = 'Metadata.Identifier'
-                value = id
-            }
+    //         const client = await MongoClient.connect(url)
+    //         const db = client.db(dbName)
 
-            const client = await MongoClient.connect(url)
-            const db = client.db(dbName)
+    //         const cont = await find_dic(db, 'entity', true, true, attr, value)
+    //         let code = 200
+    //         if (cont == null) {
+    //             code = 404
+    //         }
 
-            const cont = await find_dic(db, 'entity', true, true, attr, value)
-            let code = 200
-            if (cont == null) {
-                code = 404
-            }
+    //         res.code(code)
+    //             .header('Content-Type', 'application/json; charset=utf-8')
+    //             .send(cont)
 
-            res.code(code)
-                .header('Content-Type', 'application/json; charset=utf-8')
-                .send(cont)
+    //         await client.close()
 
-            await client.close()
-
-        } catch (err) {
-            console.log(err)
-        }
-    })
+    //     } catch (err) {
+    //         console.log(err)
+    //     }
+    // })
 }

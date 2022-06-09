@@ -3,9 +3,9 @@ import * as assert from 'assert'
 import { assign, isNumeric, xpath2object, linkify } from './tool.js'
 import flatten from 'flat'
 
-const MongoClient = mongodb.MongoClient
-const dbName = 'dictionary'
-const url = 'mongodb://127.0.0.1:27017'
+export const MongoClient = mongodb.MongoClient // for api/ using
+export const dbName = 'dictionary'
+export const url = 'mongodb://127.0.0.1:27017'
 // const url = 'mongodb://127.0.0.1:27017' + '/' + dbName
 
 // const find_entity = async (db, colName, entity) => {
@@ -251,10 +251,11 @@ export const OnFindEntity = async (value, fnReady) => {
         if (value.length > 0) {
 
             field = 'Entity'
-            if (isNumeric(value)) { // const idNum = value.replaceAll(/^0+|0+$/g, '')
-                field = 'Metadata.Identifier'
-                value = String(value).padStart(8, '0')
-            }
+
+            // if (isNumeric(value)) { // const idNum = value.replaceAll(/^0+|0+$/g, '')
+            //     field = 'Metadata.Identifier'
+            //     value = String(value).padStart(8, '0')
+            // }
 
             cont = await find_dic(db, 'entity', true, click_mode, field, value)
             if (cont == null) {

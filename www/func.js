@@ -15,13 +15,13 @@ const check_search = async (form) => {
 
     let sv = $('#search-entity').val().trim()
 
-    if (sv.length > 0 && !isNaN(sv)) {
-        sv = String(sv).padStart(8, '0')
-    }
+    // if (sv.length > 0 && !isNaN(sv)) {
+    //     sv = String(sv).padStart(8, '0')
+    // }
 
     let api_list = [
         `http://localhost:3000/api/entity/${sv}`,
-        `http://localhost:3000/api/identifier/${sv}`
+        // `http://localhost:3000/api/identifier/${sv}`
     ]
 
     for (let api of api_list) {
