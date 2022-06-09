@@ -226,8 +226,7 @@ export const OnFindEntity = async (value, fnReady) => {
 
         console.log('------------------------- < OnFindEntity > -------------------------')
 
-        let status = 200
-        let searchEntity = ''
+        let status = 404
         let click_mode = true
 
         ////////////////////////////////////////////////////////////////////////////////////////
@@ -239,67 +238,53 @@ export const OnFindEntity = async (value, fnReady) => {
             click_mode = false
         }
 
-        value = value.replace("$", "")
+        if (P.entities.length > 0) {
+            status = 200
+
+            if (click_mode) {
+                value = value.replace("$", "")
+            } else {
+                value = P.entities[0]
+            }
+
+        } else {
+            P.content = null
+            P.error = `Could NOT find: ${value}`
+        }
 
         ////////////////////////////////////////////////////////////////////////////////////////
         // Content
         ////////////
 
-        let field = ''
-        let cont = null
+        let searchEntity = ''
 
-        if (value.length > 0) {
+        if (value.length > 0 && status == 200) {
 
-            field = 'Entity'
+            let cont = await find_dic(db, 'entity', true, true, 'Entity', value)
 
-            // if (isNumeric(value)) { // const idNum = value.replaceAll(/^0+|0+$/g, '')
-            //     field = 'Metadata.Identifier'
-            //     value = String(value).padStart(8, '0')
-            // }
+            console.log('------------------------- < GOT CONTENT > -------------------------')
 
-            cont = await find_dic(db, 'entity', true, click_mode, field, value)
-            if (cont == null) {
+            searchEntity = cont.Entity
 
-                console.log('------------------------- < NULL ENTITY > -------------------------')
-
-                {
-                    P.content = null
-                    P.error = `Could NOT find: ${value} from ${field}`
-                }
-
-                status = 404
-
-            } else {
-
-                console.log('------------------------- < GOT CONTENT > -------------------------')
-
-                {
-                    P.content = cont
-                    searchEntity = cont.Entity
-                    assign(P, 'entity', cont.Entity, "")
-                    assign(P, 'definition', cont.Definition, "")
-                    assign(P, 'sif', cont.SIF, [])
-                    assign(P, 'otherStandards', cont.OtherStandards, [])
-                    assign(P, 'legalDefinitions', cont.LegalDefinitions, [])
-                    assign(P, 'collections', cont.Collections, [])
-                    assign(P, 'metadata', cont.Metadata, null)
-                }
-
-                status = 200
-            }
-
+            P.content = cont
+            assign(P, 'entity', cont.Entity, "")
+            assign(P, 'definition', cont.Definition, "")
+            assign(P, 'sif', cont.SIF, [])
+            assign(P, 'otherStandards', cont.OtherStandards, [])
+            assign(P, 'legalDefinitions', cont.LegalDefinitions, [])
+            assign(P, 'collections', cont.Collections, [])
+            assign(P, 'metadata', cont.Metadata, null)
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////
         // Path
         /////////
 
-        if (searchEntity.length > 0) {
+        if (searchEntity.length > 0 && status == 200) {
 
-            field = searchEntity
-            field = field.replaceAll(".", "[dot]")
+            let field = searchEntity.replaceAll(".", "[dot]")
 
-            cont = await find_dic(db, 'class', true, true, '', null, field)
+            let cont = await find_dic(db, 'class', true, true, '', null, field)
 
             // console.log("\n-----", cont)
 
@@ -317,7 +302,6 @@ export const OnFindEntity = async (value, fnReady) => {
                         P.navPathCol.push(path.split('--'))
                     }
                 }
-
             }
         }
 
