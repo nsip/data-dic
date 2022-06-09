@@ -2,9 +2,9 @@ import * as mongodb from 'mongodb'
 import * as assert from 'assert'
 import { xpath2object } from './tool.js'
 
-export const MongoClient = mongodb.MongoClient
-export const dbName = 'dictionary'
-export const url = 'mongodb://127.0.0.1:27017'
+const MongoClient = mongodb.MongoClient
+const dbName = 'dictionary'
+const url = 'mongodb://127.0.0.1:27017'
 
 export const del_dic = async (db, colName, oneFlag, attr, value) => {
 
@@ -63,15 +63,11 @@ export const del_dic = async (db, colName, oneFlag, attr, value) => {
 //     await client.close()
 // })
 
-export const DelEntities = (...rmEntities) => {
+export const DelEntities = async (...rmEntities) => {
 
-    rmEntities.forEach(entity => {
-
-        MongoClient.connect(url, async (err, client) => {
-
-            assert.equal(null, err)
-            console.log("Connected successfully to server")
-
+    try {
+        rmEntities.forEach(async (entity) => {
+            const client = await MongoClient.connect(url)
             const db = client.db(dbName) // create if not existing
             const colName = 'entity'
 
@@ -80,28 +76,28 @@ export const DelEntities = (...rmEntities) => {
 
             await client.close()
         })
-
-    })
+    } catch (err) {
+        console.log(err)
+    }
 }
 
-export const DelAllFiles = (colName) => {
+export const DelAllFiles = async (colName) => {
 
-    MongoClient.connect(url, async (err, client) => {
-
-        assert.equal(null, err)
-        console.log("Connected successfully to server")
-
+    try {
+        const client = await MongoClient.connect(url)
         const db = client.db(dbName) // create if not existing
 
         const delquery = await del_dic(db, colName, false, null, null)
         console.log(delquery)
 
         await client.close()
-    })
 
+    } catch (err) {
+        console.log(err)
+    }
 }
 
-DelAllFiles('entity')
-DelAllFiles('class')
-DelAllFiles('pathval')
+await DelAllFiles('entity')
+await DelAllFiles('class')
+await DelAllFiles('pathval')
 

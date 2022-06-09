@@ -35,7 +35,12 @@ fastify.register(stat, {
 // --- run the server --- //
 const start = async () => {
     try {
-        await fastify.listen(config.port, config.host)
+        await fastify.listen(
+            {
+                port: config.port,
+                host: config.host,
+            }
+        )
     } catch (err) {
         fastify.log.error(err)
         process.exit(1)

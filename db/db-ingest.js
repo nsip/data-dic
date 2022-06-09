@@ -4,7 +4,6 @@ import { getFileContent, getDir } from './tool.js'
 import * as path from 'path'
 
 const MongoClient = mongodb.MongoClient
-
 const dbName = 'dictionary'
 const url = 'mongodb://127.0.0.1:27017'
 // const url = 'mongodb://127.0.0.1:27017' + '/' + dbName
@@ -32,12 +31,10 @@ const insert_file = async (db, colName, filepath) => {
 }
 
 // dirPath: '../data/out'
-export const ingestEntity = (dirPath, colName) => {
+export const ingestEntity = async (dirPath, colName) => {
 
-    MongoClient.connect(url, async (err, client) => {
-        assert.equal(null, err)
-        console.log("Connected successfully to server")
-
+    try {
+        const client = await MongoClient.connect(url)
         const db = client.db(dbName) // create if not existing
 
         if (colName.length == 0) {
@@ -57,18 +54,19 @@ export const ingestEntity = (dirPath, colName) => {
         }
 
         await client.close()
-    })
 
+
+    } catch (err) {
+        console.log(err)
+    }
 }
 
 // linkFilePath: '../data/out/class-link.json'
-export const ingestClassLinkage = (linkFilePath, colName) => {
+export const ingestClassLinkage = async (linkFilePath, colName) => {
 
-    MongoClient.connect(url, async (err, client) => {
-        assert.equal(null, err)
-        console.log("Connected successfully to server")
-
-        const db = client.db(dbName) // create if not existing 
+    try {
+        const client = await MongoClient.connect(url)
+        const db = client.db(dbName) // create if not existing
 
         if (colName.length == 0) {
             colName = 'class'
@@ -78,17 +76,17 @@ export const ingestClassLinkage = (linkFilePath, colName) => {
         await insert_file(db, colName, linkFilePath)
 
         await client.close()
-    })
 
+    } catch (err) {
+        console.log(err)
+    }
 }
 
 // dirPath: '../data/out/path_val'
-export const ingestEntityPathVal = (dirPath, colName) => {
+export const ingestEntityPathVal = async (dirPath, colName) => {
 
-    MongoClient.connect(url, async (err, client) => {
-        assert.equal(null, err)
-        console.log("Connected successfully to server")
-
+    try {
+        const client = await MongoClient.connect(url)
         const db = client.db(dbName) // create if not existing
 
         if (colName.length == 0) {
@@ -105,6 +103,8 @@ export const ingestEntityPathVal = (dirPath, colName) => {
         }
 
         await client.close()
-    })
 
+    } catch (err) {
+        console.log(err)
+    }
 }

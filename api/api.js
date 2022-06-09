@@ -15,14 +15,12 @@ export const dic_api = async (fastify, options) => {
     // could be multiple paths
     fastify.get('/api/entity-path/:entity', async (req, res) => {
 
-        MongoClient.connect(url, async (err, client) => {
-            assert.equal(null, err)
-            console.log("Connected successfully to server")
+        try {
+            const client = await MongoClient.connect(url)
+            const db = client.db(dbName)
 
             let field = req.params.entity
             field = field.replaceAll(".", "[dot]")
-
-            const db = client.db(dbName) // create if not existing
 
             const cont = await find_dic(db, 'class', true, true, '', null, field)
             const navPathCol = []
@@ -44,7 +42,10 @@ export const dic_api = async (fastify, options) => {
                 .send(navPathCol)
 
             await client.close()
-        })
+
+        } catch (err) {
+            console.log(err)
+        }
     })
 
     fastify.get('/api/entity/:entity', async (req, res) => {
@@ -54,21 +55,20 @@ export const dic_api = async (fastify, options) => {
         // console.log('params  ---', req.params.entity)  // from /url:param
         // console.log('headers ---', req.headers)
 
-        const entity = req.params.entity.trim()
+        try {
 
-        let attr = ''
-        let value = ''
+            const entity = req.params.entity.trim()
 
-        if (entity.length != 0) {
-            attr = 'Entity'
-            value = entity
-        }
+            let attr = ''
+            let value = ''
 
-        MongoClient.connect(url, async (err, client) => {
-            assert.equal(null, err)
-            console.log("Connected successfully to server")
+            if (entity.length != 0) {
+                attr = 'Entity'
+                value = entity
+            }
 
-            const db = client.db(dbName) // create if not existing
+            const client = await MongoClient.connect(url)
+            const db = client.db(dbName)
 
             const cont = await find_dic(db, 'entity', false, true, attr, value)
             let code = 200
@@ -81,26 +81,28 @@ export const dic_api = async (fastify, options) => {
                 .send(cont)
 
             await client.close()
-        })
+
+        } catch (err) {
+            console.log(err)
+        }
     })
 
     fastify.get('/api/identifier/:identifier', async (req, res) => {
 
-        const id = req.params.identifier.trim()
+        try {
 
-        let attr = ''
-        let value = ''
+            const id = req.params.identifier.trim()
 
-        if (id.length != 0) {
-            attr = 'Metadata.Identifier'
-            value = id
-        }
+            let attr = ''
+            let value = ''
 
-        MongoClient.connect(url, async (err, client) => {
-            assert.equal(null, err)
-            console.log("Connected successfully to server")
+            if (id.length != 0) {
+                attr = 'Metadata.Identifier'
+                value = id
+            }
 
-            const db = client.db(dbName) // create if not existing
+            const client = await MongoClient.connect(url)
+            const db = client.db(dbName)
 
             const cont = await find_dic(db, 'entity', true, true, attr, value)
             let code = 200
@@ -113,7 +115,9 @@ export const dic_api = async (fastify, options) => {
                 .send(cont)
 
             await client.close()
-        })
-    })
 
+        } catch (err) {
+            console.log(err)
+        }
+    })
 }

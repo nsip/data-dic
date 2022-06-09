@@ -3,9 +3,9 @@ import * as assert from 'assert'
 import { assign, isNumeric, xpath2object, linkify } from './tool.js'
 import flatten from 'flat'
 
-export const MongoClient = mongodb.MongoClient
-export const dbName = 'dictionary'
-export const url = 'mongodb://127.0.0.1:27017'
+const MongoClient = mongodb.MongoClient
+const dbName = 'dictionary'
+const url = 'mongodb://127.0.0.1:27017'
 // const url = 'mongodb://127.0.0.1:27017' + '/' + dbName
 
 // const find_entity = async (db, colName, entity) => {
@@ -198,14 +198,11 @@ export const InitP = () => {
 
 export const OnListEntity = async (lookfor, fnReady) => {
 
-    MongoClient.connect(url, async (err, client) => {
+    try {
+        const client = await MongoClient.connect(url)
+        const db = client.db(dbName) // create if not existing
 
         console.log('------------------------- < OnListEntity > -------------------------')
-
-        assert.equal(null, err)
-        console.log("Connected successfully to server")
-
-        const db = client.db(dbName) // create if not existing
 
         {
             P.entities = await list_entity(db, 'entity', lookfor)
@@ -215,22 +212,22 @@ export const OnListEntity = async (lookfor, fnReady) => {
         fnReady(P, 200)
 
         await client.close()
-    })
 
+    } catch (err) {
+        console.log(err)
+    }
 }
 
 export const OnFindEntity = async (value, fnReady) => {
 
-    MongoClient.connect(url, async (err, client) => {
+    try {
+        const client = await MongoClient.connect(url)
+        const db = client.db(dbName) // create if not existing
 
         console.log('------------------------- < OnFindEntity > -------------------------')
 
-        assert.equal(null, err)
-        console.log("Connected successfully to server")
-
         let status = 200
         let searchEntity = ''
-        const db = client.db(dbName) // create if not existing
         let click_mode = true
 
         ////////////////////////////////////////////////////////////////////////////////////////
@@ -328,5 +325,8 @@ export const OnFindEntity = async (value, fnReady) => {
         fnReady(P, status)
 
         await client.close()
-    })
+
+    } catch (err) {
+        console.log(err)
+    }
 }

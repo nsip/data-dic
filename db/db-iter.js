@@ -1,9 +1,9 @@
 import * as mongodb from 'mongodb'
 import * as assert from 'assert'
 
-export const MongoClient = mongodb.MongoClient
-export const dbName = 'dictionary'
-export const url = 'mongodb://127.0.0.1:27017'
+const MongoClient = mongodb.MongoClient
+const dbName = 'dictionary'
+const url = 'mongodb://127.0.0.1:27017'
 
 export const iter_dic = async (db, colName) => {
 
@@ -25,13 +25,10 @@ export const iter_dic = async (db, colName) => {
     return docs
 }
 
-const LookforInDic = (colName) => {
+const LookforInDic = async (colName) => {
 
-    MongoClient.connect(url, async (err, client) => {
-
-        assert.equal(null, err)
-        console.log("Connected successfully to server")
-
+    try {
+        const client = await MongoClient.connect(url)
         const db = client.db(dbName) // create if not existing
 
         let docs = await iter_dic(db, colName)
@@ -46,8 +43,10 @@ const LookforInDic = (colName) => {
         }
 
         await client.close()
-    })
 
+    } catch (err) {
+        console.log(err)
+    }
 }
 
-// LookforInDic('pathval')
+// await LookforInDic('pathval')
