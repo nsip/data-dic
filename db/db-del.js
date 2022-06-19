@@ -100,4 +100,5 @@ export const DelAllFiles = async (colName) => {
 await DelAllFiles('entity')
 await DelAllFiles('class')
 await DelAllFiles('pathval')
+await DelAllFiles('collection')
 

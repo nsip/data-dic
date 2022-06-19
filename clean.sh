@@ -7,6 +7,7 @@ rm -f *.log
 rm -f ./prelease/prelease
 
 rm -f ./data/*.json
+rm -rf ./data/renamed
 rm -rf ./data/out
 rm -rf ./data/err
 

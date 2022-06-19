@@ -35,6 +35,7 @@ div span.nav:hover {
 
 div#search-div {
     margin-left: 18px;
+    width: 100%;
 }
 
 input#search-entity {
@@ -121,20 +122,26 @@ div span.editable:hover {
     color: brown;
 }
 
-div span.content-flex {
-    margin-right: 20px;
-    width: 88%;
-    font-weight: normal;
-    
-    display: flex;
-    flex-direction: column;    
+div span.content-whole-0 {
+    color: black;
+    margin: 0px 0px 0px 99px;
+    width: 88%;   
+    font-weight: bold;
 }
 
-div span.content-whole {
+div span.content-whole-1 {
     color: black;
-    margin-right: 20px;
+    margin: 35px 0px 0px -100px;
     width: 88%;   
     font-weight: normal;
+}
+
+div span.content-flex {    
+    margin: 35px 0px 0px -100px;
+    width: 88%;
+    font-weight: normal;
+    display: flex;
+    flex-direction: column;    
 }
 
 /*  */

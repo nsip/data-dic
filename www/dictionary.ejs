@@ -96,12 +96,6 @@
       <!-- real submitting is in 'check_search' -->
       <form id="search-form" action="/" method="post" onsubmit="check_search(this); return false">
 
-        <!------------------- Search Input ------------------->
-        <div id="search-div">
-          <input type="text" id="search-entity" name="search" placeholder="looking for ..." value="<%= search_value %>" style="padding: 5px 0px 5px 10px;">
-          <input type="submit" value="filter" style="padding: 5px 5px 5px 5px; font-size: 14px;">
-        </div>
-
         <!------------------- Entity List ------------------->
 
         <div id="container-entities">
@@ -117,6 +111,27 @@
           </ul>
         </div>
 
+        <!------------------- Collection List ------------------->
+
+        <div id="container-collections">
+          <!-- set selected item into above text input, then submit form -->
+          <ul class="entity-list">
+            <% if (Array.isArray(entities)) { for(const entity of entities) { %>
+              <li class="link ellip" title="<%= entity %>" onclick="
+              $('#search-entity').val('<%= entity %>$');
+              $('#search-form').submit();">
+                <%= entity %>
+              </li>
+              <% } } %>
+          </ul>
+        </div>
+
+        <!------------------- Search Input ------------------->
+        <div id="search-div">
+          <input type="text" id="search-entity" name="search" placeholder="looking for ..." value="<%= search_value %>" style="padding: 5px 0px 5px 10px;">
+          <input type="submit" value="filter" style="padding: 5px 5px 5px 5px; font-size: 14px;">
+        </div>
+
       </form>
 
       <!------------------- Add Entity ------------------->
@@ -127,7 +142,7 @@
         <!-- <input id="new-entity" type="button" value="New Entity" onclick="new_entity()" /> -->
 
         <input id="fileInput" type="file" style="display:none;" name="entity" accept=".json" onchange="$('#add-form').submit()" />
-        <input id="load-entity" type="button" value="Load Entity" onclick="$('#fileInput').click();" />
+        <input id="load-entity" type="button" value="Upload Entity" onclick="$('#fileInput').click();" />
 
       </form>
 
@@ -147,7 +162,7 @@
         <span class="category" id="<%=entity%>#Entity">Entity</span>
 
         <% if (content !=null) { %>
-          <span class="content-whole">
+          <span class="content-whole-0">
             <%=entity%>
           </span>
           <% } %>
@@ -160,7 +175,7 @@
         <span class="category editable" id="<%=entity%>#Definition" ondblclick="OnEdit(this)">Definition</span>
 
         <% if (content !=null) { %>
-          <span class="content-whole">
+          <span class="content-whole-1">
             <%- definition %>
           </span>
           <% } %>

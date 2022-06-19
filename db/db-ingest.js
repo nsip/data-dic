@@ -32,7 +32,6 @@ const insert_file = async (db, colName, filepath) => {
 
 // dirPath: '../data/out'
 export const ingestEntity = async (dirPath, colName) => {
-
     try {
         const client = await MongoClient.connect(url)
         const db = client.db(dbName) // create if not existing
@@ -45,7 +44,10 @@ export const ingestEntity = async (dirPath, colName) => {
         console.log(names)
 
         for (let filename of names) {
-            if (filename === 'class-link.json' || filename === 'path_val') { // this doc & folder will be put into 'class' & 'pathval' collection, rather than 'entity'
+            if (filename === 'class-link.json' ||
+                filename === 'path_val' ||
+                filename === 'collections'
+            ) { // this doc & folder will be put into 'class' & 'pathval' collection, rather than 'entity'
                 continue
             }
             const filepath = path.join(dirPath, filename)
@@ -55,7 +57,6 @@ export const ingestEntity = async (dirPath, colName) => {
 
         await client.close()
 
-
     } catch (err) {
         console.log(err)
     }
@@ -63,7 +64,6 @@ export const ingestEntity = async (dirPath, colName) => {
 
 // linkFilePath: '../data/out/class-link.json'
 export const ingestClassLinkage = async (linkFilePath, colName) => {
-
     try {
         const client = await MongoClient.connect(url)
         const db = client.db(dbName) // create if not existing
@@ -84,7 +84,6 @@ export const ingestClassLinkage = async (linkFilePath, colName) => {
 
 // dirPath: '../data/out/path_val'
 export const ingestEntityPathVal = async (dirPath, colName) => {
-
     try {
         const client = await MongoClient.connect(url)
         const db = client.db(dbName) // create if not existing
@@ -97,6 +96,34 @@ export const ingestEntityPathVal = async (dirPath, colName) => {
         console.log(names)
 
         for (let filename of names) {
+            const filepath = path.join(dirPath, filename)
+            console.log("storing: " + filepath)
+            await insert_file(db, colName, filepath)
+        }
+
+        await client.close()
+
+    } catch (err) {
+        console.log(err)
+    }
+}
+
+export const ingestCollection = async (dirPath, colName) => {
+    try {
+        const client = await MongoClient.connect(url)
+        const db = client.db(dbName) // create if not existing
+
+        if (colName.length == 0) {
+            colName = 'collection'
+        }
+
+        const names = await getDir(dirPath)
+        console.log("===>", names)
+
+        for (let filename of names) {
+            if (filename === 'class-link.json' || filename === 'path_val') { // this doc & folder will be put into 'class' & 'pathval' collection
+                continue
+            }
             const filepath = path.join(dirPath, filename)
             console.log("storing: " + filepath)
             await insert_file(db, colName, filepath)

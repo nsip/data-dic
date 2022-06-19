@@ -22,6 +22,7 @@ body {
 
 #title {
     width: 100%;
+    margin-top: -10px;
 }
 
 /* for main content */
@@ -30,10 +31,11 @@ body {
     height: 100%;
     width: 100%;
     display: flex;
+    margin-top: -10px;
 }
 
 #left {
-    width: 15%;    
+    width: 22%;    
     padding-top: 10px;
     background-color: rgb(220, 220, 220);
     height: 91%;
@@ -43,7 +45,7 @@ body {
 }
 
 #content {
-    width: 95%;
+    width: 88%;
     margin-left: 10px;
     overflow-y: scroll;
     display: flex;
@@ -57,9 +59,20 @@ body {
 }
 
 #container-entities {
-    width: 87%;    
-    height: 90%;
-    margin: 10px 0px 0px 18px;  
+    width: 90%;    
+    height: 45%;
+    margin: 5px 0px 0px 18px;  
+    border-style: groove;
+    border-color: rgb(230, 230, 230);
+    overflow-y: scroll;
+    display: flex;
+    flex-direction: column; 
+}
+
+#container-collections {
+    width: 90%;    
+    height: 45%;
+    margin: 5px 0px 0px 18px;  
     border-style: groove;
     border-color: rgb(230, 230, 230);
     overflow-y: scroll;
