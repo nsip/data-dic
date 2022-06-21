@@ -22,9 +22,9 @@ const insert_file = async (db, colName, filepath) => {
     const data = await getFileContent(filepath)
     const obj = JSON.parse(data)
 
-    if (filepath.includes('path_val')) {
-        console.log("%o", obj)
-    }
+    // if (filepath.includes('path_val')) {
+    //     console.log("%o", obj)
+    // }
 
     // await col.insertOne(obj)
     await col.updateOne({ Entity: obj.Entity }, { $set: obj }, { upsert: true })
@@ -32,13 +32,14 @@ const insert_file = async (db, colName, filepath) => {
 
 // dirPath: '../data/out'
 export const ingestEntity = async (dirPath, colName) => {
+
+    if (colName.length == 0) {
+        colName = 'entity'
+    }
+
     try {
         const client = await MongoClient.connect(url)
         const db = client.db(dbName) // create if not existing
-
-        if (colName.length == 0) {
-            colName = 'entity'
-        }
 
         const names = await getDir(dirPath)
         console.log(names)
@@ -46,7 +47,8 @@ export const ingestEntity = async (dirPath, colName) => {
         for (let filename of names) {
             if (filename === 'class-link.json' ||
                 filename === 'path_val' ||
-                filename === 'collections'
+                filename === 'collections' ||
+                filename === 'collection-entities.json'
             ) { // this doc & folder will be put into 'class' & 'pathval' collection, rather than 'entity'
                 continue
             }
@@ -64,13 +66,34 @@ export const ingestEntity = async (dirPath, colName) => {
 
 // linkFilePath: '../data/out/class-link.json'
 export const ingestClassLinkage = async (linkFilePath, colName) => {
+
+    if (colName.length == 0) {
+        colName = 'class'
+    }
+
     try {
         const client = await MongoClient.connect(url)
         const db = client.db(dbName) // create if not existing
 
-        if (colName.length == 0) {
-            colName = 'class'
-        }
+        console.log("storing: " + linkFilePath)
+        await insert_file(db, colName, linkFilePath)
+
+        await client.close()
+
+    } catch (err) {
+        console.log(err)
+    }
+}
+
+export const ingestCollectionEntities = async (linkFilePath, colName) => {
+
+    if (colName.length == 0) {
+        colName = 'colentities'
+    }
+
+    try {
+        const client = await MongoClient.connect(url)
+        const db = client.db(dbName) // create if not existing
 
         console.log("storing: " + linkFilePath)
         await insert_file(db, colName, linkFilePath)
@@ -84,13 +107,14 @@ export const ingestClassLinkage = async (linkFilePath, colName) => {
 
 // dirPath: '../data/out/path_val'
 export const ingestEntityPathVal = async (dirPath, colName) => {
+
+    if (colName.length == 0) {
+        colName = 'pathval'
+    }
+
     try {
         const client = await MongoClient.connect(url)
         const db = client.db(dbName) // create if not existing
-
-        if (colName.length == 0) {
-            colName = 'pathval'
-        }
 
         const names = await getDir(dirPath)
         console.log(names)
@@ -109,19 +133,22 @@ export const ingestEntityPathVal = async (dirPath, colName) => {
 }
 
 export const ingestCollection = async (dirPath, colName) => {
+
+    if (colName.length == 0) {
+        colName = 'collection'
+    }
+
     try {
         const client = await MongoClient.connect(url)
         const db = client.db(dbName) // create if not existing
-
-        if (colName.length == 0) {
-            colName = 'collection'
-        }
 
         const names = await getDir(dirPath)
         console.log("===>", names)
 
         for (let filename of names) {
-            if (filename === 'class-link.json' || filename === 'path_val') { // this doc & folder will be put into 'class' & 'pathval' collection
+            if (filename === 'class-link.json' ||
+                filename === 'path_val' ||
+                filename === 'collection-entities.json') { // this doc & folder will be put into 'class' & 'pathval' collection
                 continue
             }
             const filepath = path.join(dirPath, filename)

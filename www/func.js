@@ -13,29 +13,21 @@ const scrollToBottom = (eleID) => {
 // before real submitting, check background in advance 
 const check_search = async (form) => {
 
-    let sv = $('#search-entity').val().trim()
+    let sv = $('#search').val().trim()
 
-    // if (sv.length > 0 && !isNaN(sv)) {
-    //     sv = String(sv).padStart(8, '0')
-    // }
+    console.log("--->", sv)
 
-    let api_list = [
+    const resp = await fetch(
         `http://localhost:3000/api/entity/${sv}`,
-        // `http://localhost:3000/api/identifier/${sv}`
-    ]
-
-    for (let api of api_list) {
-        const resp = await fetch(
-            api, {
+        {
             method: 'GET',
             mode: 'cors',
         }
-        )
-        const code = resp.status
-        if (code == 200) {
-            form.submit()
-            return
-        }
+    )
+    const code = resp.status
+    if (code == 200) {
+        form.submit()
+        return
     }
 
     alert(`Couldn't find: ${sv}`)
@@ -137,7 +129,7 @@ const Dialog = (prompt_msg, value) => {
 }
 
 // double click content
-const OnEdit = async (span) => {
+const OnEdit = async (span, filetype) => {
 
     // id: 'Campus # Definition'
     // id: 'Campus # Metadata # Identifier'
@@ -188,15 +180,6 @@ const OnEdit = async (span) => {
 
     // remove '_id' field
     delete entityObj._id
-
-    // load from db --- 'class' collection
-    // const respEntityPath = await fetch(
-    //     `http://localhost:3000/api/entity-path/${entity}`, {
-    //     method: 'GET',
-    //     mode: 'cors',
-    // })
-    // const entityPaths = await respEntityPath.json()
-    // console.log("%o", entityPaths)
 
     let value = null
     switch (flag) {
@@ -262,8 +245,9 @@ const OnEdit = async (span) => {
     }
 
     // update db
+    const url = 'http://localhost:3000/new?filetype=' + filetype
     const respUpdate = await fetch(
-        `http://localhost:3000/new`,
+        url,
         {
             method: 'POST',
             mode: 'cors',

@@ -60,7 +60,7 @@ body {
 
 #container-entities {
     width: 90%;    
-    height: 45%;
+    height: 75%;
     margin: 5px 0px 0px 18px;  
     border-style: groove;
     border-color: rgb(230, 230, 230);
@@ -71,7 +71,7 @@ body {
 
 #container-collections {
     width: 90%;    
-    height: 45%;
+    height: 15%;
     margin: 5px 0px 0px 18px;  
     border-style: groove;
     border-color: rgb(230, 230, 230);

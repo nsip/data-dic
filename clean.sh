@@ -8,8 +8,8 @@ rm -f ./prelease/prelease
 
 rm -f ./data/*.json
 rm -rf ./data/renamed
-rm -rf ./data/out
 rm -rf ./data/err
+rm -rf ./data/out
 
 # clean test entities in db
 cd ./db

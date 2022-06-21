@@ -181,8 +181,13 @@ export const P = {}
 export const InitP = () => {
 
     P.title = 'Education Data Dictionary'
-    P.entities = []
-    P.content = null
+    P.entity_list = []
+    P.collection_list = []
+
+    P.typeCont = ""
+
+    P.contEnt = null
+    P.contCol = null
 
     P.entity = ''
     P.definition = ''
@@ -191,22 +196,26 @@ export const InitP = () => {
     P.legalDefinitions = []
     P.collections = []
     P.metadata = null // Identifier, OtherNames, Type, ExpectedAttributes, DefaultParent, Superclass, CrossrefEntities
+    P.url = []
+    P.entities = []
 
     P.error = ''
     P.navPathCol = [] // [ [], []... ]
 }
 
-export const OnListEntity = async (lookfor, fnReady) => {
+export const OnList = async (lookfor, fnReady) => {
 
     try {
         const client = await MongoClient.connect(url)
         const db = client.db(dbName) // create if not existing
 
-        console.log('------------------------- < OnListEntity > -------------------------')
+        console.log('------------------------- < OnList > -------------------------')
 
         {
-            P.entities = await list_entity(db, 'entity', lookfor)
-            P.content = null
+            P.entity_list = await list_entity(db, 'entity', lookfor)
+            P.collection_list = await list_entity(db, 'collection', lookfor)
+            P.contEnt = null
+            P.contCol = null
         }
 
         fnReady(P, 200)
@@ -218,13 +227,13 @@ export const OnListEntity = async (lookfor, fnReady) => {
     }
 }
 
-export const OnFindEntity = async (value, fnReady) => {
+export const OnFind = async (value, fnReady) => {
 
     try {
         const client = await MongoClient.connect(url)
         const db = client.db(dbName) // create if not existing
 
-        console.log('------------------------- < OnFindEntity > -------------------------')
+        console.log('------------------------- < OnFind > -------------------------')
 
         let status = 404
         let click_mode = true
@@ -233,22 +242,30 @@ export const OnFindEntity = async (value, fnReady) => {
         // Refresh List
         ////////////
 
-        if (!value.endsWith("$")) {
-            P.entities = await list_entity(db, 'entity', value)
+        if (!value.endsWith("$") && !value.endsWith("#")) {
+            P.entity_list = await list_entity(db, 'entity', value)
+            P.collection_list = await list_entity(db, 'collection', value)
             click_mode = false
         }
 
-        if (P.entities.length > 0) {
+        if (P.entity_list.length > 0 || P.collection_list.length > 0) {
             status = 200
 
             if (click_mode) {
-                value = value.replace("$", "")
+                value = value.replace("$", "").replace("#", "")
             } else {
-                value = P.entities[0]
+                if (P.collection_list.length > 0) {
+                    value = P.collection_list[0]
+                }
+                if (P.entity_list.length > 0) { // make the first entity as default
+                    value = P.entity_list[0]
+                }
             }
 
         } else {
-            P.content = null
+
+            P.contEnt = null
+            P.contCol = null
             P.error = `Could NOT find: ${value}`
         }
 
@@ -256,33 +273,56 @@ export const OnFindEntity = async (value, fnReady) => {
         // Content
         ////////////
 
-        let searchEntity = ''
+        let search = ''
 
         if (value.length > 0 && status == 200) {
 
             let cont = await find_dic(db, 'entity', true, true, 'Entity', value)
+            if (cont != null) {
+                console.log('------------------------- < GOT Entity CONTENT > -------------------------')
 
-            console.log('------------------------- < GOT CONTENT > -------------------------')
+                search = cont.Entity
 
-            searchEntity = cont.Entity
+                P.typeCont = "entity"
+                P.contEnt = cont
 
-            P.content = cont
-            assign(P, 'entity', cont.Entity, "")
-            assign(P, 'definition', cont.Definition, "")
-            assign(P, 'sif', cont.SIF, [])
-            assign(P, 'otherStandards', cont.OtherStandards, [])
-            assign(P, 'legalDefinitions', cont.LegalDefinitions, [])
-            assign(P, 'collections', cont.Collections, [])
-            assign(P, 'metadata', cont.Metadata, null)
+                assign(P, 'entity', cont.Entity, "")
+                assign(P, 'definition', cont.Definition, "")
+                assign(P, 'sif', cont.SIF, [])
+                assign(P, 'otherStandards', cont.OtherStandards, [])
+                assign(P, 'legalDefinitions', cont.LegalDefinitions, [])
+                assign(P, 'collections', cont.Collections, [])
+                assign(P, 'metadata', cont.Metadata, null)
+
+            } else {
+
+                cont = await find_dic(db, 'collection', true, true, 'Entity', value)
+                if (cont != null) {
+                    console.log('------------------------- < GOT Collection CONTENT > -------------------------')
+
+                    search = cont.Entity
+
+                    P.typeCont = "collection"
+                    P.contCol = cont
+
+                    assign(P, 'entity', cont.Entity, "")
+                    assign(P, 'definition', cont.Definition, "")
+                    assign(P, 'url', cont.URL, [])
+                    assign(P, 'metadata', cont.Metadata, null)
+
+                    let m = await find_dic(db, 'colentities', true, true, '', '')
+                    assign(P, 'entities', m[value], null)
+                }
+            }
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////
         // Path
         /////////
 
-        if (searchEntity.length > 0 && status == 200) {
+        if (search.length > 0 && status == 200) {
 
-            let field = searchEntity.replaceAll(".", "[dot]")
+            let field = search.replaceAll(".", "[dot]")
 
             let cont = await find_dic(db, 'class', true, true, '', null, field)
 
@@ -315,3 +355,15 @@ export const OnFindEntity = async (value, fnReady) => {
         console.log(err)
     }
 }
+
+// (async () => {
+//     try {
+//         const client = await MongoClient.connect(url)
+//         const db = client.db(dbName) // create if not existing
+//         let m = await find_dic(db, 'colentities', true, true, '', '')
+//         console.log(m)
+//         await client.close()
+//     } catch (err) {
+//         console.log(err)
+//     }
+// })()

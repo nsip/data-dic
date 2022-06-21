@@ -56,8 +56,10 @@ export const dic_api = async (fastify, options) => {
         // console.log('headers ---', req.headers)
 
         try {
-            const entity = req.params.entity.trim()
 
+            let code = 200
+
+            const entity = req.params.entity.trim()
             let attr = ''
             let value = ''
 
@@ -69,10 +71,12 @@ export const dic_api = async (fastify, options) => {
             const client = await MongoClient.connect(url)
             const db = client.db(dbName)
 
-            const cont = await find_dic(db, 'entity', false, true, attr, value)
-            let code = 200
-            if (cont == null) {
-                code = 404
+            let cont = await find_dic(db, 'entity', false, true, attr, value)
+            if (cont.length == 0) {
+                cont = await find_dic(db, 'collection', false, true, attr, value)
+                if (cont.length == 0) {
+                    code = 404
+                }
             }
 
             res.code(code)
@@ -86,36 +90,4 @@ export const dic_api = async (fastify, options) => {
         }
     })
 
-    // fastify.get('/api/identifier/:identifier', async (req, res) => {
-
-    //     try {
-    //         const id = req.params.identifier.trim()
-
-    //         let attr = ''
-    //         let value = ''
-
-    //         if (id.length != 0) {
-    //             attr = 'Metadata.Identifier'
-    //             value = id
-    //         }
-
-    //         const client = await MongoClient.connect(url)
-    //         const db = client.db(dbName)
-
-    //         const cont = await find_dic(db, 'entity', true, true, attr, value)
-    //         let code = 200
-    //         if (cont == null) {
-    //             code = 404
-    //         }
-
-    //         res.code(code)
-    //             .header('Content-Type', 'application/json; charset=utf-8')
-    //             .send(cont)
-
-    //         await client.close()
-
-    //     } catch (err) {
-    //         console.log(err)
-    //     }
-    // })
 }

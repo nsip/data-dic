@@ -38,12 +38,12 @@ div#search-div {
     width: 100%;
 }
 
-input#search-entity {
+input#search {
     padding-left: 10px;
     width: 75%;
 }
 
-ul.entity-list {
+ul.left-list {
     font-size: 16px;
     font-weight: normal;
     font-family: Arial, Helvetica, sans-serif;
@@ -51,23 +51,19 @@ ul.entity-list {
     margin-left: -30px;
 }
 
-ul.entity-list li.ellip {
+ul.left-list li.ellip {
     width: 90%;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
 }
 
-/* ul.entity-list li.ellip:hover {    
-    overflow: visible;
-} */
-
-ul.entity-list li.link {
+ul.left-list li.link {
     color: blue;
     text-decoration: none;    
 }
 
-ul.entity-list li.link:hover {
+ul.left-list li.link:hover {
     color: blue;
     text-decoration: underline;
     cursor: pointer;
@@ -113,26 +109,21 @@ div span.category {
     cursor: default;
 }
 
-div span.editable {
-    text-decoration: underline;
-}
-
 div span.editable:hover {
-    text-decoration: underline;
     color: brown;
 }
 
 div span.content-whole-0 {
     color: black;
     margin: 0px 0px 0px 99px;
-    width: 88%;   
+    width: 100%;   
     font-weight: bold;
 }
 
 div span.content-whole-1 {
     color: black;
     margin: 35px 0px 0px -100px;
-    width: 88%;   
+    width: 100%;   
     font-weight: normal;
 }
 
