@@ -55,20 +55,30 @@
       <hr class="line1">
       <br>
 
-      <!------------------- Entity Class Path, e.g. 'Organisation/School/Campus' ------------------->
+      <!------------------- Entity Class Path, e.g. 'Organisation / School / Campus' ------------------->
       <div id="nav-path" class="nav-path">
-        <% if (Array.isArray(navPathCol)) { for (const path of navPathCol) { %>
-          <% for (const [i, seg] of path.entries()) { %>
-            <span class="nav" onclick="
-        $('#search').val('<%= seg %>$');
-        $('#search-form').submit();">
-              <%= seg %>
-            </span>
-            <% if (i < path.length-1) { %> <span> / </span>
+
+        <% for (const [i, seg] of navPathCol.entries()) { %>
+          <span class="nav" onclick="
+                $('#search').val('<%= seg %>$');
+                $('#search-form').submit();">
+            <%= seg %>
+              <% if ( i < navPathCol.length - 1 ) { %> / <% } %>
+          </span>
+          <% } %>
+
+            <% if (navPathChildren.length> 0) { %> /
+              <select name="children" onchange="                  
+                    $('#search').val(this.value + '$');
+                    $('#search-form').submit();">
+                <option value="-1">--subclass--</option>
+                <% for (const child of navPathChildren) { %>
+                  <option>
+                    <%= child %>
+                  </option>
+                  <% } %>
+              </select>
               <% } %>
-                <% } %>
-                  <br>
-                  <% } } %>
       </div>
 
       <!------------------- Category ------------------->

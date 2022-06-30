@@ -13,40 +13,40 @@ export const dic_api = async (fastify, options) => {
     })
 
     // could be multiple paths
-    fastify.get('/api/entity-path/:entity', async (req, res) => {
+    // fastify.get('/api/entity-path/:entity', async (req, res) => {
 
-        try {
-            const client = await MongoClient.connect(url)
-            const db = client.db(dbName)
+    //     try {
+    //         const client = await MongoClient.connect(url)
+    //         const db = client.db(dbName)
 
-            let field = req.params.entity
-            field = field.replaceAll(".", "[dot]")
+    //         let field = req.params.entity
+    //         field = field.replaceAll(".", "[dot]")
 
-            const cont = await find_dic(db, 'class', true, true, '', null, field)
-            const navPathCol = []
-            let code = 200
+    //         const cont = await find_dic(db, 'class', true, true, '', null, field)
+    //         const navPathCol = []
+    //         let code = 200
 
-            if (Object.keys(cont).length !== 0) {
-                const pathCol = cont[field]
-                if (Array.isArray(pathCol)) {
-                    for (let path of pathCol) {
-                        navPathCol.push(path.split('--'))
-                    }
-                }
-            } else {
-                code = 404
-            }
+    //         if (Object.keys(cont).length !== 0) {
+    //             const pathCol = cont[field]
+    //             if (Array.isArray(pathCol)) {
+    //                 for (let path of pathCol) {
+    //                     navPathCol.push(path.split('--'))
+    //                 }
+    //             }
+    //         } else {
+    //             code = 404
+    //         }
 
-            res.code(code)
-                .header('Content-Type', 'application/json; charset=utf-8')
-                .send(navPathCol)
+    //         res.code(code)
+    //             .header('Content-Type', 'application/json; charset=utf-8')
+    //             .send(navPathCol)
 
-            await client.close()
+    //         await client.close()
 
-        } catch (err) {
-            console.log(err)
-        }
-    })
+    //     } catch (err) {
+    //         console.log(err)
+    //     }
+    // })
 
     fastify.get('/api/entity/:entity', async (req, res) => {
 

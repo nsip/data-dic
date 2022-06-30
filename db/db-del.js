@@ -101,4 +101,5 @@ await DelAllFiles('entity')
 await DelAllFiles('class')
 await DelAllFiles('pathval')
 await DelAllFiles('collection')
+await DelAllFiles('colentities')
 

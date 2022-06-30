@@ -29,7 +29,7 @@ export const find_dic = async (db, colName, single, strict, attr, value, ...out_
         if (err.codeName != 'NamespaceExists') {
             return
         }
-        console.log(`${err.codeName}, use existing collection - ${colName}`)
+        // console.log(`${err.codeName}, use existing collection - ${colName}`)
     }
     const col = db.collection(colName)
 
@@ -55,7 +55,7 @@ export const find_dic = async (db, colName, single, strict, attr, value, ...out_
         query = { [attr]: rVal } // this one is "Query on Nested Field" 
         // query = await xpath2object(attr, rVal) // this one is "Match an Embedded/Nested Document"
     }
-    console.log(query)
+    // console.log(query)
 
     if (out_attrs.length == 0) {
         if (single) {
@@ -68,7 +68,7 @@ export const find_dic = async (db, colName, single, strict, attr, value, ...out_
     for (const oa of out_attrs) {
         out[oa] = true
     }
-    console.log(out)
+    // console.log(out)
 
     if (single) {
         return await col.findOne(query, { projection: out })
@@ -84,13 +84,13 @@ export const iter_dic = async (db, colName) => {
         if (err.codeName != 'NamespaceExists') {
             return
         }
-        console.log(`${err.codeName}, use existing collection - ${colName}`)
+        // console.log(`${err.codeName}, use existing collection - ${colName}`)
     }
     const col = db.collection(colName)
 
     let docs = []
     await col.find().forEach(element => {
-        console.log(element)
+        // console.log(element)
         docs.push(element)
     });
     return docs
@@ -140,7 +140,7 @@ const list_entity = async (db, colName, lookfor) => {
         let value = lookfor
 
         let docs = await iter_dic(db, colName)
-        console.log(docs.length)
+        // console.log(docs.length)
         for (const doc of docs) {
             for (let k of Object.keys(doc)) {
                 attrs.push(k)
@@ -199,8 +199,9 @@ export const InitP = () => {
     P.url = []
     P.entities = []
 
+    P.navPathCol = []       // class(db) -> entity(key) -> { Branch 'Split' }
+    P.navPathChildren = []  // class(db) -> entity(key) -> { Children }
     P.error = ''
-    P.navPathCol = [] // [ [], []... ]
 }
 
 export const OnList = async (lookfor, fnReady) => {
@@ -317,31 +318,29 @@ export const OnFind = async (value, fnReady) => {
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////
-        // Path
+        // NavPath
         /////////
 
         if (search.length > 0 && status == 200) {
 
             let field = search.replaceAll(".", "[dot]")
 
-            let cont = await find_dic(db, 'class', true, true, '', null, field)
+            const cont = await find_dic(db, 'class', true, true, '', null, field)
 
-            // console.log("\n-----", cont)
+            // console.log("\n----- DEBUG----- >>", cont)
+
+            P.navPathCol = []
+            P.navPathChildren = []
 
             if (Object.keys(cont).length === 0) {
 
-                P.navPathCol = []                   // pathCol is 2D array
-                P.navPathCol.push([field])
+                P.navPathCol = [field]
+                P.navPathChildren = []
 
             } else {
 
-                const pathCol = cont[field]
-                if (Array.isArray(pathCol)) {
-                    P.navPathCol = []
-                    for (let path of pathCol) {
-                        P.navPathCol.push(path.split('--'))
-                    }
-                }
+                P.navPathCol = cont[field]['Branch'].split('--')
+                P.navPathChildren = cont[field]['Children']
             }
         }
 

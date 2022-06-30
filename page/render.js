@@ -40,6 +40,7 @@ const render_ejs = (P, code) => {
 
         search_value: SearchVal.replace("$", "").replace("#", ""),
         navPathCol: P.navPathCol,
+        navPathChildren: P.navPathChildren,
         error: P.error,
     })
 
@@ -140,12 +141,15 @@ export const esa_dic = async (fastify, options) => {
 
         const filename = req.body.Entity
 
-        createIfNeeded('./data/out/')
-        createIfNeeded('./data/out/collections/')
+        // console.log("DEBUG: filetype\n", req.query.filetype)
+        // console.log("DEBUG: body\n", req.body)
 
-        let uploadpath = `data/out/${filename}.json`
+        createIfNeeded('./data/renamed/')
+        createIfNeeded('./data/renamed/collections/')
+
+        let uploadpath = `data/renamed/${filename}.json`
         if (req.query.filetype == 'collection') {
-            uploadpath = `data/out/collections/${filename}.json`
+            uploadpath = `data/renamed/collections/${filename}.json`
         }
 
         fs.writeFile(uploadpath, JSON.stringify(req.body), (err) => {
@@ -163,7 +167,7 @@ export const esa_dic = async (fastify, options) => {
             await fsp.readFile(uploadpath, { encoding: 'utf8' })
         }
 
-        // re-preprocess all
+        // re-preprocess all from '/renamed/', after processing, generated '/out/'
         invoke("./preproc", () => {
             // re-ingest all
             ingestEntity('./data/out', 'entity')
@@ -198,12 +202,12 @@ export const esa_dic = async (fastify, options) => {
         // data.mimetype
         // await data.toBuffer() // Buffer
 
-        createIfNeeded('./data/out/')
-        createIfNeeded('./data/out/collections/')
+        createIfNeeded('./data/renamed/')
+        createIfNeeded('./data/renamed/collections/')
 
-        let uploadpath = `data/out/${data.filename}`
+        let uploadpath = `data/renamed/${data.filename}`
         if (req.query.filetype == 'collection') {
-            uploadpath = `data/out/collections/${filename}.json`
+            uploadpath = `data/renamed/collections/${filename}.json`
         }
 
         await pump(data.file, fs.createWriteStream(uploadpath))

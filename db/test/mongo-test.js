@@ -16,7 +16,7 @@ const insert_file = async (db, colName, filepath) => {
             await client.close()
             return
         }
-        console.log(`${err.codeName}, use existing collection - ${colName}`)
+        // console.log(`${err.codeName}, use existing collection - ${colName}`)
     }
     const col = db.collection(colName)
 

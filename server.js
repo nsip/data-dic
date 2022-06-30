@@ -17,7 +17,7 @@ const __dirname = path.dirname(__filename);
 // console.log(__dirname)
 
 // --- init fastify --- //
-const fastify = fastifyFac({ logger: true })
+const fastify = fastifyFac({ logger: false })
 fastify.register(multipart)
 fastify.register(formbody)
 fastify.register(cors)

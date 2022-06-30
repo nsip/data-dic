@@ -45,7 +45,7 @@
       "Link": "http://www.austlii.edu.au/cgi-bin/viewdoc/au/legis/cth/consol_act/aea2013210/s6.html",
       "Datestamp": "2020-12-01",
       "Definition": "<p>Minister to make determinations in relation to locations of schools <ol><li>This section applies if a school has more than one location.</li> <li>The Minister may, in writing, determine the location of the school for the purposes of working out the school's ARIA index value.</li> <li>If not all locations of the school are in the same State or Territory, the Minister may, in writing, determine which State or Territory the school is located in.</li> <li>For the purposes of this Act, a determination under subsection (2) or (3) has effect according to its terms.</li> <li>A determination under subsection (2) or (3) is not a legislative instrument.</li></ol></p>",
-    "Commentary": "This means that for the purpose of determining funding for a school, a single location is picked among the school campuses."
+      "Commentary": "This means that for the purpose of determining funding for a school, a single location is picked among the school campuses."
     },
     {
       "LegislationName": "Education Act 2013",
@@ -69,16 +69,16 @@
     }
   ],
   "Metadata": {
-  "Identifier": "0003",
-  "Type": "Object",
-  "ExpectedAttributes": [
-    "School Name",
-    "AGE ID (old)",
-    "Address"
-  ],
-  "Superclass": [
-    "School"
-  ],
-  "CrossrefEntities": []
+    "Identifier": "0003",
+    "Type": "Object",
+    "ExpectedAttributes": [
+      "School Name",
+      "AGE ID (old)",
+      "Address"
+    ],
+    "Superclass": [
+      "School"
+    ],
+    "CrossrefEntities": []
   }
 }

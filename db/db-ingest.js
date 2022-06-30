@@ -15,7 +15,7 @@ const insert_file = async (db, colName, filepath) => {
         if (err.codeName != 'NamespaceExists') {
             return
         }
-        console.log(`${err.codeName}, use existing collection - ${colName}`)
+        // console.log(`${err.codeName}, use existing collection - ${colName}`)
     }
     const col = db.collection(colName)
 
@@ -42,7 +42,7 @@ export const ingestEntity = async (dirPath, colName) => {
         const db = client.db(dbName) // create if not existing
 
         const names = await getDir(dirPath)
-        console.log(names)
+        // console.log(names)
 
         for (let filename of names) {
             if (filename === 'class-link.json' ||
@@ -53,7 +53,7 @@ export const ingestEntity = async (dirPath, colName) => {
                 continue
             }
             const filepath = path.join(dirPath, filename)
-            console.log("storing: " + filepath)
+            // console.log("storing: " + filepath)
             await insert_file(db, colName, filepath)
         }
 
@@ -75,7 +75,7 @@ export const ingestClassLinkage = async (linkFilePath, colName) => {
         const client = await MongoClient.connect(url)
         const db = client.db(dbName) // create if not existing
 
-        console.log("storing: " + linkFilePath)
+        // console.log("storing: " + linkFilePath)
         await insert_file(db, colName, linkFilePath)
 
         await client.close()
@@ -95,7 +95,7 @@ export const ingestCollectionEntities = async (linkFilePath, colName) => {
         const client = await MongoClient.connect(url)
         const db = client.db(dbName) // create if not existing
 
-        console.log("storing: " + linkFilePath)
+        // console.log("storing: " + linkFilePath)
         await insert_file(db, colName, linkFilePath)
 
         await client.close()
@@ -117,11 +117,11 @@ export const ingestEntityPathVal = async (dirPath, colName) => {
         const db = client.db(dbName) // create if not existing
 
         const names = await getDir(dirPath)
-        console.log(names)
+        // console.log(names)
 
         for (let filename of names) {
             const filepath = path.join(dirPath, filename)
-            console.log("storing: " + filepath)
+            // console.log("storing: " + filepath)
             await insert_file(db, colName, filepath)
         }
 
@@ -143,7 +143,7 @@ export const ingestCollection = async (dirPath, colName) => {
         const db = client.db(dbName) // create if not existing
 
         const names = await getDir(dirPath)
-        console.log("===>", names)
+        // console.log("===>", names)
 
         for (let filename of names) {
             if (filename === 'class-link.json' ||
@@ -152,7 +152,7 @@ export const ingestCollection = async (dirPath, colName) => {
                 continue
             }
             const filepath = path.join(dirPath, filename)
-            console.log("storing: " + filepath)
+            // console.log("storing: " + filepath)
             await insert_file(db, colName, filepath)
         }
 
