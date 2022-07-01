@@ -308,6 +308,8 @@ export const OnFind = async (value, fnReady) => {
 
                     assign(P, 'entity', cont.Entity, "")
                     assign(P, 'definition', cont.Definition, "")
+
+                    cont.URL.forEach((e, i, arr) => { arr[i] = linkify(e) })
                     assign(P, 'url', cont.URL, [])
                     assign(P, 'metadata', cont.Metadata, null)
 
