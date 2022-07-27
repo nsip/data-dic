@@ -1,4 +1,4 @@
-github.com/digisan/go-generics v0.1.15 h1:8esdtrzlb3JzixTaIS7CunYJaaaWPaTYQJzoLtkmKGE=
-github.com/digisan/go-generics v0.1.15/go.mod h1:uYqkhOsBlydT6uPQaapc6Bk3cbnmQ8ftBm/sWbShxAI=
-github.com/digisan/gotk v0.1.16 h1:QAMfT35dRDJLuSACIdE+ak62mx6sMh2m7P8C+UiSJGk=
-github.com/digisan/gotk v0.1.16/go.mod h1:jZoPRUt62t+kIntjTM/cRErzvP495u7RZMS1O5GOiuQ=
+github.com/digisan/go-generics v0.2.1 h1:rUQsgfFWWeMTpDBmZZAQSnlbybONe20MzedrN+oG5hE=
+github.com/digisan/go-generics v0.2.1/go.mod h1:uYqkhOsBlydT6uPQaapc6Bk3cbnmQ8ftBm/sWbShxAI=
+github.com/digisan/gotk v0.1.18 h1:IoOhbCUmobW55xAPmZapKqqQ9iIVUU1uaIjouSFf7js=
+github.com/digisan/gotk v0.1.18/go.mod h1:qIohmTpVDN95xoycu2BKbqKRiP1lB5uLhztYFXNPV9E=
