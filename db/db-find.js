@@ -1,12 +1,7 @@
-import * as mongodb from 'mongodb'
 import * as assert from 'assert'
 import { assign, isNumeric, xpath2object, linkify } from './tool.js'
 import flatten from 'flat'
-
-export const MongoClient = mongodb.MongoClient // for api/ using
-export const dbName = 'dictionary'
-export const url = 'mongodb://127.0.0.1:27017'
-// const url = 'mongodb://127.0.0.1:27017' + '/' + dbName
+import { MongoClient, dbName, url } from './shared.js'
 
 // const find_entity = async (db, colName, entity) => {
 //     try {
@@ -52,7 +47,7 @@ export const find_dic = async (db, colName, single, strict, attr, value, ...out_
         }
 
         // make query object 
-        query = { [attr]: rVal } // this one is "Query on Nested Field" 
+        query = { [attr]: rVal } // this one is "Query on Nested Field"
         // query = await xpath2object(attr, rVal) // this one is "Match an Embedded/Nested Document"
     }
     // console.log(query)
@@ -213,8 +208,8 @@ export const OnList = async (lookfor, fnReady) => {
         console.log('------------------------- < OnList > -------------------------')
 
         {
-            P.entity_list = await list_entity(db, 'entity', lookfor)
-            P.collection_list = await list_entity(db, 'collection', lookfor)
+            P.entity_list = await list_entity(db, 'entities', lookfor)
+            P.collection_list = await list_entity(db, 'collections', lookfor)
             P.contEnt = null
             P.contCol = null
         }
@@ -244,8 +239,8 @@ export const OnFind = async (value, fnReady) => {
         ////////////
 
         if (!value.endsWith("$") && !value.endsWith("#")) {
-            P.entity_list = await list_entity(db, 'entity', value)
-            P.collection_list = await list_entity(db, 'collection', value)
+            P.entity_list = await list_entity(db, 'entities', value)
+            P.collection_list = await list_entity(db, 'collections', value)
             click_mode = false
         }
 
@@ -278,7 +273,7 @@ export const OnFind = async (value, fnReady) => {
 
         if (value.length > 0 && status == 200) {
 
-            let cont = await find_dic(db, 'entity', true, true, 'Entity', value)
+            let cont = await find_dic(db, 'entities', true, true, 'Entity', value)
             if (cont != null) {
                 console.log('------------------------- < GOT Entity CONTENT > -------------------------')
 
@@ -297,7 +292,7 @@ export const OnFind = async (value, fnReady) => {
 
             } else {
 
-                cont = await find_dic(db, 'collection', true, true, 'Entity', value)
+                cont = await find_dic(db, 'collections', true, true, 'Entity', value)
                 if (cont != null) {
                     console.log('------------------------- < GOT Collection CONTENT > -------------------------')
 

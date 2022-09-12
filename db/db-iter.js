@@ -1,9 +1,5 @@
-import * as mongodb from 'mongodb'
 import * as assert from 'assert'
-
-const MongoClient = mongodb.MongoClient
-const dbName = 'dictionary'
-const url = 'mongodb://127.0.0.1:27017'
+import { MongoClient, dbName, url } from './shared.js'
 
 export const iter_dic = async (db, colName) => {
 

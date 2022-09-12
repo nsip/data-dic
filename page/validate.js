@@ -1,7 +1,7 @@
 'use strict'
 
 export const validateEntity = (entity) => {
-    for (let attr of ['Entity', 'Definition', 'SIF', 'OtherStandards', 'LegalDefinitions', 'Collections', 'Metadata']) {
+    for (let attr of ['Entity', 'OtherNames', 'Definition', 'SIF', 'OtherStandards', 'LegalDefinitions', 'Collections', 'Metadata']) {
         if (entity[attr] === undefined) {
             console.log(attr, `is not in ${entity}`)
             return false

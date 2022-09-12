@@ -1,10 +1,6 @@
-import * as mongodb from 'mongodb'
 import * as assert from 'assert'
 import { xpath2object } from './tool.js'
-
-const MongoClient = mongodb.MongoClient
-const dbName = 'dictionary'
-const url = 'mongodb://127.0.0.1:27017'
+import { MongoClient, dbName, url } from './shared.js'
 
 export const del_dic = async (db, colName, oneFlag, attr, value) => {
 

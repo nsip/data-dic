@@ -1,4 +1,6 @@
-github.com/digisan/go-generics v0.2.1 h1:rUQsgfFWWeMTpDBmZZAQSnlbybONe20MzedrN+oG5hE=
-github.com/digisan/go-generics v0.2.1/go.mod h1:uYqkhOsBlydT6uPQaapc6Bk3cbnmQ8ftBm/sWbShxAI=
-github.com/digisan/gotk v0.1.18 h1:IoOhbCUmobW55xAPmZapKqqQ9iIVUU1uaIjouSFf7js=
-github.com/digisan/gotk v0.1.18/go.mod h1:qIohmTpVDN95xoycu2BKbqKRiP1lB5uLhztYFXNPV9E=
+github.com/digisan/go-generics v0.2.2 h1:5ec8h+H6YVCdzxra5VDm3SHdgcdtRwWgFQrfF7QsCK8=
+github.com/digisan/go-generics v0.2.2/go.mod h1:HoHbkpjEgiw3YQ3QaADIfeFt/kpdODb0qerSbs0PSBA=
+github.com/digisan/gotk v0.1.20 h1:ERdxpOgt+BgQQafVfLH1N+kEINRWck49fnFH9j6IRxI=
+github.com/digisan/gotk v0.1.20/go.mod h1:DXDqcHRqQgELT71674pjB/nshczVM40I9OG7oKHlBwE=
+golang.org/x/net v0.0.0-20220909164309-bea034e7d591 h1:D0B/7al0LLrVC8aWF4+oxpv/m8bc7ViFfVS8/gXGdqI=
+golang.org/x/net v0.0.0-20220909164309-bea034e7d591/go.mod h1:YDH+HFinaLZZlnHAfSS6ZXJJ9M9t4Dl22yv3iI2vPwk=

@@ -1,5 +1,6 @@
 import * as assert from 'assert'
-import { MongoClient, dbName, url, find_dic } from '../db/db-find.js'
+import { MongoClient, dbName, url } from '../db/shared.js'
+import { find_dic } from '../db/db-find.js'
 
 export const dic_api = async (fastify, options) => {
 
@@ -71,9 +72,9 @@ export const dic_api = async (fastify, options) => {
             const client = await MongoClient.connect(url)
             const db = client.db(dbName)
 
-            let cont = await find_dic(db, 'entity', false, true, attr, value)
+            let cont = await find_dic(db, 'entities', false, true, attr, value)
             if (cont.length == 0) {
-                cont = await find_dic(db, 'collection', false, true, attr, value)
+                cont = await find_dic(db, 'collections', false, true, attr, value)
                 if (cont.length == 0) {
                     code = 404
                 }

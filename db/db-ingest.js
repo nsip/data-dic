@@ -2,11 +2,7 @@ import * as mongodb from 'mongodb'
 import * as assert from 'assert'
 import { getFileContent, getDir } from './tool.js'
 import * as path from 'path'
-
-const MongoClient = mongodb.MongoClient
-const dbName = 'dictionary'
-const url = 'mongodb://127.0.0.1:27017'
-// const url = 'mongodb://127.0.0.1:27017' + '/' + dbName
+import { MongoClient, dbName, url } from './shared.js'
 
 const insert_file = async (db, colName, filepath) => {
     try {
@@ -85,7 +81,7 @@ export const ingestClassLinkage = async (linkFilePath, colName) => {
     }
 }
 
-export const ingestCollectionEntities = async (linkFilePath, colName) => {
+export const ingestCollectionEntities = async (colEntFilePath, colName) => {
 
     if (colName.length == 0) {
         colName = 'colentities'
@@ -95,8 +91,8 @@ export const ingestCollectionEntities = async (linkFilePath, colName) => {
         const client = await MongoClient.connect(url)
         const db = client.db(dbName) // create if not existing
 
-        // console.log("storing: " + linkFilePath)
-        await insert_file(db, colName, linkFilePath)
+        // console.log("storing: " + colEntFilePath)
+        await insert_file(db, colName, colEntFilePath)
 
         await client.close()
 
