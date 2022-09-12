@@ -174,7 +174,7 @@ export const P = {}
 
 export const InitP = () => {
 
-    P.title = 'Education Data Dictionary'
+    P.title = 'National Education Data Dictionary'
     P.entity_list = []
     P.collection_list = []
 

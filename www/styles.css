@@ -111,10 +111,6 @@ div span.category {
     cursor: default;
 }
 
-div span.editable:hover {
-    color: brown;
-}
-
 div span.content-whole-0 {
     color: black;
     margin: 0px 0px 0px 99px;

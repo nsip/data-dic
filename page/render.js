@@ -72,7 +72,7 @@ export const esa_dic = async (fastify, options) => {
     // Init page OR OnEdit refresh, param 'search' 
     fastify.get('/', async (req, res) => {
 
-        console.log("\n---------------------INIT---------------------")
+        console.log("\n--------------------- INIT ---------------------")
 
         SearchVal = ''
 

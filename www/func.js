@@ -85,184 +85,188 @@ const check_search = async (form) => {
 //     }
 // }
 
-const Dialog = (prompt_msg, value) => {
-    return new Promise(async (resolve, reject) => {
-        let ready = false
-        let ok = false
+////////////////////////////////////////////
 
-        $("#dialog-wrapper").prop('hidden', false)
-        // $("#dialog-wrapper").prop('innerHTML', value) // get $("#dialog-wrapper").text() // div usage
-        $("#dialog").val(value)                          // textarea usage
-        $("#dialog-wrapper").dialog({
-            // autoOpen: false,
-            title: prompt_msg,
-            resizable: true,
-            width: 800,
-            height: 300,
-            modal: true,
-            buttons: {
-                OK: function () {
-                    ready = true
-                    ok = true
-                    $(this).dialog("close")
-                },
-                Cancel: function () {
-                    ready = true
-                    ok = false
-                    $(this).dialog("close")
-                }
-            }
-        });
+// const Dialog = (prompt_msg, value) => {
+//     return new Promise(async (resolve, reject) => {
+//         let ready = false
+//         let ok = false
 
-        await (async () => {
-            while (!ready) {
-                await new Promise(resolve => setTimeout(resolve, 200));
-            }
-        })()
+//         $("#dialog-wrapper").prop('hidden', false)
+//         // $("#dialog-wrapper").prop('innerHTML', value) // get $("#dialog-wrapper").text() // div usage
+//         $("#dialog").val(value)                          // textarea usage
+//         $("#dialog-wrapper").dialog({
+//             // autoOpen: false,
+//             title: prompt_msg,
+//             resizable: true,
+//             width: 800,
+//             height: 300,
+//             modal: true,
+//             buttons: {
+//                 OK: function () {
+//                     ready = true
+//                     ok = true
+//                     $(this).dialog("close")
+//                 },
+//                 Cancel: function () {
+//                     ready = true
+//                     ok = false
+//                     $(this).dialog("close")
+//                 }
+//             }
+//         });
 
-        if (ok) {
-            resolve($("#dialog").val())
-        } else {
-            reject('canceled')
-        }
-    });
-}
+//         await (async () => {
+//             while (!ready) {
+//                 await new Promise(resolve => setTimeout(resolve, 200));
+//             }
+//         })()
+
+//         if (ok) {
+//             resolve($("#dialog").val())
+//         } else {
+//             reject('canceled')
+//         }
+//     });
+// }
+
+////////////////////////////////////////////
 
 // double click content
-const OnEdit = async (span, filetype) => {
+// const OnEdit = async (span, filetype) => {
 
-    // id: 'Campus # Definition'
-    // id: 'Campus # Metadata # Identifier'
-    // id: 'Campus # SIF # 1 # XPath'
+//     // id: 'Campus # Definition'
+//     // id: 'Campus # Metadata # Identifier'
+//     // id: 'Campus # SIF # 1 # XPath'
 
-    const arr = span.id.split("#")
-    let entity = arr[0]                 // e.g. 'Campus'
-    let cat = arr[1]                    // e.g. 'SIF'
-    let idx_subcat = ''                 // e.g. '1'
-    let subcat = ''                     // e.g. 'XPath'
+//     const arr = span.id.split("#")
+//     let entity = arr[0]                 // e.g. 'Campus'
+//     let cat = arr[1]                    // e.g. 'SIF'
+//     let idx_subcat = ''                 // e.g. '1'
+//     let subcat = ''                     // e.g. 'XPath'
 
-    let flag = arr.length - 1
-    let prompt_msg = ''
+//     let flag = arr.length - 1
+//     let prompt_msg = ''
 
-    // console.log("flag:  ", flag)
+//     // console.log("flag:  ", flag)
 
-    switch (flag) {
-        case 3:
-            idx_subcat = arr[2]
-            subcat = arr[3]
-            prompt_msg = `[${entity}] @${cat}.${idx_subcat}.${subcat}:`
-            break
-        case 2:
-            idx_subcat = arr[2]
-            prompt_msg = `[${entity}] @${cat}.${idx_subcat}:`
-            break
-        case 1:
-            prompt_msg = `[${entity}] @${cat}:`
-            break
-        default:
-            console.log('ERROR ID')
-    }
+//     switch (flag) {
+//         case 3:
+//             idx_subcat = arr[2]
+//             subcat = arr[3]
+//             prompt_msg = `[${entity}] @${cat}.${idx_subcat}.${subcat}:`
+//             break
+//         case 2:
+//             idx_subcat = arr[2]
+//             prompt_msg = `[${entity}] @${cat}.${idx_subcat}:`
+//             break
+//         case 1:
+//             prompt_msg = `[${entity}] @${cat}:`
+//             break
+//         default:
+//             console.log('ERROR ID')
+//     }
 
-    console.log("entity:  ", entity)
-    console.log("cat:  ", cat)
-    console.log("idx_subcat:  ", idx_subcat)
-    console.log("subcat:  ", subcat)
+//     console.log("entity:  ", entity)
+//     console.log("cat:  ", cat)
+//     console.log("idx_subcat:  ", idx_subcat)
+//     console.log("subcat:  ", subcat)
 
-    // load from db --- 'entity' collection
-    const respEntities = await fetch(
-        `http://localhost:3000/api/entity/${entity}`, {
-        method: 'GET',
-        mode: 'cors',
-    })
-    const entityObjs = await respEntities.json()
-    const entityObj = entityObjs[0]
-    // console.log("%o", entityObj)
+//     // load from db --- 'entity' collection
+//     const respEntities = await fetch(
+//         `http://localhost:3000/api/entity/${entity}`, {
+//         method: 'GET',
+//         mode: 'cors',
+//     })
+//     const entityObjs = await respEntities.json()
+//     const entityObj = entityObjs[0]
+//     // console.log("%o", entityObj)
 
-    // remove '_id' field
-    delete entityObj._id
+//     // remove '_id' field
+//     delete entityObj._id
 
-    let value = null
-    switch (flag) {
-        case 3:
-            value = entityObj[cat][idx_subcat][subcat]
-            break
-        case 2:
-            value = entityObj[cat][idx_subcat]
-            break
-        case 1:
-            value = entityObj[cat]
-            break
-    }
+//     let value = null
+//     switch (flag) {
+//         case 3:
+//             value = entityObj[cat][idx_subcat][subcat]
+//             break
+//         case 2:
+//             value = entityObj[cat][idx_subcat]
+//             break
+//         case 1:
+//             value = entityObj[cat]
+//             break
+//     }
 
-    // check value type: [string or array]
-    let valType = 'string'
-    if (Array.isArray(value)) {
-        valType = 'array'
-    }
+//     // check value type: [string or array]
+//     let valType = 'string'
+//     if (Array.isArray(value)) {
+//         valType = 'array'
+//     }
 
-    // if value is array, join with '<br>'
-    if (valType === 'array') {
-        value = value.join('<br>')
-    }
+//     // if value is array, join with '<br>'
+//     if (valType === 'array') {
+//         value = value.join('<br>')
+//     }
 
-    ////////////////////////////////////////////////////////////////////////////
+//     ////////////////////////////////////////////////////////////////////////////
 
-    // popup input box & modify entityObject
-    let modified = null
+//     // popup input box & modify entityObject
+//     let modified = null
 
-    // modified = prompt(prompt_msg, value) // -------------------------------------- INPUT 1
-    // if (modified === null) {
-    //     return
-    // }
+//     // modified = prompt(prompt_msg, value) // -------------------------------------- INPUT 1
+//     // if (modified === null) {
+//     //     return
+//     // }
 
-    try {
-        modified = await Dialog(prompt_msg, value) // -------------------------------------- INPUT 2
-    } catch (e) {
-        console.log(e)
-        return
-    }
-    // console.log("---:", modified)
+//     try {
+//         modified = await Dialog(prompt_msg, value) // -------------------------------------- INPUT 2
+//     } catch (e) {
+//         console.log(e)
+//         return
+//     }
+//     // console.log("---:", modified)
 
-    if (modified === value) {
-        return
-    }
+//     if (modified === value) {
+//         return
+//     }
 
-    // if original value is array, restore modified value back to array from string
-    if (valType === 'array') {
-        modified = modified.split('<br>')
-    }
+//     // if original value is array, restore modified value back to array from string
+//     if (valType === 'array') {
+//         modified = modified.split('<br>')
+//     }
 
-    switch (flag) {
-        case 3:
-            entityObj[cat][idx_subcat][subcat] = modified
-            break
-        case 2:
-            entityObj[cat][idx_subcat] = modified
-            break
-        case 1:
-            entityObj[cat] = modified
-            break
-    }
+//     switch (flag) {
+//         case 3:
+//             entityObj[cat][idx_subcat][subcat] = modified
+//             break
+//         case 2:
+//             entityObj[cat][idx_subcat] = modified
+//             break
+//         case 1:
+//             entityObj[cat] = modified
+//             break
+//     }
 
-    // update db
-    const url = 'http://localhost:3000/new?filetype=' + filetype
-    const respUpdate = await fetch(
-        url,
-        {
-            method: 'POST',
-            mode: 'cors',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(entityObj),
-        }
-    )
+//     // update db
+//     const url = 'http://localhost:3000/new?filetype=' + filetype
+//     const respUpdate = await fetch(
+//         url,
+//         {
+//             method: 'POST',
+//             mode: 'cors',
+//             headers: {
+//                 'Content-Type': 'application/json',
+//             },
+//             body: JSON.stringify(entityObj),
+//         }
+//     )
 
-    // refresh page, invoke 'init page' in render.js
-    if (respUpdate.status == 200) {
-        await (async () => {
-            await new Promise(resolve => setTimeout(resolve, 200));
-            window.location.replace(`http://localhost:3000/?search=${entity}$`)
-        })()
-    }
-}
+//     // refresh page, invoke 'init page' in render.js
+//     if (respUpdate.status == 200) {
+//         await (async () => {
+//             await new Promise(resolve => setTimeout(resolve, 200));
+//             window.location.replace(`http://localhost:3000/?search=${entity}$`)
+//         })()
+//     }
+// }
