@@ -2,13 +2,13 @@
 
 import ejs from 'ejs'
 import fs from 'fs'
-import fsp from 'fs/promises'
-import util from 'util'
-import { createIfNeeded, invoke } from './tool.js'
-import { validateEntity } from './validate.js'
-import { ingestEntity, ingestClassLinkage, ingestEntityPathVal, ingestCollection, ingestCollectionEntities } from '../db/db-ingest.js'
-import { pipeline } from 'stream'
-const pump = util.promisify(pipeline)
+// import fsp from 'fs/promises'
+// import util from 'util'
+// import { createIfNeeded, invoke } from './tool.js'
+// import { validateEntity } from './validate.js'
+// import { ingestEntity, ingestClassLinkage, ingestEntityPathVal, ingestCollection, ingestCollectionEntities } from '../db/db-ingest.js'
+// import { pipeline } from 'stream'
+// const pump = util.promisify(pipeline)
 
 import { P, InitP, OnList, OnFind } from '../db/db-find.js'
 
@@ -104,7 +104,7 @@ export const esa_dic = async (fastify, options) => {
     for (const entity of ['School', 'Campus']) {
         fastify.get(`/${entity}`, async (req, res) => {
 
-            console.log("\n---------------------CLICK URL---------------------")
+            console.log("\n--------------------- CLICK URL ---------------------")
 
             P.error = ''
             P.res = res
@@ -132,116 +132,117 @@ export const esa_dic = async (fastify, options) => {
         await OnFind(SearchVal.trim(), render_ejs)
     })
 
-    fastify.post('/new', async (req, res) => {
+///////////////////////////////////////////////////////////////////////
 
-        console.log("\n---------------------NEW ENTITY---------------------\n")
+    // fastify.post('/new', async (req, res) => {
 
-        P.error = ''
-        P.res = res
+    //     console.log("\n---------------------NEW ENTITY---------------------\n")
 
-        const filename = req.body.Entity
+    //     P.error = ''
+    //     P.res = res
 
-        // console.log("DEBUG: filetype\n", req.query.filetype)
-        // console.log("DEBUG: body\n", req.body)
+    //     const filename = req.body.Entity
 
-        createIfNeeded('./data/renamed/')
-        createIfNeeded('./data/renamed/collections/')
+    //     // console.log("DEBUG: filetype\n", req.query.filetype)
+    //     // console.log("DEBUG: body\n", req.body)
 
-        let uploadpath = `data/renamed/${filename}.json`
-        if (req.query.filetype == 'collection') {
-            uploadpath = `data/renamed/collections/${filename}.json`
-        }
+    //     createIfNeeded('./data/renamed/')
+    //     createIfNeeded('./data/renamed/collections/')
 
-        fs.writeFile(uploadpath, JSON.stringify(req.body), (err) => {
-            if (err) {
-                console.log("-------------------", err)
-            }
-        })
+    //     let uploadpath = `data/renamed/${filename}.json`
+    //     if (req.query.filetype == 'collection') {
+    //         uploadpath = `data/renamed/collections/${filename}.json`
+    //     }
 
-        // waiting for file saving is finished !
-        while (!fs.existsSync(uploadpath)) {
-            await new Promise(resolve => setTimeout(resolve, 50));
-        }
+    //     fs.writeFile(uploadpath, JSON.stringify(req.body), (err) => {
+    //         if (err) {
+    //             console.log("-------------------", err)
+    //         }
+    //     })
 
-        if (fs.existsSync(uploadpath)) {
-            await fsp.readFile(uploadpath, { encoding: 'utf8' })
-        }
+    //     // waiting for file saving is finished !
+    //     while (!fs.existsSync(uploadpath)) {
+    //         await new Promise(resolve => setTimeout(resolve, 50));
+    //     }
 
-        // re-preprocess all from '/renamed/', after processing, generated '/out/'
-        invoke("./preproc", () => {
-            // re-ingest all
-            ingestEntity('./data/out', 'entity')
-            ingestClassLinkage('./data/out/class-link.json', 'class')
-            ingestEntityPathVal('./data/out/path_val', 'pathval')
-            ingestCollection('./data/out/collections', 'collection')
-            ingestCollectionEntities('./data/out/collection-entities.json', 'colentities')
-        })
+    //     if (fs.existsSync(uploadpath)) {
+    //         await fsp.readFile(uploadpath, { encoding: 'utf8' })
+    //     }
 
-        ///////////////////////////////////////////////////////////////////////
+    //     // re-preprocess all from '/renamed/', after processing, generated '/out/'
+    //     invoke("./preproc", () => {
+    //         // re-ingest all
+    //         ingestEntity('./data/out', 'entity')
+    //         ingestClassLinkage('./data/out/class-link.json', 'class')
+    //         ingestEntityPathVal('./data/out/path_val', 'pathval')
+    //         ingestCollection('./data/out/collections', 'collection')
+    //         ingestCollectionEntities('./data/out/collection-entities.json', 'colentities')
+    //     })
 
-        await OnList(filename, render_ejs)
-    })
+    //     ///////////////////////////////////////////////////////////////////////
+
+    //     await OnList(filename, render_ejs)
+    // })
+
 
     // add Entity from JSON file, form with [enctype="multipart/form-data"] on submit
-    fastify.post('/add', async (req, res) => {
+    // fastify.post('/add', async (req, res) => {
 
-        console.log("\n---------------------ADD ENTITY---------------------\n")
+    //     console.log("\n---------------------ADD ENTITY---------------------\n")
 
-        P.error = ''
-        P.res = res
+    //     P.error = ''
+    //     P.res = res
 
-        // process a single file, also, consider that if you allow to upload multiple files
-        // consume all files otherwise the promise will never fulfill
-        const data = await req.file()
+    //     // process a single file, also, consider that if you allow to upload multiple files
+    //     // consume all files otherwise the promise will never fulfill
+    //     const data = await req.file()
 
-        // data.file // stream
-        // data.fields // other parsed parts
-        // data.fieldname
-        // data.filename
-        // data.encoding
-        // data.mimetype
-        // await data.toBuffer() // Buffer
+    //     // data.file // stream
+    //     // data.fields // other parsed parts
+    //     // data.fieldname
+    //     // data.filename
+    //     // data.encoding
+    //     // data.mimetype
+    //     // await data.toBuffer() // Buffer
 
-        createIfNeeded('./data/renamed/')
-        createIfNeeded('./data/renamed/collections/')
+    //     createIfNeeded('./data/renamed/')
+    //     createIfNeeded('./data/renamed/collections/')
 
-        let uploadpath = `data/renamed/${data.filename}`
-        if (req.query.filetype == 'collection') {
-            uploadpath = `data/renamed/collections/${filename}.json`
-        }
+    //     let uploadpath = `data/renamed/${data.filename}`
+    //     if (req.query.filetype == 'collection') {
+    //         uploadpath = `data/renamed/collections/${filename}.json`
+    //     }
 
-        await pump(data.file, fs.createWriteStream(uploadpath))
+    //     await pump(data.file, fs.createWriteStream(uploadpath))
 
-        // be careful of permission issues on disk and not overwrite, sensitive files that could cause security risks
-        // also, consider that if the file stream is not consumed, the promise will never fulfill
+    //     // be careful of permission issues on disk and not overwrite, sensitive files that could cause security risks
+    //     // also, consider that if the file stream is not consumed, the promise will never fulfill
 
-        ///////////////////////////////////////////////////////////////////////
-        // validate inbound entity json file
+    //     ///////////////////////////////////////////////////////////////////////
+    //     // validate inbound entity json file
 
-        const rawdata = fs.readFileSync(uploadpath)
-        const entity = JSON.parse(rawdata)
-        console.log("entity ----------------", entity)
+    //     const rawdata = fs.readFileSync(uploadpath)
+    //     const entity = JSON.parse(rawdata)
+    //     console.log("entity ----------------", entity)
 
-        if (!validateEntity(entity)) {
-            P.error = `invalid upload entity@ ${data.filename}`
-            console.log("error ----------------", P.error)
-            fs.unlinkSync(uploadpath)
-        }
+    //     if (!validateEntity(entity)) {
+    //         P.error = `invalid upload entity@ ${data.filename}`
+    //         console.log("error ----------------", P.error)
+    //         fs.unlinkSync(uploadpath)
+    //     }
 
-        // re-preprocess all
-        if (P.error.length == 0) {
-            invoke("./preproc", () => {
-                // re-ingest all
-                ingestEntity('./data/out', 'entity')
-                ingestClassLinkage('./data/out/class-link.json', 'class')
-                ingestEntityPathVal('./data/out/path_val', 'pathval')
-                ingestCollection('./data/out/collections', 'collection')
-                ingestCollectionEntities('./data/out/collection-entities.json', 'colentities')
-            })
-        }
-
-        ///////////////////////////////////////////////////////////////////////
-
-        await OnList(entity.Entity, render_ejs)
-    })
+    //     // re-preprocess all
+    //     if (P.error.length == 0) {
+    //         invoke("./preproc", () => {
+    //             // re-ingest all
+    //             ingestEntity('./data/out', 'entity')
+    //             ingestClassLinkage('./data/out/class-link.json', 'class')
+    //             ingestEntityPathVal('./data/out/path_val', 'pathval')
+    //             ingestCollection('./data/out/collections', 'collection')
+    //             ingestCollectionEntities('./data/out/collection-entities.json', 'colentities')
+    //         })
+    //     }
+    
+    //     await OnList(entity.Entity, render_ejs)
+    // })
 }

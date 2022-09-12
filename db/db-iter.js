@@ -1,4 +1,3 @@
-import * as assert from 'assert'
 import { MongoClient, dbName, url } from './shared.js'
 
 export const iter_dic = async (db, colName) => {

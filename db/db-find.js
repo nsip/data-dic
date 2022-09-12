@@ -1,4 +1,3 @@
-import * as assert from 'assert'
 import { assign, isNumeric, xpath2object, linkify } from './tool.js'
 import flatten from 'flat'
 import { MongoClient, dbName, url } from './shared.js'

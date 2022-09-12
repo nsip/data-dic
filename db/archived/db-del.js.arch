@@ -1,4 +1,3 @@
-import * as assert from 'assert'
 import { xpath2object } from './tool.js'
 import { MongoClient, dbName, url } from './shared.js'
 

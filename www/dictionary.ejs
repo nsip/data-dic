@@ -14,8 +14,10 @@
   <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="line.css">
   <link rel="stylesheet" href="dialog.css">
+  <link rel="stylesheet" href="add-button.css">
   <title>Education Data Dictionary</title>
 
+  <script src="https://use.fontawesome.com/536e0c9b50.js"></script>
   <script>
     $(document).ready(() => {
       // hide and show scrollbars dynamically
@@ -154,13 +156,9 @@
       </form>
 
       <!------------------- Add Entity / Collection ------------------->
-      <!-- upload file by select box. Different from normal, below do submitting when closing select box -->
-      <form id="add-form" action="/add" method="post" enctype="multipart/form-data">
-
-        <input id="fileInput" type="file" style="display:none;" name="entity" accept=".json" onchange="$('#add-form').submit()" />
-        <input id="load-entity" type="button" value="Upload..." onclick="$('#fileInput').click();" />
-
-      </form>
+      <a href="http://localhost:8080/" target="_blank" class="float">
+        <i class="fa fa-plus floating"></i>
+      </a>
 
     </div>
 
