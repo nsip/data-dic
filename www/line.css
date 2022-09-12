@@ -1,0 +1,10 @@
+hr.line1 {
+    border-top: 1.5px solid rgb(20, 20, 20);
+    margin: -10px 0px -8px 0px;
+}
+
+hr.line2 {
+    border-top: 0.5px dotted rgb(100, 100, 100);
+    border-bottom: 0.5px dotted rgb(100, 100, 100);
+    margin: 6px 0px 15px 0px;
+}

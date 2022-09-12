@@ -1,0 +1,181 @@
+/* header */
+
+h1 {
+    text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 24px;
+}
+
+#nav-path {
+    float: left;
+    margin: 0px 0px 10px 20px;    
+    font-weight: normal;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+#nav-field {
+    float: right;
+    margin: 0px 10px 10px 0px;
+    font-weight: normal;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+div span.nav {
+    font-size: 14px;
+    color: grey;
+    text-decoration: none;    
+}
+
+div span.nav:hover {
+    font-size: 14px;
+    color: blue;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+/* left panel */
+
+div#search-div {
+    margin-left: 18px;
+    width: 100%;
+}
+
+input#search {
+    padding-left: 10px;
+    width: 75%;
+}
+
+ul.left-list {
+    font-size: 15px;
+    font-weight: normal;
+    font-family: Arial, Helvetica, sans-serif;
+    padding-bottom: 2px;  
+    margin-left: -30px;
+}
+
+ul.left-list li.ellip {
+    width: 90%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+ul.left-list li.link {
+    color: blue;
+    text-decoration: none;    
+}
+
+ul.left-list li.link:hover {
+    color: blue;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+form#add-form {
+    margin: -10px 12px 5px 18px;
+    width: 89%;
+}
+
+form input#new-entity {
+    font-size: 15px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    width: 100%;
+    display: inline-block;
+}
+
+form input#load-entity {
+    font-size: 15px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    width: 100%;
+    display: inline-block;
+}
+
+/* right panel */
+
+div.block {
+    padding: 15px 0px 15px 10px;
+    margin-bottom: 2px;
+    font-size: 17px;    
+    font-family: Arial, Helvetica, sans-serif, monospace;    
+    background-color: rgb(200, 200, 200);
+    display: flex;
+    flex-direction: row;
+}
+
+div span.category {
+    width: 10%;
+    font-size: 18;
+    font-weight: bold;
+    cursor: default;
+}
+
+div span.editable:hover {
+    color: brown;
+}
+
+div span.content-whole-0 {
+    color: black;
+    margin: 0px 0px 0px 99px;
+    width: 100%;   
+    font-weight: bold;
+}
+
+div span.content-whole-1 {
+    color: black;
+    margin: 35px 0px 0px -100px;
+    width: 100%;   
+    font-weight: normal;
+}
+
+div span.content-flex {    
+    margin: 35px 0px 0px -100px;
+    width: 88%;
+    font-weight: normal;
+    display: flex;
+    flex-direction: column;    
+}
+
+/*  */
+
+div span div.cat-val {
+    display: flex;
+    flex-direction: row;
+    margin-top: 0px;  
+    margin-bottom: 10px;   
+}
+
+div span div span.sub-cat {    
+    font-weight: normal;
+    width: 220px;
+    /* background-color: rgb(172, 180, 178); */
+    cursor: default;
+}
+
+div span div span.sub-val {    
+    color: black;
+    width: 100%;
+    margin: auto;    
+}
+
+/*  */
+
+div#bottom-padding {
+    background-color: rgb(200, 200, 200);
+    margin-top: 80px;
+}
+
+/*  */
+
+.block span.shortarray-link {
+    font-size: 16px;
+    font-weight: normal;
+    color: blue;
+}
+
+.block span.shortarray-link:hover {
+    color: blue;
+    text-decoration: underline;
+    cursor: pointer;
+}
