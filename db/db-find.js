@@ -1,4 +1,4 @@
-import { assign, isNumeric, xpath2object, linkify } from './tool.js'
+import { assign, isNumeric, xpath2object, linkify, textInHtml } from './tool.js'
 import flatten from 'flat'
 import { MongoClient, dbName, url } from './shared.js'
 
@@ -38,7 +38,8 @@ export const find_dic = async (db, colName, single, strict, attr, value, ...out_
         value = value.replaceAll(')', '\\)')
 
         // regex for case insensitive, any part of word
-        let rVal = new RegExp('(^|\\s+)' + value + '(\\s+|$)', 'i') // filter mode
+        // let rVal = new RegExp('(^|\\s+)' + value + '(\\s+|$)', 'i')  // filter mode
+        let rVal = new RegExp(value, 'i')                               // filter mode
 
         if (strict) {
             // regex for case insensitive, whole word
@@ -184,6 +185,7 @@ export const InitP = () => {
     P.contCol = null
 
     P.entity = ''
+    P.otherNames = []
     P.definition = ''
     P.sif = []
     P.otherStandards = []
@@ -282,12 +284,30 @@ export const OnFind = async (value, fnReady) => {
                 P.contEnt = cont
 
                 assign(P, 'entity', cont.Entity, "")
+                assign(P, 'otherNames', cont.OtherNames, [])
                 assign(P, 'definition', cont.Definition, "")
                 assign(P, 'sif', cont.SIF, [])
                 assign(P, 'otherStandards', cont.OtherStandards, [])
                 assign(P, 'legalDefinitions', cont.LegalDefinitions, [])
                 assign(P, 'collections', cont.Collections, [])
                 assign(P, 'metadata', cont.Metadata, null)
+
+                // fetch from 'entities_html' for decorated html value
+                {
+                    let cont = await find_dic(db, 'entities_html', true, false, 'Entity', '>' + value + '<')
+                    if (cont != null) {
+                        console.log('------------------------- < GOT Entity CONTENT (HTML) > -------------------------')
+
+                        assign(P, 'entity', cont.Entity, "")                        // <%=
+                        assign(P, 'otherNames', cont.OtherNames, [])
+                        assign(P, 'definition', cont.Definition, "")                // <%-
+                        assign(P, 'sif', cont.SIF, [])                              // <%- 
+                        assign(P, 'otherStandards', cont.OtherStandards, [])
+                        assign(P, 'legalDefinitions', cont.LegalDefinitions, [])
+                        assign(P, 'collections', cont.Collections, [])
+                        assign(P, 'metadata', cont.Metadata, null)
+                    }
+                }
 
             } else {
 

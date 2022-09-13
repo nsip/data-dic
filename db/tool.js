@@ -3,6 +3,13 @@ import * as fs from 'fs' // sync listFile
 import * as path from 'path'
 import * as util from 'util'
 
+export const textInHtml = (html) => {
+    return html.replace(/<[^>]+>/g, '');
+}
+
+// let text = textInHtml("<p>Hello</p><a href='http://w3c.org'>W3C</a>.  Nice to <em>see</em><strong><em>you!</em></strong>")
+// console.log(text)
+
 const provided = (param) => {
     return param !== undefined
 }

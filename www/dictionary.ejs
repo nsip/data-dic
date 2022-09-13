@@ -176,7 +176,7 @@
         <div class="block" id="Entity">
           <span class="category" id="<%=entity%>#Entity">Name</span>
           <span class="content-whole-0">
-            <%=entity%>
+            <%- entity %>
           </span>
         </div>
 
@@ -210,21 +210,21 @@
               <div class="cat-val">
                 <span class="sub-cat" id="<%=entity%>#SIF#<%= i.toString() %>#Definition">Definition:</span>
                 <span class="sub-val">
-                  <%= s.Definition %>
+                  <%- s.Definition %>
                 </span>
               </div>
 
               <div class="cat-val">
                 <span class="sub-cat" id="<%=entity%>#SIF#<%= i.toString() %>#Commentary">Commentary:</span>
                 <span class="sub-val">
-                  <%= s.Commentary %>
+                  <%- s.Commentary %>
                 </span>
               </div>
 
               <div class="cat-val">
                 <span class="sub-cat" id="<%=entity%>#SIF#<%= i.toString() %>#Datestamp">Datestamp:</span>
                 <span class="sub-val">
-                  <%= s.Datestamp %>
+                  <%- s.Datestamp %>
                 </span>
               </div>
 
@@ -246,7 +246,7 @@
                 <div class="cat-val">
                   <span class="sub-cat" id="<%=entity%>#OtherStandards#<%= i.toString() %>#Standard">Standard:</span>
                   <span class="sub-val">
-                    <%= os.Standard %>
+                    <%- os.Standard %>
                   </span>
                 </div>
                 <% } %>
@@ -265,7 +265,7 @@
                           <span class="sub-cat" id="<%=entity%>#OtherStandards#<%= i.toString() %>#Path">Path:</span>
                           <span class="sub-val">
                             <% for(const path of os.Path) { %>
-                              <%= path %>
+                              <%- path %>
                                 <br>
                                 <% } %>
                           </span>
@@ -275,7 +275,7 @@
                             <div class="cat-val">
                               <span class="sub-cat" id="<%=entity%>#OtherStandards#<%= i.toString() %>#Definition">Definition:</span>
                               <span class="sub-val">
-                                <%= os.Definition %>
+                                <%- os.Definition %>
                               </span>
                             </div>
                             <% } %>
@@ -291,7 +291,7 @@
                                     <div class="cat-val">
                                       <span class="sub-cat" id="<%=entity%>#OtherStandards#<%= i.toString() %>#Datestamp">Datestamp:</span>
                                       <span class="sub-val">
-                                        <%= os.Datestamp %>
+                                        <%- os.Datestamp %>
                                       </span>
                                     </div>
                                     <% } %>
@@ -311,7 +311,7 @@
                 <div class="cat-val">
                   <span class="sub-cat" id="<%=entity%>#LegalDefinitions#<%= i.toString() %>#LegislationName">LegislationName:</span>
                   <span class="sub-val">
-                    <%= ld.LegislationName %>
+                    <%- ld.LegislationName %>
                   </span>
                 </div>
                 <% } %>
@@ -319,7 +319,7 @@
                     <div class="cat-val">
                       <span class="sub-cat" id="<%=entity%>#LegalDefinitions#<%= i.toString() %>#Citation">Citation:</span>
                       <span class="sub-val">
-                        <%= ld.Citation %>
+                        <%- ld.Citation %>
                       </span>
                     </div>
                     <% } %>
@@ -343,7 +343,7 @@
                                 <div class="cat-val">
                                   <span class="sub-cat" id="<%=entity%>#LegalDefinitions#<%= i.toString() %>#Commentary">Commentary:</span>
                                   <span class="sub-val">
-                                    <%= ld.Commentary %>
+                                    <%- ld.Commentary %>
                                   </span>
                                 </div>
                                 <% } %>
@@ -351,7 +351,7 @@
                                     <div class="cat-val">
                                       <span class="sub-cat" id="<%=entity%>#LegalDefinitions#<%= i.toString() %>#Datestamp">Datestamp:</span>
                                       <span class="sub-val">
-                                        <%= ld.Datestamp %>
+                                        <%- ld.Datestamp %>
                                       </span>
                                     </div>
                                     <% } %>
@@ -371,7 +371,7 @@
                 <div class="cat-val">
                   <span class="sub-cat" id="<%=entity%>#Collections#<%= i.toString() %>#Name">Name:</span>
                   <span class="sub-val">
-                    <%= col.Name %>
+                    <%- col.Name %>
                   </span>
                 </div>
                 <% } %>
@@ -379,7 +379,7 @@
                     <div class="cat-val">
                       <span class="sub-cat" id="<%=entity%>#Collections#<%= i.toString() %>#Description">Description:</span>
                       <span class="sub-val">
-                        <%= col.Description %>
+                        <%- col.Description %>
                       </span>
                     </div>
                     <% } %>
@@ -388,7 +388,7 @@
                           <span class="sub-cat" id="<%=entity%>#Collections#<%= i.toString() %>#BusinessRules">BusinessRules:</span>
                           <span class="sub-val">
                             <% for( let rule of col.BusinessRules) { %>
-                              <%= rule %>
+                              <%- rule %>
                                 <br>
                                 <% } %>
                           </span>
@@ -398,7 +398,7 @@
                             <div class="cat-val">
                               <span class="sub-cat" id="<%=entity%>#Collections#<%= i.toString() %>#Standard">Standard:</span>
                               <span class="sub-val">
-                                <%= col.Standard %>
+                                <%- col.Standard %>
                               </span>
                             </div>
                             <% } %>
@@ -407,7 +407,7 @@
                                   <span class="sub-cat" id="<%=entity%>#Collections#<%= i.toString() %>#Elements">Elements:</span>
                                   <span class="sub-val">
                                     <% for (let ele of col.Elements) { %>
-                                      <%= ele %>
+                                      <%- ele %>
                                         <br>
                                         <% } %>
                                   </span>
@@ -417,7 +417,7 @@
                                     <div class="cat-val">
                                       <span class="sub-cat" id="<%=entity%>#Collections#<%= i.toString() %>#DefinitionModification">DefinitionModification:</span>
                                       <span class="sub-val">
-                                        <%= col.DefinitionModification %>
+                                        <%- col.DefinitionModification %>
                                       </span>
                                     </div>
                                     <% } %>
@@ -436,7 +436,7 @@
               <div class="cat-val">
                 <span class="sub-cat" id="<%=entity%>#Metadata#Identifier">Identifier:</span>
                 <span class="sub-val">
-                  <%= metadata.Identifier %>
+                  <%- metadata.Identifier %>
                 </span>
               </div>
               <% } %>
@@ -445,7 +445,7 @@
                     <span class="sub-cat" id="<%=entity%>#Metadata#OtherNames">OtherNames:</span>
                     <span class="sub-val">
                       <% for(const [i, on] of metadata.OtherNames.entries()) { %>
-                        <%= on %>
+                        <%- on %>
                           <% if (i < metadata.OtherNames.length - 1) { %> &nbsp;|&nbsp; <% } } %>
                     </span>
                   </div>
@@ -454,7 +454,7 @@
                       <div class="cat-val">
                         <span class="sub-cat" id="<%=entity%>#Metadata#Type">Type:</span>
                         <span class="sub-val">
-                          <%= metadata.Type %>
+                          <%- metadata.Type %>
                         </span>
                       </div>
                       <% } %>
@@ -464,7 +464,7 @@
                             <span class="sub-val">
                               <% for(const [i, attr] of metadata.ExpectedAttributes.entries()) { %>
                                 <span class="shortarray-link" onclick="$('#search').val('<%= attr %>$'); $('#search-form').submit();">
-                                  <%= attr %>
+                                  <%- attr %>
                                 </span>
                                 <% if ( i < metadata.ExpectedAttributes.length - 1) { %> &nbsp;|&nbsp; <% } %>
                                     <% } %>
@@ -476,7 +476,7 @@
                               <div class="cat-val">
                                 <span class="sub-cat" id="<%=entity%>#Metadata#DefaultParent">DefaultParent:</span>
                                 <span class="sub-val" onclick="$('#search').val('<%= metadata.DefParent %>$'); $('#search-form').submit();">
-                                  <%= metadata.DefParent %>
+                                  <%- metadata.DefParent %>
                                 </span>
                               </div>
                               <% } %>
@@ -486,7 +486,7 @@
                                     <span class="sub-val">
                                       <% for(const [i, sc] of metadata.Superclass.entries()) { %>
                                         <span class="shortarray-link" onclick="$('#search').val('<%= sc %>$'); $('#search-form').submit();">
-                                          <%= sc %>
+                                          <%- sc %>
                                         </span>
                                         <% if ( i < metadata.Superclass.length - 1) { %> &nbsp;|&nbsp; <% } %>
                                             <% } %>
@@ -499,7 +499,7 @@
                                         <span class="sub-val">
                                           <% for(const [i, crf] of metadata.CrossrefEntities.entries()) { %>
                                             <span class="shortarray-link" onclick="$('#search').val('<%= crf %>$'); $('#search-form').submit();">
-                                              <%= crf %>
+                                              <%- crf %>
                                             </span>
                                             <% if (i < metadata.CrossrefEntities.length - 1) { %> &nbsp;|&nbsp; <% } %>
                                                 <% } %>
@@ -520,7 +520,7 @@
             <div class="block" id="Entity">
               <span class="category" id="<%=entity%>#Entity">Name</span>
               <span class="content-whole-0">
-                <%=entity%>
+                <%- entity %>
               </span>
             </div>
 
@@ -551,7 +551,7 @@
                   <div class="cat-val">
                     <span class="sub-cat" id="<%=entity%>#Metadata#Identifier">Identifier:</span>
                     <span class="sub-val">
-                      <%= metadata.Identifier %>
+                      <%- metadata.Identifier %>
                     </span>
                   </div>
                   <% } %>
@@ -560,7 +560,7 @@
                         <span class="sub-cat" id="<%=entity%>#Metadata#OtherNames">OtherNames:</span>
                         <span class="sub-val">
                           <% for(const [i, on] of metadata.OtherNames.entries()) { %>
-                            <%= on %>
+                            <%- on %>
                               <% if (i < metadata.OtherNames.length - 1) { %> &nbsp;|&nbsp; <% } } %>
                         </span>
                       </div>
@@ -569,7 +569,7 @@
                           <div class="cat-val">
                             <span class="sub-cat" id="<%=entity%>#Metadata#Type">Type:</span>
                             <span class="sub-val">
-                              <%= metadata.Type %>
+                              <%- metadata.Type %>
                             </span>
                           </div>
                           <% } %>
@@ -579,7 +579,7 @@
                                 <span class="sub-val">
                                   <% for(const [i, attr] of metadata.ExpectedAttributes.entries()) { %>
                                     <span class="shortarray-link" onclick="$('#search').val('<%= attr %>$'); $('#search-form').submit();">
-                                      <%= attr %>
+                                      <%- attr %>
                                     </span>
                                     <% if ( i < metadata.ExpectedAttributes.length - 1) { %> &nbsp;|&nbsp; <% } %>
                                         <% } %>
@@ -591,7 +591,7 @@
                                   <div class="cat-val">
                                     <span class="sub-cat" id="<%=entity%>#Metadata#DefaultParent">DefaultParent:</span>
                                     <span class="sub-val" onclick="$('#search').val('<%= metadata.DefParent %>$'); $('#search-form').submit();">
-                                      <%= metadata.DefParent %>
+                                      <%- metadata.DefParent %>
                                     </span>
                                   </div>
                                   <% } %>
@@ -601,7 +601,7 @@
                                         <span class="sub-val">
                                           <% for(const [i, sc] of metadata.Superclass.entries()) { %>
                                             <span class="shortarray-link" onclick="$('#search').val('<%= sc %>$'); $('#search-form').submit();">
-                                              <%= sc %>
+                                              <%- sc %>
                                             </span>
                                             <% if ( i < metadata.Superclass.length - 1) { %> &nbsp;|&nbsp; <% } %>
                                                 <% } %>
@@ -614,7 +614,7 @@
                                             <span class="sub-val">
                                               <% for(const [i, crf] of metadata.CrossrefEntities.entries()) { %>
                                                 <span class="shortarray-link" onclick="$('#search').val('<%= crf %>$'); $('#search-form').submit();">
-                                                  <%= crf %>
+                                                  <%- crf %>
                                                 </span>
                                                 <% if (i < metadata.CrossrefEntities.length - 1) { %> &nbsp;|&nbsp; <% } %>
                                                     <% } %>
@@ -630,7 +630,7 @@
               <span class="content-flex">
                 <% for(const [i, s] of entities.entries()) { %>
                   <span class="shortarray-link" onclick="$('#search').val('<%= s %>$'); $('#search-form').submit();">
-                    <%= s %>
+                    <%- s %>
                   </span>
                   <br>
                   <% } %>
